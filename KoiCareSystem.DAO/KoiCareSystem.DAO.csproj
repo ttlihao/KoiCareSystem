@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KoiCareSystem.BussinessObject\KoiCareSystem.BussinessObject.csproj" />
+  </ItemGroup>
+
 </Project>
