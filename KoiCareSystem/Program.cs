@@ -1,7 +1,26 @@
+using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.Repository;
+using KoiCareSystem.Repository.Interfaces;
+using KoiCareSystem.Service;
+using KoiCareSystem.Service.Interfaces;
+using KoiCareSystem.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+
+
+
+builder.Services.AddScoped<ICarePropertyService, CarePropertyService>();
+builder.Services.AddScoped<ICareScheduleService, CareScheduleService>();
+builder.Services.AddScoped<ICareScheduleRepository, CareScheduleRepository>();
+builder.Services.AddScoped<ICarePropertyRepository, CarePropertyRepository>();
+
+builder.Services.AddDbContext<CarekoisystemContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
