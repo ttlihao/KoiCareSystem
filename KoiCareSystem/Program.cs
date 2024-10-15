@@ -5,6 +5,7 @@ using KoiCareSystem.Service;
 using KoiCareSystem.Service.Interfaces;
 using KoiCareSystem.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,6 @@ builder.Services.AddScoped<ICarePropertyService, CarePropertyService>();
 builder.Services.AddScoped<ICareScheduleService, CareScheduleService>();
 builder.Services.AddScoped<ICareScheduleRepository, CareScheduleRepository>();
 builder.Services.AddScoped<ICarePropertyRepository, CarePropertyRepository>();
-
 builder.Services.AddDbContext<CarekoisystemContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

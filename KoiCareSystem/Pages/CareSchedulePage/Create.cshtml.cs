@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CareSchedulePage
 {
     public class CreateModel : PageModel
     {
         private readonly KoiCareSystem.BussinessObject.Models.CarekoisystemContext _context;
-
-        public CreateModel(KoiCareSystem.BussinessObject.Models.CarekoisystemContext context)
+        private ICareScheduleService careScheduleService;
+        public CreateModel(KoiCareSystem.BussinessObject.Models.CarekoisystemContext context, ICareScheduleService careScheduleService)
         {
             _context = context;
+            this.careScheduleService = careScheduleService;
         }
 
         public IActionResult OnGet()
@@ -35,8 +37,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 return Page();
             }
 
-            _context.CareSchedules.Add(CareSchedule);
-            await _context.SaveChangesAsync();
+            await careScheduleService.AddCareSchedule(CareSchedule);
 
             return RedirectToPage("./Index");
         }
