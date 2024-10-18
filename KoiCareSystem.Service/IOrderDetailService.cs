@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using KoiCareSystem.BussinessObject.Models;
 
 namespace KoiCareSystem.Service
 {
-    internal class IOrderDetailService
+    public interface IOrderDetailService
     {
+        List<OrderDetail> GetAllOrderDetails();
+        OrderDetail GetOrderDetailById(int id);
+        void CreateOrderDetail(OrderDetail orderDetail);
+        void UpdateOrderDetail(OrderDetail orderDetail);
+        void DeleteOrderDetail(int id);
     }
 }
