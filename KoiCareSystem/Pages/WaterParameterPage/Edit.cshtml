@@ -1,0 +1,56 @@
+﻿@page
+@model KoiCareSystem.Pages.WaterParameterPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>WaterParameter</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="WaterParameter.PondId" />
+            <input type="hidden" asp-for="WaterParameter.CheckDate" />
+            <div class="form-group">
+                <label asp-for="WaterParameter.Temperature" class="control-label"></label>
+                <input asp-for="WaterParameter.Temperature" class="form-control" />
+                <span asp-validation-for="WaterParameter.Temperature" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.PH" class="control-label"></label>
+                <input asp-for="WaterParameter.PH" class="form-control" />
+                <span asp-validation-for="WaterParameter.PH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.Co2" class="control-label"></label>
+                <input asp-for="WaterParameter.Co2" class="form-control" />
+                <span asp-validation-for="WaterParameter.Co2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.No2" class="control-label"></label>
+                <input asp-for="WaterParameter.No2" class="form-control" />
+                <span asp-validation-for="WaterParameter.No2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.IsDeleted" class="control-label"></label>
+                <input asp-for="WaterParameter.IsDeleted" class="form-control" />
+                <span asp-validation-for="WaterParameter.IsDeleted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,55 @@
+﻿@page
+@model KoiCareSystem.Pages.WaterParameterPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>WaterParameter</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WaterParameter.Temperature)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WaterParameter.Temperature)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WaterParameter.PH)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WaterParameter.PH)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WaterParameter.Co2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WaterParameter.Co2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WaterParameter.No2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WaterParameter.No2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WaterParameter.IsDeleted)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WaterParameter.IsDeleted)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WaterParameter.Pond)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WaterParameter.Pond.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-page="./Index">Back to List</a>
+</div>

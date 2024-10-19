@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace KoiCareSystem.Service.Interfaces
 {
-    public interface IWaterParameterService { 
-          public bool AddWaterParameter(WaterParameter waterParameter);
+    public interface IWaterParameterService
+    {
+        public bool AddWaterParameter(WaterParameter waterParameter);
 
         public bool DeleteWaterParameter(WaterParameter waterParameter);
 
@@ -18,5 +19,6 @@ namespace KoiCareSystem.Service.Interfaces
         public List<WaterParameter> GetListWaterParameters();
 
         public bool UpdateWaterParameter(WaterParameter waterParameter);
-   
+
+    }
 }

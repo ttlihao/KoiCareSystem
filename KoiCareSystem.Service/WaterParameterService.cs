@@ -29,7 +29,20 @@ namespace KoiCareSystem.Service
 
         public List<WaterParameter> GetListWaterParameters()
         {
-            WaterParameter>waterParameter = waterParameterRepos.GetWaterParameterByID(0);
+   
+                List<WaterParameter> waterParameters = waterParameterRepos.GetListWaterParameters();
+                List<WaterParameter> listWater = new List<WaterParameter>();
+
+                foreach (WaterParameter water in waterParameters)
+                {
+                    if (water.IsDeleted != false)
+                    {
+                        listWater.Add(water);
+                    }
+                }
+
+                return listWater;
+    
         }
 
         public WaterParameter GetWaterParameterByID(int PondID)
