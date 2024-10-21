@@ -1,7 +1,17 @@
+using KoiCareSystem.DAO;
+using KoiCareSystem.Repository;
+using KoiCareSystem.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<CarekoisystemContext>();
+builder.Services.AddScoped<AccountDAO>();
+
 
 var app = builder.Build();
 
