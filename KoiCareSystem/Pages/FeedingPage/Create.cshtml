@@ -1,0 +1,54 @@
+﻿@page
+@model KoiCareSystem.Pages.FeedingPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Feeding</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Feeding.PondFeedingId" class="control-label"></label>
+                <input asp-for="Feeding.PondFeedingId" class="form-control" />
+                <span asp-validation-for="Feeding.PondFeedingId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feeding.FoodType" class="control-label"></label>
+                <input asp-for="Feeding.FoodType" class="form-control" />
+                <span asp-validation-for="Feeding.FoodType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feeding.FeedAmount" class="control-label"></label>
+                <input asp-for="Feeding.FeedAmount" class="form-control" />
+                <span asp-validation-for="Feeding.FeedAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feeding.FeedingTime" class="control-label"></label>
+                <input asp-for="Feeding.FeedingTime" class="form-control" />
+                <span asp-validation-for="Feeding.FeedingTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feeding.IsDeleted" class="control-label"></label>
+                <input asp-for="Feeding.IsDeleted" class="form-control" />
+                <span asp-validation-for="Feeding.IsDeleted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

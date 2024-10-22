@@ -6,36 +6,36 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject.Models;
-using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.WaterParameterPage
+namespace KoiCareSystem.Pages.FeedingPage
 {
     public class DetailsModel : PageModel
     {
-        private readonly IWaterParameterService waterParameterService;
+        private readonly KoiCareSystem.BussinessObject.Models.CarekoisystemContext _context;
 
-        public DetailsModel(IWaterParameterService water)
+        public DetailsModel(KoiCareSystem.BussinessObject.Models.CarekoisystemContext context)
         {
-            waterParameterService = water;
+            _context = context;
         }
 
-        public WaterParameter WaterParameter { get; set; } = default!;
+        public Feeding Feeding { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            if (waterParameterService.GetWaterParameterByID(id) == null)
+
+            var feeding = await _context.Feedings.FirstOrDefaultAsync(m => m.Id == id);
+            if (feeding == null)
             {
                 return NotFound();
             }
             else
             {
-                waterParameterService.GetWaterParameterByID(id);
+                Feeding = feeding;
             }
-   
             return Page();
         }
     }

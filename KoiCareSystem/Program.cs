@@ -11,6 +11,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IWaterParameterService, WaterParameterService>();
 builder.Services.AddScoped<IWaterParameterRepos, WaterParameterRepos>();
 
+builder.Services.AddScoped<IFeedingService, FeedingService>();
+builder.Services.AddScoped<IFeedingRepos, FeedingRepos>();
+
 builder.Services.AddSession();
 
 var app = builder.Build();

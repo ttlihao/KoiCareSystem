@@ -15,5 +15,7 @@ public partial class Feeding
 
     public DateTime? FeedingTime { get; set; }
 
+    public bool? IsDeleted { get; set; }
+
     public virtual ICollection<PondFeeding> PondFeedings { get; set; } = new List<PondFeeding>();
 }
