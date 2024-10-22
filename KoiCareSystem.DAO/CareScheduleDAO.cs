@@ -40,14 +40,18 @@ namespace KoiCareSystem.DAO
                     // Check if the care schedule already exists
                     var existingSchedule = await _context.CareSchedules
                         .FirstOrDefaultAsync(cs => cs.Id == careSchedule.Id);
-                    if (existingSchedule == null)
+                    if (_context.Ponds.Any(p => p.Id == careSchedule.PondId))
                     {
-                        await _context.CareSchedules.AddAsync(careSchedule);
-                        await _context.SaveChangesAsync();
-                        isSuccess = true;
+                        if (existingSchedule == null)
+                        {
+                            careSchedule.Pond = await _context.Ponds.FindAsync(careSchedule.PondId);
+                            await _context.CareSchedules.AddAsync(careSchedule);
+                            await _context.SaveChangesAsync();
+                            isSuccess = true;
+                        }
+                    }
                     }
                 }
-            }
             catch (Exception e)
             {
                 throw new Exception(e.Message);

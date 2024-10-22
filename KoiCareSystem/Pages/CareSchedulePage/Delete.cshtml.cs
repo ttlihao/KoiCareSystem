@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CareSchedulePage
 {
     public class DeleteModel : PageModel
     {
-        private readonly KoiCareSystem.BussinessObject.Models.CarekoisystemContext _context;
+        private ICareScheduleService careScheduleService;
 
-        public DeleteModel(KoiCareSystem.BussinessObject.Models.CarekoisystemContext context)
+        public DeleteModel(ICareScheduleService careScheduleService)
         {
-            _context = context;
+        this.careScheduleService = careScheduleService;
         }
 
         [BindProperty]
@@ -28,7 +29,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 return NotFound();
             }
 
-            var careschedule = await _context.CareSchedules.FirstOrDefaultAsync(m => m.Id == id);
+            var careschedule = await careScheduleService.GetCareSchedule(id);
 
             if (careschedule == null)
             {
