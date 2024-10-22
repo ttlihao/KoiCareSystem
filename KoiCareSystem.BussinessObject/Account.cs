@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace KoiCareSystem.BussinessObject.Models;
+namespace KoiCareSystem.BussinessObject;
 
 public partial class Account
 {

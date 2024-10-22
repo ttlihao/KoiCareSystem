@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Repository.Interfaces;
 using KoiCareSystem.Service.Interfaces;
 

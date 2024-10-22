@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.WaterParameterPage

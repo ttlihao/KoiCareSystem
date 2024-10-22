@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
+using KoiCareSystem.DAO;
+using KoiCareSystem.Service;
 
-namespace KoiCareSystem.Pages.FeedingPage
+namespace KoiCareSystem.Pages.AccountPage
 {
     public class EditModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly IAccountService _accountService;
 
-        public EditModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public EditModel(IAccountService accountService)
         {
-            _context = context;
+            _accountService = accountService;
         }
 
         [BindProperty]
-        public Feeding Feeding { get; set; } = default!;
+        public Account Account { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,12 +31,13 @@ namespace KoiCareSystem.Pages.FeedingPage
                 return NotFound();
             }
 
-            var feeding =  await _context.Feedings.FirstOrDefaultAsync(m => m.Id == id);
-            if (feeding == null)
+            // Use the account service to get the account by ID
+            Account = _accountService.GetAccountById(id.Value);
+            if (Account == null)
             {
                 return NotFound();
             }
-            Feeding = feeding;
+            
             return Page();
         }
 
@@ -47,15 +50,14 @@ namespace KoiCareSystem.Pages.FeedingPage
                 return Page();
             }
 
-            _context.Attach(Feeding).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                _accountService.UpdateAccount(Account);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FeedingExists(Feeding.Id))
+                if (!AccountExists(Account.Id))
                 {
                     return NotFound();
                 }
@@ -68,9 +70,9 @@ namespace KoiCareSystem.Pages.FeedingPage
             return RedirectToPage("./Index");
         }
 
-        private bool FeedingExists(int id)
+        private bool AccountExists(int id)
         {
-            return _context.Feedings.Any(e => e.Id == id);
+            return _accountService.GetAccountById(id) is not null;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using KoiCareSystem.BussinessObject.Models;
+﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
 using System;
 using System.Collections.Generic;

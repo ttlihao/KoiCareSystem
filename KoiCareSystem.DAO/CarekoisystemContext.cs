@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using KoiCareSystem.BussinessObject;
 
-namespace KoiCareSystem.BussinessObject.Models;
+namespace KoiCareSystem.DAO;
 
 public partial class CarekoisystemContext : DbContext
 {
@@ -43,8 +45,19 @@ public partial class CarekoisystemContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(local);Database=carekoisystem;Uid=sa;Pwd=sa12345;Trusted_Connection=True;Trust Server Certificate=True");
 
+
+        => optionsBuilder.UseSqlServer(GetConnectionString());
+
+
+    private string GetConnectionString()
+    {
+        IConfiguration configuration = new ConfigurationBuilder ()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", true, true)
+            .Build();
+        return configuration.GetConnectionString("DbConnect") ?? string.Empty;
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>

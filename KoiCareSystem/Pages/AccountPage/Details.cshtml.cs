@@ -6,20 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
-using KoiCareSystem.Service.Interfaces;
+using KoiCareSystem.DAO;
+using KoiCareSystem.Service;
 
-namespace KoiCareSystem.Pages.WaterParameterPage
+namespace KoiCareSystem.Pages.AccountPage
 {
     public class DetailsModel : PageModel
     {
-        private readonly IWaterParameterService waterParameterService;
+        private readonly IAccountService _accountService;
 
-        public DetailsModel(IWaterParameterService water)
+        public DetailsModel(IAccountService accountService)
         {
-            waterParameterService = water;
+            _accountService = accountService;
         }
 
-        public WaterParameter WaterParameter { get; set; } = default!;
+        public Account Account { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -27,15 +28,16 @@ namespace KoiCareSystem.Pages.WaterParameterPage
             {
                 return NotFound();
             }
-            if (waterParameterService.GetWaterParameterByID(id) == null)
+
+            var account = _accountService.GetAccountById(id);
+            if (account == null)
             {
                 return NotFound();
             }
             else
             {
-                waterParameterService.GetWaterParameterByID(id);
+                Account = account;
             }
-   
             return Page();
         }
     }
