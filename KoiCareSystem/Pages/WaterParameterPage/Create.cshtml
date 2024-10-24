@@ -1,0 +1,63 @@
+﻿@page
+@model KoiCareSystem.Pages.WaterParameterPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>WaterParameter</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.PondId" class="control-label"></label>
+                <select asp-for="WaterParameter.PondId" class ="form-control" asp-items="ViewBag.PondId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.CheckDate" class="control-label"></label>
+                <input asp-for="WaterParameter.CheckDate" class="form-control" />
+                <span asp-validation-for="WaterParameter.CheckDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.Temperature" class="control-label"></label>
+                <input asp-for="WaterParameter.Temperature" class="form-control" />
+                <span asp-validation-for="WaterParameter.Temperature" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.PH" class="control-label"></label>
+                <input asp-for="WaterParameter.PH" class="form-control" />
+                <span asp-validation-for="WaterParameter.PH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.Co2" class="control-label"></label>
+                <input asp-for="WaterParameter.Co2" class="form-control" />
+                <span asp-validation-for="WaterParameter.Co2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.No2" class="control-label"></label>
+                <input asp-for="WaterParameter.No2" class="form-control" />
+                <span asp-validation-for="WaterParameter.No2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaterParameter.IsDeleted" class="control-label"></label>
+                <input asp-for="WaterParameter.IsDeleted" class="form-control" />
+                <span asp-validation-for="WaterParameter.IsDeleted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

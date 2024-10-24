@@ -1,0 +1,74 @@
+﻿@page
+@model KoiCareSystem.Pages.WaterParameterPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WaterParameter[0].Temperature)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WaterParameter[0].PH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WaterParameter[0].Co2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WaterParameter[0].No2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WaterParameter[0].IsDeleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WaterParameter[0].Pond)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.WaterParameter != null && Model.WaterParameter.Any())
+        {
+            @foreach (var item in Model.WaterParameter)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Temperature)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PH)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Co2)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.No2)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsDeleted)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pond.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <p>No water parameters available.</p>
+        }
+    </tbody>
+</table>

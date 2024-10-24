@@ -1,11 +1,13 @@
-using KoiCareSystem.BussinessObject.Models;
+
 using KoiCareSystem.Repository;
 using KoiCareSystem.Repository.Interfaces;
 using KoiCareSystem.Service;
 using KoiCareSystem.Service.Interfaces;
-using KoiCareSystem.Services;
-using Microsoft.EntityFrameworkCore;
-using System.Configuration;
+
+using KoiCareSystem.DAO;
+using KoiCareSystem.Repository;
+using KoiCareSystem.Service;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +15,30 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 
+builder.Services.AddScoped<IWaterParameterService, WaterParameterService>();
+builder.Services.AddScoped<IWaterParameterRepos, WaterParameterRepos>();
+
+builder.Services.AddScoped<IFeedingService, FeedingService>();
+builder.Services.AddScoped<IFeedingRepos, FeedingRepos>();
+
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+
+builder.Services.AddScoped<IKoiFishRepository, KoiFishRepository>();
+builder.Services.AddScoped<IKoiFishService, KoiFishService>();
+
+builder.Services.AddScoped<IPondService, PondService>();
+builder.Services.AddScoped<IPondRepository, PondRepository>();
+
+builder.Services.AddScoped<CarekoisystemContext>();
+builder.Services.AddScoped<AccountDAO>();
+builder.Services.AddScoped<KoiFishDAO>();
+builder.Services.AddScoped<PondDAO>();
+builder.Services.AddSession();
 
 
-builder.Services.AddScoped<ICarePropertyService, CarePropertyService>();
-builder.Services.AddScoped<ICareScheduleService, CareScheduleService>();
-builder.Services.AddScoped<ICareScheduleRepository, CareScheduleRepository>();
-builder.Services.AddScoped<ICarePropertyRepository, CarePropertyRepository>();
-builder.Services.AddDbContext<CarekoisystemContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
 var app = builder.Build();
 
@@ -40,5 +58,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+
+app.UseSession();
 
 app.Run();
