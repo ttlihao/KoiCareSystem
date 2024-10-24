@@ -21,12 +21,22 @@ builder.Services.AddScoped<IWaterParameterRepos, WaterParameterRepos>();
 builder.Services.AddScoped<IFeedingService, FeedingService>();
 builder.Services.AddScoped<IFeedingRepos, FeedingRepos>();
 
-builder.Services.AddSession();
-
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+
+builder.Services.AddScoped<IKoiFishRepository, KoiFishRepository>();
+builder.Services.AddScoped<IKoiFishService, KoiFishService>();
+
+builder.Services.AddScoped<IPondService, PondService>();
+builder.Services.AddScoped<IPondRepository, PondRepository>();
+
 builder.Services.AddScoped<CarekoisystemContext>();
 builder.Services.AddScoped<AccountDAO>();
+builder.Services.AddScoped<KoiFishDAO>();
+builder.Services.AddScoped<PondDAO>();
+builder.Services.AddSession();
+
+
 
 
 
