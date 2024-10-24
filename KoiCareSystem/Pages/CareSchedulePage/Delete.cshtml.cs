@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CareSchedulePage
@@ -29,7 +29,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 return NotFound();
             }
 
-            var careschedule = await careScheduleService.GetCareSchedule(id);
+            var careschedule = await careScheduleService.GetCareSchedule((int)id);
 
             if (careschedule == null)
             {
@@ -49,12 +49,11 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 return NotFound();
             }
 
-            var careschedule = await _context.CareSchedules.FindAsync(id);
+            var careschedule = await careScheduleService.GetCareSchedule((int)id);
             if (careschedule != null)
             {
                 CareSchedule = careschedule;
-                _context.CareSchedules.Remove(CareSchedule);
-                await _context.SaveChangesAsync();
+                await careScheduleService.RemoveCareSchedule((int)id);
             }
 
             return RedirectToPage("./Index");

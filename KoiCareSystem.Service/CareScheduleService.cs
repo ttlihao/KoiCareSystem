@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Repository;
 using KoiCareSystem.Repository.Interfaces;
 using KoiCareSystem.Service.Interfaces;

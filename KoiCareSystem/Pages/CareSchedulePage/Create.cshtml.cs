@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CareSchedulePage
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiCareSystem.BussinessObject.Models.CarekoisystemContext _context;
+        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
         private ICareScheduleService careScheduleService;
-        public CreateModel(KoiCareSystem.BussinessObject.Models.CarekoisystemContext context, ICareScheduleService careScheduleService)
+        public CreateModel(KoiCareSystem.DAO.CarekoisystemContext context, ICareScheduleService careScheduleService)
         {
             _context = context;
             this.careScheduleService = careScheduleService;

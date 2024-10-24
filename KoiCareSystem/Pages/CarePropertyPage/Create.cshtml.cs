@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.BussinessObject;
 
 namespace KoiCareSystem.Pages.CareSchdulePage
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiCareSystem.BussinessObject.Models.CarekoisystemContext _context;
+        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
 
-        public CreateModel(KoiCareSystem.BussinessObject.Models.CarekoisystemContext context)
+        public CreateModel(KoiCareSystem.DAO.CarekoisystemContext context)
         {
             _context = context;
         }
@@ -30,10 +30,10 @@ namespace KoiCareSystem.Pages.CareSchdulePage
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
             _context.CareProperties.Add(CareProperty);
             await _context.SaveChangesAsync();

@@ -6,17 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
+using KoiCareSystem.DAO;
 
 namespace KoiCareSystem.Pages.CareSchedulePage
 {
     public class EditModel : PageModel
     {
-        private readonly KoiCareSystem.BussinessObject.Models.CarekoisystemContext _context;
+        private ICareScheduleService careScheduleService;
+        private readonly CarekoisystemContext context;
 
-        public EditModel(KoiCareSystem.BussinessObject.Models.CarekoisystemContext context)
+        public EditModel(ICareScheduleService careScheduleService, CarekoisystemContext context)
         {
-            _context = context;
+            this.careScheduleService = careScheduleService; 
+            this.context = context;
         }
 
         [BindProperty]
@@ -29,13 +33,13 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 return NotFound();
             }
 
-            var careschedule =  await _context.CareSchedules.FirstOrDefaultAsync(m => m.Id == id);
+            var careschedule = await careScheduleService.GetCareSchedule((int)id);
             if (careschedule == null)
             {
                 return NotFound();
             }
             CareSchedule = careschedule;
-           ViewData["PondId"] = new SelectList(_context.Ponds, "Id", "Name");
+           ViewData["PondId"] = new SelectList(context.Ponds, "Id", "Name");
             return Page();
         }
 
@@ -43,20 +47,19 @@ namespace KoiCareSystem.Pages.CareSchedulePage
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
-            _context.Attach(CareSchedule).State = EntityState.Modified;
-
+            bool isSuccess;
             try
             {
-                await _context.SaveChangesAsync();
+                isSuccess = await careScheduleService.UpdateCareSchedule(CareSchedule);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CareScheduleExists(CareSchedule.Id))
+                if (await careScheduleService.GetCareSchedule(CareSchedule.Id) == null)
                 {
                     return NotFound();
                 }
@@ -66,12 +69,13 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 }
             }
 
+            if (!isSuccess)
+            {
+                return BadRequest("Update failed.");
+            }
+
             return RedirectToPage("./Index");
         }
 
-        private bool CareScheduleExists(int id)
-        {
-            return _context.CareSchedules.Any(e => e.Id == id);
-        }
     }
 }

@@ -5,25 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service;
 
 namespace KoiCareSystem.Pages.CareSchdulePage
 {
     public class IndexModel : PageModel
     {
-        private readonly KoiCareSystem.BussinessObject.Models.CarekoisystemContext _context;
+        private readonly CarePropertyService carePropertyService;
 
-        public IndexModel(KoiCareSystem.BussinessObject.Models.CarekoisystemContext context)
+        public IndexModel(CarePropertyService carePropertyService)
         {
-            _context = context;
+            this.carePropertyService = carePropertyService;
         }
 
         public IList<CareProperty> CareProperty { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            CareProperty = await _context.CareProperties
-                .Include(c => c.Schedule).ToListAsync();
+            CareProperty = await carePropertyService.GetCareProperties();
         }
     }
 }

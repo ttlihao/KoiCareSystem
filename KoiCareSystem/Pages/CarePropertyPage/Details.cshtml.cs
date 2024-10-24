@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.BussinessObject;
 
 namespace KoiCareSystem.Pages.CareSchdulePage
 {
     public class DetailsModel : PageModel
     {
-        private readonly KoiCareSystem.BussinessObject.Models.CarekoisystemContext _context;
+        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
 
-        public DetailsModel(KoiCareSystem.BussinessObject.Models.CarekoisystemContext context)
+        public DetailsModel(KoiCareSystem.DAO.CarekoisystemContext context)
         {
             _context = context;
         }

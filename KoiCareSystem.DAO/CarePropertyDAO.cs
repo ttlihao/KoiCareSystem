@@ -1,4 +1,4 @@
-﻿using KoiCareSystem.BussinessObject.Models;
+﻿using KoiCareSystem.BussinessObject;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -58,17 +58,23 @@ namespace KoiCareSystem.DAO
         // Read by Id
         public async Task<CareProperty> GetCarePropertyByIdAsync(int id)
         {
-            if (id > 0)
+            if (id <= 0)
             {
-                return await _context.CareProperties.FirstOrDefaultAsync(c => c.Id == id);
+                return null;
             }
-            return null;
+
+            var careProperty = await _context.CareProperties
+                .Include(cp => cp.Schedule)
+                .FirstOrDefaultAsync(cp => cp.Id == id);
+
+            return careProperty;
         }
+
 
         // Read all
         public async Task<List<CareProperty>> GetCarePropertiesAsync()
         {
-            return await _context.CareProperties.ToListAsync();
+            return await _context.CareProperties.Include(p => p.Schedule).ToListAsync();
         }
 
         // Update

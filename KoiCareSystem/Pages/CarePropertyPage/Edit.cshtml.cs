@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using KoiCareSystem.BussinessObject.Models;
+using KoiCareSystem.BussinessObject;
 
 namespace KoiCareSystem.Pages.CareSchdulePage
 {
     public class EditModel : PageModel
     {
-        private readonly KoiCareSystem.BussinessObject.Models.CarekoisystemContext _context;
+        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
 
-        public EditModel(KoiCareSystem.BussinessObject.Models.CarekoisystemContext context)
+        public EditModel(KoiCareSystem.DAO.CarekoisystemContext context)
         {
             _context = context;
         }
@@ -43,10 +43,10 @@ namespace KoiCareSystem.Pages.CareSchdulePage
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
             _context.Attach(CareProperty).State = EntityState.Modified;
 
