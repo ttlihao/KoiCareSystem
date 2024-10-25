@@ -6,38 +6,38 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
-using KoiCareSystem.DAO;
+using KoiCareSystem.Service;
 
 namespace KoiCareSystem.Pages.OrderPage
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly IOrderService _orderService;
+        private readonly IAccountService _accountService;
 
-        public CreateModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public CreateModel(IOrderService orderService, IAccountService accountService)
         {
-            _context = context;
+            _orderService = orderService;
+            _accountService = accountService;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Password");
+            ViewData["AccountId"] = new SelectList(_accountService.GetAllAccounts(), "Id", "Name");
             return Page();
         }
 
         [BindProperty]
         public Order Order { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Orders.Add(Order);
-            await _context.SaveChangesAsync();
+            _orderService.CreateOrder(Order);
 
             return RedirectToPage("./Index");
         }

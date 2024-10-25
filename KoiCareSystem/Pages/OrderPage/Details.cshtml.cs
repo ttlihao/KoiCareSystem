@@ -7,28 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
+using KoiCareSystem.Service;
 
 namespace KoiCareSystem.Pages.OrderPage
 {
     public class DetailsModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly IOrderService _orderService;
 
-        public DetailsModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public DetailsModel(IOrderService orderService)
         {
-            _context = context;
+            _orderService = orderService;
         }
 
         public Order Order { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var order = await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
+            var order = _orderService.GetOrderById(id);
             if (order == null)
             {
                 return NotFound();

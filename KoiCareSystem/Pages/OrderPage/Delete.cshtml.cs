@@ -7,29 +7,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
+using KoiCareSystem.Service;
 
 namespace KoiCareSystem.Pages.OrderPage
 {
     public class DeleteModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly IOrderService _orderService;
 
-        public DeleteModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public DeleteModel(IOrderService orderService)
         {
-            _context = context;
+            _orderService = orderService;
         }
 
         [BindProperty]
         public Order Order { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var order = await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
+            var order = _orderService.GetOrderById(id);
 
             if (order == null)
             {
@@ -42,21 +38,9 @@ namespace KoiCareSystem.Pages.OrderPage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public IActionResult OnPost(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var order = await _context.Orders.FindAsync(id);
-            if (order != null)
-            {
-                Order = order;
-                _context.Orders.Remove(Order);
-                await _context.SaveChangesAsync();
-            }
-
+            _orderService.DeleteOrder(id);
             return RedirectToPage("./Index");
         }
     }

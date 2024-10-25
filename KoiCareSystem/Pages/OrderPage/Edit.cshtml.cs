@@ -5,74 +5,47 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
-using KoiCareSystem.DAO;
+using KoiCareSystem.Service;
 
 namespace KoiCareSystem.Pages.OrderPage
 {
     public class EditModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly IOrderService _orderService;
+        private readonly IAccountService _accountService;
 
-        public EditModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public EditModel(IOrderService orderService, IAccountService accountService)
         {
-            _context = context;
+            _orderService = orderService;
+            _accountService = accountService;
         }
 
         [BindProperty]
         public Order Order { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var order =  await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
+            var order = _orderService.GetOrderById(id);
             if (order == null)
             {
                 return NotFound();
             }
             Order = order;
-           ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Password");
+            ViewData["AccountId"] = new SelectList(_accountService.GetAllAccounts(), "Id", "Name");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Order).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(Order.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _orderService.UpdateOrder(Order);
 
             return RedirectToPage("./Index");
-        }
-
-        private bool OrderExists(int id)
-        {
-            return _context.Orders.Any(e => e.Id == id);
         }
     }
 }
