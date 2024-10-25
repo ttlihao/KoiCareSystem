@@ -1,0 +1,37 @@
+﻿@page
+@model KoiCareSystem.Pages.CareSchdulePage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CareProperty</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CareProperty.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CareProperty.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CareProperty.Value)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CareProperty.Value)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CareProperty.Schedule)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CareProperty.Schedule.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.CareProperty.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

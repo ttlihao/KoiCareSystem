@@ -7,6 +7,8 @@ using KoiCareSystem.Service.Interfaces;
 using KoiCareSystem.DAO;
 using KoiCareSystem.Repository;
 using KoiCareSystem.Service;
+using KoiCareSystem.Services;
+using KoiCareSystem.BussinessObject;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,12 +23,30 @@ builder.Services.AddScoped<IWaterParameterRepos, WaterParameterRepos>();
 builder.Services.AddScoped<IFeedingService, FeedingService>();
 builder.Services.AddScoped<IFeedingRepos, FeedingRepos>();
 
-builder.Services.AddSession();
-
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+
+builder.Services.AddScoped<IKoiFishRepository, KoiFishRepository>();
+builder.Services.AddScoped<IKoiFishService, KoiFishService>();
+
+builder.Services.AddScoped<IPondService, PondService>();
+builder.Services.AddScoped<IPondRepository, PondRepository>();
+
+builder.Services.AddScoped<ICarePropertyRepository, CarePropertyRepository>();
+builder.Services.AddScoped<ICarePropertyService, CarePropertyService>();
+
+builder.Services.AddScoped<ICareScheduleRepository, CareScheduleRepository>();
+builder.Services.AddScoped<ICareScheduleService, CareScheduleService>();
+
 builder.Services.AddScoped<CarekoisystemContext>();
 builder.Services.AddScoped<AccountDAO>();
+builder.Services.AddScoped<KoiFishDAO>();
+builder.Services.AddScoped<PondDAO>();
+builder.Services.AddScoped<CarePropertyDAO>();
+builder.Services.AddScoped<CareScheduleDAO>();
+builder.Services.AddSession();
+
+
 
 
 
