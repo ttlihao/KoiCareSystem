@@ -101,7 +101,9 @@ namespace KoiCareSystem.DAO
 
         public List<Feeding> GetListFeeding()
         {
-            return dbContext.Feedings.ToList();
+            return dbContext.Feedings
+                    .Where(f => !f.IsDeleted)
+                    .ToList();
         }
     }
 }

@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.FeedingPage
 {
     public class EditModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly IFeedingService feedingService;
 
-        public EditModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public EditModel(IFeedingService feedingService)
         {
-            _context = context;
+            this.feedingService = feedingService;
         }
 
         [BindProperty]
@@ -29,7 +30,7 @@ namespace KoiCareSystem.Pages.FeedingPage
                 return NotFound();
             }
 
-            var feeding =  await _context.Feedings.FirstOrDefaultAsync(m => m.Id == id);
+            var feeding =  feedingService.GetFeedingByPondID(id);
             if (feeding == null)
             {
                 return NotFound();
@@ -47,30 +48,11 @@ namespace KoiCareSystem.Pages.FeedingPage
                 return Page();
             }
 
-            _context.Attach(Feeding).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FeedingExists(Feeding.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            feedingService.UpdateFeeding(Feeding);
 
             return RedirectToPage("./Index");
         }
 
-        private bool FeedingExists(int id)
-        {
-            return _context.Feedings.Any(e => e.Id == id);
-        }
+
     }
 }
