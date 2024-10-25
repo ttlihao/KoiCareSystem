@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CareSchdulePage
 {
     public class DetailsModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private ICarePropertyService carePropertyService;
 
-        public DetailsModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public DetailsModel(ICarePropertyService carePropertyService)
         {
-            _context = context;
+            this.carePropertyService = carePropertyService; 
         }
 
         public CareProperty CareProperty { get; set; } = default!;
@@ -27,7 +28,7 @@ namespace KoiCareSystem.Pages.CareSchdulePage
                 return NotFound();
             }
 
-            var careproperty = await _context.CareProperties.FirstOrDefaultAsync(m => m.Id == id);
+            var careproperty = await carePropertyService.GetCareProperty((int)id);
             if (careproperty == null)
             {
                 return NotFound();

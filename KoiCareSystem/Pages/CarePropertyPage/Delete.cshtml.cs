@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CareSchdulePage
 {
     public class DeleteModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly ICarePropertyService carePropertyService;
 
-        public DeleteModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public DeleteModel(ICarePropertyService carePropertyService)
         {
-            _context = context;
+            this.carePropertyService = carePropertyService;
         }
 
         [BindProperty]
@@ -28,7 +29,7 @@ namespace KoiCareSystem.Pages.CareSchdulePage
                 return NotFound();
             }
 
-            var careproperty = await _context.CareProperties.FirstOrDefaultAsync(m => m.Id == id);
+            var careproperty = await carePropertyService.GetCareProperty((int) id);
 
             if (careproperty == null)
             {
@@ -48,12 +49,11 @@ namespace KoiCareSystem.Pages.CareSchdulePage
                 return NotFound();
             }
 
-            var careproperty = await _context.CareProperties.FindAsync(id);
+            var careproperty = await carePropertyService.GetCareProperty((int)id);
             if (careproperty != null)
             {
                 CareProperty = careproperty;
-                _context.CareProperties.Remove(CareProperty);
-                await _context.SaveChangesAsync();
+                await carePropertyService.RemoveCareProperty(CareProperty.Id);
             }
 
             return RedirectToPage("./Index");

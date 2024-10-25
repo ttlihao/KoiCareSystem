@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CareSchdulePage
 {
     public class EditModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private ICarePropertyService carePropertyService;
+        private ICareScheduleService careScheduleService;
 
-        public EditModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public EditModel(ICarePropertyService carePropertyService, ICareScheduleService careScheduleService)
         {
-            _context = context;
+            this.carePropertyService = carePropertyService;
+            this.careScheduleService = careScheduleService; 
         }
 
         [BindProperty]
@@ -29,13 +32,13 @@ namespace KoiCareSystem.Pages.CareSchdulePage
                 return NotFound();
             }
 
-            var careproperty =  await _context.CareProperties.FirstOrDefaultAsync(m => m.Id == id);
+            var careproperty = await carePropertyService.GetCareProperty((int)id);
             if (careproperty == null)
             {
                 return NotFound();
             }
             CareProperty = careproperty;
-           ViewData["ScheduleId"] = new SelectList(_context.CareSchedules, "Id", "Id");
+           ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
             return Page();
         }
 
@@ -48,15 +51,14 @@ namespace KoiCareSystem.Pages.CareSchdulePage
             //    return Page();
             //}
 
-            _context.Attach(CareProperty).State = EntityState.Modified;
-
+            bool isSuccess;
             try
             {
-                await _context.SaveChangesAsync();
+                isSuccess = await carePropertyService.UpdateCareProperty(CareProperty);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CarePropertyExists(CareProperty.Id))
+                if (await carePropertyService.GetCareProperty(CareProperty.Id) == null)
                 {
                     return NotFound();
                 }
@@ -66,12 +68,12 @@ namespace KoiCareSystem.Pages.CareSchdulePage
                 }
             }
 
-            return RedirectToPage("./Index");
-        }
+            if (!isSuccess)
+            {
+                return BadRequest("Update failed.");
+            }
 
-        private bool CarePropertyExists(int id)
-        {
-            return _context.CareProperties.Any(e => e.Id == id);
+            return RedirectToPage("./Index");
         }
     }
 }

@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CareSchdulePage
 {
     public class IndexModel : PageModel
     {
-        private readonly CarePropertyService carePropertyService;
+        private readonly ICarePropertyService carePropertyService;
 
-        public IndexModel(CarePropertyService carePropertyService)
+        public IndexModel(ICarePropertyService carePropertyService)
         {
             this.carePropertyService = carePropertyService;
         }
