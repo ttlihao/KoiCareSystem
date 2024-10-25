@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
+using KoiCareSystem.Service;
 
 namespace KoiCareSystem.Pages.CareSchedulePage
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private IPondService pondService;
         private ICareScheduleService careScheduleService;
-        public CreateModel(KoiCareSystem.DAO.CarekoisystemContext context, ICareScheduleService careScheduleService)
+        public CreateModel(IPondService pondService, ICareScheduleService careScheduleService)
         {
-            _context = context;
+            this.pondService = pondService;
             this.careScheduleService = careScheduleService;
         }
 

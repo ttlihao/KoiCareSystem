@@ -12,13 +12,11 @@ namespace KoiCareSystem.Pages.CareSchdulePage
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
         private readonly ICarePropertyService carePropertyService;
         private readonly ICareScheduleService careScheduleService;
 
-        public CreateModel(KoiCareSystem.DAO.CarekoisystemContext context, ICarePropertyService carePropertyService, ICareScheduleService careScheduleService)
+        public CreateModel(ICarePropertyService carePropertyService, ICareScheduleService careScheduleService)
         {
-            _context = context;
             this.carePropertyService = carePropertyService; 
             this.careScheduleService = careScheduleService; 
         }
@@ -40,8 +38,7 @@ namespace KoiCareSystem.Pages.CareSchdulePage
             //    return Page();
             //}
 
-            _context.CareProperties.Add(CareProperty);
-            await _context.SaveChangesAsync();
+            await carePropertyService.AddCareProperty(CareProperty);
 
             return RedirectToPage("./Index");
         }
