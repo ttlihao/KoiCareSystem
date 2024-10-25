@@ -1,4 +1,3 @@
-
 using KoiCareSystem.Repository;
 using KoiCareSystem.Repository.Interfaces;
 using KoiCareSystem.Service;
@@ -45,9 +44,6 @@ builder.Services.AddScoped<PondDAO>();
 builder.Services.AddScoped<CarePropertyDAO>();
 builder.Services.AddScoped<CareScheduleDAO>();
 builder.Services.AddSession();
-
-
-
 
 
 var app = builder.Build();
