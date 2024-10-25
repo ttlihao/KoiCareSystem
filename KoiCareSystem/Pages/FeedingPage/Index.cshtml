@@ -32,29 +32,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Feeding) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PondFeedingId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedingTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+        @if(Model.Feeding != null && Model.Feeding.Any())
+        {
+            @foreach (var item in Model.Feeding)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PondFeedingId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FoodType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FeedAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FeedingTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsDeleted)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }else
+           {
+            <p>No water feeding available.</p>
+            }
+            </tbody>
 </table>
