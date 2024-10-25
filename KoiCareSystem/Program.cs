@@ -49,6 +49,10 @@ builder.Services.AddScoped<OrderDAO>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 
+builder.Services.AddScoped<PondKoiFishDAO>();
+builder.Services.AddScoped<IPondKoiFishRepository, PondKoiFishRepository>();
+builder.Services.AddScoped<IPondKoiFishService, PondKoiFishService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

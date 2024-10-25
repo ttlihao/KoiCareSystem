@@ -1,5 +1,6 @@
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
+using KoiCareSystem.Repository.Interfaces;
 
 namespace KoiCareSystem.Repository
 {

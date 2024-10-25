@@ -1,5 +1,5 @@
 using KoiCareSystem.BussinessObject;
-using KoiCareSystem.Repository;
+using KoiCareSystem.Repository.Interfaces;
 
 namespace KoiCareSystem.Service
 {

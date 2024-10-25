@@ -1,6 +1,6 @@
 using KoiCareSystem.BussinessObject;
 
-namespace KoiCareSystem.Repository
+namespace KoiCareSystem.Repository.Interfaces
 {
     public interface IOrderRepository
     {
