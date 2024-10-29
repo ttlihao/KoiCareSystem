@@ -7,7 +7,7 @@ public partial class Feeding
 {
     public int Id { get; set; }
 
-    public int? PondFeedingId { get; set; }
+    public int PondFeedingId { get; set; }
 
     public string? FoodType { get; set; }
 

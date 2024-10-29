@@ -11,22 +11,14 @@ namespace KoiCareSystem.DAO
     {
         private CarekoisystemContext dbContext;
 
-        private static FeedingDAO instance;
 
-        public static FeedingDAO Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new FeedingDAO();
-                }
-                return instance;
-            }
-        }
+        private readonly PondDAO pondDAO;
 
-        public FeedingDAO()
+  
+
+        public FeedingDAO(PondDAO pondDAO)
         {
+            this.pondDAO = pondDAO;
             dbContext = new CarekoisystemContext();
         }
 
@@ -41,7 +33,7 @@ namespace KoiCareSystem.DAO
         public bool AddFeeding(Feeding feeding)
         {
             bool isSuccess = false;
-            PondFeeding feedingPond = PondFeedingDAO.Instance.GetPondFeedingId(feeding.PondFeedingId);
+            Pond feedingPond = pondDAO.GetPondById(feeding.PondFeedingId);
           
             Feeding feed = GetFeedingByPondID(feeding.Id);
             try

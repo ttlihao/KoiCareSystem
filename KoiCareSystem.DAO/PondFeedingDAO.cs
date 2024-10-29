@@ -35,5 +35,9 @@ namespace KoiCareSystem.DAO
             return dbContext.PondFeedings.SingleOrDefault(m => m.Id.Equals(id));
         }
 
+        public List<PondFeeding> GetListPondFeeding() {
+            return dbContext.PondFeedings.ToList();
+        }
+
     }
 }

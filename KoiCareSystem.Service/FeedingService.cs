@@ -11,11 +11,11 @@ namespace KoiCareSystem.Service.Interfaces
 {
     public class FeedingService : IFeedingService
     {
-        private FeedingRepos feedingRepos;
+        private IFeedingRepos feedingRepos;
 
-        public FeedingService()
+        public FeedingService(IFeedingRepos feedingRepos)
         {
-            feedingRepos = new FeedingRepos();
+            this.feedingRepos = feedingRepos;
         }
         public bool AddFeeding(Feeding feeding)
         {

@@ -38,12 +38,16 @@ builder.Services.AddScoped<ICarePropertyService, CarePropertyService>();
 builder.Services.AddScoped<ICareScheduleRepository, CareScheduleRepository>();
 builder.Services.AddScoped<ICareScheduleService, CareScheduleService>();
 
+builder.Services.AddScoped<IPondFeedingRepos, PondFeedingRepos>();
+builder.Services.AddScoped<IPondFeedingService, PondFeedingService>();
+
 builder.Services.AddScoped<CarekoisystemContext>();
 builder.Services.AddScoped<AccountDAO>();
 builder.Services.AddScoped<KoiFishDAO>();
 builder.Services.AddScoped<PondDAO>();
 builder.Services.AddScoped<CarePropertyDAO>();
 builder.Services.AddScoped<CareScheduleDAO>();
+builder.Services.AddScoped<FeedingDAO>();
 builder.Services.AddSession();
 
 
