@@ -6,21 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CareSchdulePage
 {
     public class CreateModel : PageModel
     {
         private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly ICarePropertyService carePropertyService;
+        private readonly ICareScheduleService careScheduleService;
 
-        public CreateModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public CreateModel(KoiCareSystem.DAO.CarekoisystemContext context, ICarePropertyService carePropertyService, ICareScheduleService careScheduleService)
         {
             _context = context;
+            this.carePropertyService = carePropertyService; 
+            this.careScheduleService = careScheduleService; 
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-        ViewData["ScheduleId"] = new SelectList(_context.CareSchedules, "Id", "Id");
+        ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
             return Page();
         }
 
