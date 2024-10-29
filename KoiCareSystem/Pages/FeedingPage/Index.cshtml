@@ -1,0 +1,60 @@
+﻿@page
+@model KoiCareSystem.Pages.FeedingPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Feeding[0].PondFeedingId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feeding[0].FoodType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feeding[0].FeedAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feeding[0].FeedingTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feeding[0].IsDeleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Feeding) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PondFeedingId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedingTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
