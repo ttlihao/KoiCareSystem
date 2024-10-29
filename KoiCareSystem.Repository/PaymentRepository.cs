@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using KoiCareSystem.BussinessObject.Models;
+﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
 
 namespace KoiCareSystem.Repository

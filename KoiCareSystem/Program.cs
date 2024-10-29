@@ -38,12 +38,24 @@ builder.Services.AddScoped<ICarePropertyService, CarePropertyService>();
 builder.Services.AddScoped<ICareScheduleRepository, CareScheduleRepository>();
 builder.Services.AddScoped<ICareScheduleService, CareScheduleService>();
 
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
+builder.Services.AddScoped<IFoodItemService, FoodItemService>();
+
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+
 builder.Services.AddScoped<CarekoisystemContext>();
 builder.Services.AddScoped<AccountDAO>();
 builder.Services.AddScoped<KoiFishDAO>();
 builder.Services.AddScoped<PondDAO>();
 builder.Services.AddScoped<CarePropertyDAO>();
 builder.Services.AddScoped<CareScheduleDAO>();
+builder.Services.AddScoped<PaymentDAO>();
+builder.Services.AddScoped<FoodItemDAO>();
+builder.Services.AddScoped<OrderDetailDAO>();
 builder.Services.AddSession();
 
 

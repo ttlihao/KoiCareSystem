@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
-using KoiCareSystem.BussinessObject.Models;
+﻿using KoiCareSystem.BussinessObject;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace KoiCareSystem.Service
+namespace KoiCareSystem.Service.Interfaces
 {
     public interface IFoodItemService
     {
-        List<FoodItem> GetAllFoodItems();
-        FoodItem GetFoodItemById(int id);
-        void CreateFoodItem(FoodItem foodItem);
-        void UpdateFoodItem(FoodItem foodItem);
-        void DeleteFoodItem(int id);
+        Task<List<FoodItem>> GetAllFoodItemsAsync();
+        Task<FoodItem> GetFoodItemByIdAsync(int id);
+        Task CreateFoodItemAsync(FoodItem foodItem);
+        Task UpdateFoodItemAsync(FoodItem foodItem);
+        Task DeleteFoodItemAsync(int id);
     }
 }

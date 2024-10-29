@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace KoiCareSystem.Pages.FoodItemPage
 {
-    public class EditModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly IFoodItemService _foodItemService;
 
-        public EditModel(IFoodItemService foodItemService)
+        public DeleteModel(IFoodItemService foodItemService)
         {
             _foodItemService = foodItemService;
         }
@@ -34,14 +34,14 @@ namespace KoiCareSystem.Pages.FoodItemPage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            await _foodItemService.UpdateFoodItemAsync(FoodItem);
+            await _foodItemService.DeleteFoodItemAsync(id.Value);
             return RedirectToPage("./Index");
         }
     }

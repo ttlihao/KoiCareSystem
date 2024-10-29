@@ -1,42 +1,51 @@
 ﻿using System.Collections.Generic;
-using KoiCareSystem.BussinessObject.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
+using Microsoft.EntityFrameworkCore;
 
 namespace KoiCareSystem.Repository
 {
     public class OrderDetailRepository : IOrderDetailRepository
     {
-        private readonly OrderDetailDAO _orderDetailDAO;
+        private readonly CarekoisystemContext _context;
 
-        // Constructor
-        public OrderDetailRepository()
+        public OrderDetailRepository(CarekoisystemContext context)
         {
-            _orderDetailDAO = new OrderDetailDAO(); // You can use dependency injection here if needed
+            _context = context;
         }
 
-        public void CreateOrderDetail(OrderDetail orderDetail)
+        public async Task<List<OrderDetail>> GetAllOrderDetailsAsync()
         {
-            _orderDetailDAO.CreateOrderDetail(orderDetail);
+            return await _context.OrderDetails.ToListAsync();
         }
 
-        public List<OrderDetail> GetAllOrderDetails()
+        public async Task<OrderDetail> GetOrderDetailByIdAsync(int id)
         {
-            return _orderDetailDAO.GetAllOrderDetails();
+            return await _context.OrderDetails.FindAsync(id);
         }
 
-        public OrderDetail GetOrderDetailById(int id)
+        public async Task CreateOrderDetailAsync(OrderDetail orderDetail)
         {
-            return _orderDetailDAO.GetOrderDetailById(id);
+            await _context.OrderDetails.AddAsync(orderDetail);
+            await _context.SaveChangesAsync();
         }
 
-        public void UpdateOrderDetail(OrderDetail orderDetail)
+        public async Task UpdateOrderDetailAsync(OrderDetail orderDetail)
         {
-            _orderDetailDAO.UpdateOrderDetail(orderDetail);
+            _context.OrderDetails.Update(orderDetail);
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteOrderDetail(int id)
+        public async Task DeleteOrderDetailAsync(int id)
         {
-            _orderDetailDAO.DeleteOrderDetail(id);
+            var orderDetail = await _context.OrderDetails.FindAsync(id);
+            if (orderDetail != null)
+            {
+                _context.OrderDetails.Remove(orderDetail);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using KoiCareSystem.BussinessObject.Models;
+﻿using KoiCareSystem.BussinessObject;
+
 namespace KoiCareSystem.DAO
 {
     public class FoodItemDAO

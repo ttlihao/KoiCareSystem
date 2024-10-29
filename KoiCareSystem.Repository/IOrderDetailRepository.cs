@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
-using KoiCareSystem.BussinessObject.Models;
+using System.Threading.Tasks;
+using KoiCareSystem.BussinessObject;
 
 namespace KoiCareSystem.Repository
 {
     public interface IOrderDetailRepository
     {
-        List<OrderDetail> GetAllOrderDetails();
-        OrderDetail GetOrderDetailById(int id);
-        void CreateOrderDetail(OrderDetail orderDetail);
-        void UpdateOrderDetail(OrderDetail orderDetail);
-        void DeleteOrderDetail(int id);
+        Task<List<OrderDetail>> GetAllOrderDetailsAsync();
+        Task<OrderDetail> GetOrderDetailByIdAsync(int id);
+        Task CreateOrderDetailAsync(OrderDetail orderDetail);
+        Task UpdateOrderDetailAsync(OrderDetail orderDetail);
+        Task DeleteOrderDetailAsync(int id);
     }
 }

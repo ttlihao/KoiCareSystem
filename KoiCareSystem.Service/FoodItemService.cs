@@ -1,49 +1,51 @@
-﻿using System.Collections.Generic;
-using KoiCareSystem.BussinessObject.Models;
-using KoiCareSystem.Repository;
+﻿using KoiCareSystem.BussinessObject;
+using KoiCareSystem.DAO;
+using KoiCareSystem.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KoiCareSystem.Service
 {
     public class FoodItemService : IFoodItemService
     {
-        private readonly IFoodItemRepository _foodItemRepository;
+        private readonly CarekoisystemContext _context;
 
-        // Constructor
-        public FoodItemService(IFoodItemRepository foodItemRepository)
+        public FoodItemService(CarekoisystemContext context)
         {
-            _foodItemRepository = foodItemRepository;
+            _context = context;
         }
 
-        // Create a new FoodItem
-        public void CreateFoodItem(FoodItem foodItem)
+        public async Task<List<FoodItem>> GetAllFoodItemsAsync()
         {
-            // You can include business logic or validation here before calling the repository
-            _foodItemRepository.CreateFoodItem(foodItem);
+            return await _context.FoodItems.ToListAsync();
         }
 
-        // Retrieve all FoodItems
-        public List<FoodItem> GetAllFoodItems()
+        public async Task<FoodItem> GetFoodItemByIdAsync(int id)
         {
-            return _foodItemRepository.GetAllFoodItems();
+            return await _context.FoodItems.FindAsync(id);
         }
 
-        // Retrieve a FoodItem by Id
-        public FoodItem GetFoodItemById(int id)
+        public async Task CreateFoodItemAsync(FoodItem foodItem)
         {
-            return _foodItemRepository.GetFoodItemById(id);
+            await _context.FoodItems.AddAsync(foodItem);
+            await _context.SaveChangesAsync();
         }
 
-        // Update a FoodItem
-        public void UpdateFoodItem(FoodItem foodItem)
+        public async Task UpdateFoodItemAsync(FoodItem foodItem)
         {
-            // You can include business logic or validation here before calling the repository
-            _foodItemRepository.UpdateFoodItem(foodItem);
+            _context.FoodItems.Update(foodItem);
+            await _context.SaveChangesAsync();
         }
 
-        // Delete (soft delete) a FoodItem
-        public void DeleteFoodItem(int id)
+        public async Task DeleteFoodItemAsync(int id)
         {
-            _foodItemRepository.DeleteFoodItem(id);
+            var foodItem = await _context.FoodItems.FindAsync(id);
+            if (foodItem != null)
+            {
+                _context.FoodItems.Remove(foodItem);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

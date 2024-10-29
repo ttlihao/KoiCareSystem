@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace KoiCareSystem.Pages.FoodItemPage
 {
-    public class EditModel : PageModel
+    public class CreateModel : PageModel
     {
         private readonly IFoodItemService _foodItemService;
 
-        public EditModel(IFoodItemService foodItemService)
+        public CreateModel(IFoodItemService foodItemService)
         {
             _foodItemService = foodItemService;
         }
@@ -18,19 +18,8 @@ namespace KoiCareSystem.Pages.FoodItemPage
         [BindProperty]
         public FoodItem FoodItem { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            FoodItem = await _foodItemService.GetFoodItemByIdAsync(id.Value);
-
-            if (FoodItem == null)
-            {
-                return NotFound();
-            }
             return Page();
         }
 
@@ -41,7 +30,7 @@ namespace KoiCareSystem.Pages.FoodItemPage
                 return Page();
             }
 
-            await _foodItemService.UpdateFoodItemAsync(FoodItem);
+            await _foodItemService.CreateFoodItemAsync(FoodItem);
             return RedirectToPage("./Index");
         }
     }

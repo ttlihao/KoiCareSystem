@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using KoiCareSystem.BussinessObject.Models;
+using System.Threading.Tasks;
+using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Repository;
 
 namespace KoiCareSystem.Service
@@ -8,37 +9,34 @@ namespace KoiCareSystem.Service
     {
         private readonly IOrderDetailRepository _orderDetailRepository;
 
-        // Constructor
         public OrderDetailService(IOrderDetailRepository orderDetailRepository)
         {
             _orderDetailRepository = orderDetailRepository;
         }
 
-        public void CreateOrderDetail(OrderDetail orderDetail)
+        public async Task<List<OrderDetail>> GetAllOrderDetailsAsync()
         {
-            // Add any business logic here
-            _orderDetailRepository.CreateOrderDetail(orderDetail);
+            return await _orderDetailRepository.GetAllOrderDetailsAsync();
         }
 
-        public List<OrderDetail> GetAllOrderDetails()
+        public async Task<OrderDetail> GetOrderDetailByIdAsync(int id)
         {
-            return _orderDetailRepository.GetAllOrderDetails();
+            return await _orderDetailRepository.GetOrderDetailByIdAsync(id);
         }
 
-        public OrderDetail GetOrderDetailById(int id)
+        public async Task CreateOrderDetailAsync(OrderDetail orderDetail)
         {
-            return _orderDetailRepository.GetOrderDetailById(id);
+            await _orderDetailRepository.CreateOrderDetailAsync(orderDetail);
         }
 
-        public void UpdateOrderDetail(OrderDetail orderDetail)
+        public async Task UpdateOrderDetailAsync(OrderDetail orderDetail)
         {
-            // Add any business logic here
-            _orderDetailRepository.UpdateOrderDetail(orderDetail);
+            await _orderDetailRepository.UpdateOrderDetailAsync(orderDetail);
         }
 
-        public void DeleteOrderDetail(int id)
+        public async Task DeleteOrderDetailAsync(int id)
         {
-            _orderDetailRepository.DeleteOrderDetail(id);
+            await _orderDetailRepository.DeleteOrderDetailAsync(id);
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using KoiCareSystem.BussinessObject.Models;
+﻿using KoiCareSystem.BussinessObject;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KoiCareSystem.Service
 {
@@ -10,5 +11,9 @@ namespace KoiCareSystem.Service
         void CreatePayment(Payment payment);
         void UpdatePayment(Payment payment);
         void DeletePayment(int id);
+
+        // Thêm phương thức bất đồng bộ
+        Task<IList<Payment>> GetAllPaymentsAsync();
+        void AddPayment(Payment payment);
     }
 }
