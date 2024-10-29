@@ -33,12 +33,23 @@ namespace KoiCareSystem.DAO
                 throw new ArgumentException("Account not found.");
             }
             pond.Account = account;
-
+            
             // Thêm pond vào cơ sở dữ liệu
             _context.Ponds.Add(pond);
 
-            // Lưu thay đổi vào cơ sở dữ liệu
             _context.SaveChanges();
+
+            //Tạo PondFeeding cùng với Pond
+
+            PondFeeding pondFeeding = new PondFeeding();
+            
+            pondFeeding.PondId = pond.Id;
+
+            _context.PondFeedings.Add(pondFeeding);
+
+            _context.SaveChanges();
+            
+           
         }
 
 

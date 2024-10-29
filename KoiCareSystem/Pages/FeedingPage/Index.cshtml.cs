@@ -23,7 +23,7 @@ namespace KoiCareSystem.Pages.FeedingPage
 
         public async Task OnGetAsync()
         {
-            feedingService.GetListFeeding();
+            Feeding = feedingService.GetListFeeding();
         }
     }
 }

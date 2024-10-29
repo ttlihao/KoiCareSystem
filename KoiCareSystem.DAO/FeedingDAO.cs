@@ -37,15 +37,27 @@ namespace KoiCareSystem.DAO
 
 
 
+
         public bool AddFeeding(Feeding feeding)
         {
             bool isSuccess = false;
-            Feeding feed = GetFeedingByPondID(feeding.PondFeedingId);
+            PondFeeding feedingPond = PondFeedingDAO.Instance.GetPondFeedingId(feeding.PondFeedingId);
+          
+            Feeding feed = GetFeedingByPondID(feeding.Id);
             try
             {
+                if (feedingPond == null)
+                {
+                    throw new Exception("Plese choose pond before add feeding time!");
+                }
                 if (feed == null)
                 {
-                    dbContext.Feedings.Add(feed);
+                    dbContext.Feedings.Add(feeding);
+                    dbContext.SaveChanges();
+
+                    PondFeeding pondFeeding = new PondFeeding();
+                    pondFeeding.FeedingId = feeding.Id;
+                    dbContext.PondFeedings.Add(pondFeeding);
                     dbContext.SaveChanges();
                     isSuccess = true;
                 }
@@ -60,7 +72,7 @@ namespace KoiCareSystem.DAO
         public bool DeleteWaterParameter(Feeding feeding)
         {
             bool isSuccess = false;
-            Feeding feed = GetFeedingByPondID(feeding.PondFeedingId);
+            Feeding feed = GetFeedingByPondID(feeding.Id);
             try
             {
                 if (feed != null)
@@ -102,8 +114,8 @@ namespace KoiCareSystem.DAO
         public List<Feeding> GetListFeeding()
         {
             return dbContext.Feedings
-                    .Where(f => !f.IsDeleted)
-                    .ToList();
+            .Where(f => f.IsDeleted == false)
+            .ToList();
         }
     }
 }
