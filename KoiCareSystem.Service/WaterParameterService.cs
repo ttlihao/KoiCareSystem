@@ -1,5 +1,6 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Repository;
+using KoiCareSystem.Repository.Interfaces;
 using KoiCareSystem.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace KoiCareSystem.Service
 {
     public class WaterParameterService : IWaterParameterService
     {
-        private WaterParameterRepos waterParameterRepos;
+        private IWaterParameterRepos waterParameterRepos;
 
         public WaterParameterService()
         {

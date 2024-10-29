@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.FeedingPage
 {
     public class DetailsModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly IFeedingService feedingService;
 
-        public DetailsModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public DetailsModel(IFeedingService feedingService)
         {
-            _context = context;
+            this.feedingService = feedingService;
         }
 
         public Feeding Feeding { get; set; } = default!;
@@ -27,7 +28,7 @@ namespace KoiCareSystem.Pages.FeedingPage
                 return NotFound();
             }
 
-            var feeding = await _context.Feedings.FirstOrDefaultAsync(m => m.Id == id);
+            var feeding = feedingService.GetFeedingByPondID(id);
             if (feeding == null)
             {
                 return NotFound();

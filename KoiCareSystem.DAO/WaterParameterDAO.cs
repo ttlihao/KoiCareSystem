@@ -102,7 +102,9 @@ namespace KoiCareSystem.DAO
 
         public List<WaterParameter> GetListWaterParameters()
         {
-            return dbContext.WaterParameters.ToList();
+            return dbContext.WaterParameters
+                    .Where(f => !f.IsDeleted)
+                    .ToList();
         }
     }
 }

@@ -11,13 +11,20 @@ namespace KoiCareSystem.Repository
 {
     public class FeedingRepos : IFeedingRepos
     {
-        public bool AddFeeding(Feeding feeding) => FeedingDAO.Instance.AddFeeding(feeding);
+        private readonly FeedingDAO feedingDAO;
 
-        public bool DeleteFeeding(Feeding feeding) => FeedingDAO.Instance.DeleteWaterParameter(feeding);
-        public Feeding GetFeedingByPondID(int? PondId) => FeedingDAO.Instance.GetFeedingByPondID(PondId);
+        public FeedingRepos(FeedingDAO feedingDAO)
+        {
+            this.feedingDAO = feedingDAO;
+        }
 
-        public List<Feeding> GetListFeeding() => FeedingDAO.Instance.GetListFeeding();
+        public bool AddFeeding(Feeding feeding) => feedingDAO.AddFeeding(feeding);
 
-        public bool UpdateFeeding(Feeding feeding) => FeedingDAO.Instance.UpdateFeeding(feeding);
+        public bool DeleteFeeding(Feeding feeding) => feedingDAO.DeleteWaterParameter(feeding);
+        public Feeding GetFeedingByPondID(int? PondId) => feedingDAO.GetFeedingByPondID(PondId);
+
+        public List<Feeding> GetListFeeding() => feedingDAO.GetListFeeding();
+
+        public bool UpdateFeeding(Feeding feeding) => feedingDAO.UpdateFeeding(feeding);
     }
 }

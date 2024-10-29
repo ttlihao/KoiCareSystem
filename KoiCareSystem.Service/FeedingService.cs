@@ -1,5 +1,6 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Repository;
+using KoiCareSystem.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,11 @@ namespace KoiCareSystem.Service.Interfaces
 {
     public class FeedingService : IFeedingService
     {
-        private FeedingRepos feedingRepos;
+        private IFeedingRepos feedingRepos;
 
-        public FeedingService()
+        public FeedingService(IFeedingRepos feedingRepos)
         {
-            feedingRepos = new FeedingRepos();
+            this.feedingRepos = feedingRepos;
         }
         public bool AddFeeding(Feeding feeding)
         {
