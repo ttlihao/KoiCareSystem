@@ -38,9 +38,6 @@ namespace KoiCareSystem.Pages.AccountPage
 
             try
             {
-                // Hash the password before saving
-                Account.Password = HashPassword(Account.Password);
-
                 // Call the service to add the account
                 _accountService.Register(Account); // Assuming Register is the method in the service
 
@@ -55,14 +52,14 @@ namespace KoiCareSystem.Pages.AccountPage
 
         }
 
-        private string HashPassword(string password)
-        {
-            using (var sha256 = System.Security.Cryptography.SHA256.Create())
-            {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(password);
-                var hash = sha256.ComputeHash(bytes);
-                return Convert.ToBase64String(hash);
-            }
-        }
+        //private string HashPassword(string password)
+        //{
+        //    using (var sha256 = System.Security.Cryptography.SHA256.Create())
+        //    {
+        //        var bytes = System.Text.Encoding.UTF8.GetBytes(password);
+        //        var hash = sha256.ComputeHash(bytes);
+        //        return Convert.ToBase64String(hash);
+        //    }
+        //}
     }
 }
