@@ -5,66 +5,63 @@
 }
 
 <img src="/images/koi-background.jpg" class="background-image" alt="Hình nền chăm sóc cá koi" />
-<div class="text-center">
-    <h1 class="display-4">Chào Mừng Đến Với Dịch Vụ Chăm Sóc Cá Koi</h1>
-    <p class="lead">Chúng tôi cung cấp dịch vụ chăm sóc cá koi chuyên nghiệp ngay tại nhà bạn!</p>
-
-    <div class="mt-5">
-        <h2>Về Dịch Vụ</h2>
-        <p>
-            Dịch vụ chăm sóc cá koi của chúng tôi bao gồm tất cả những gì bạn cần để giữ cho cá koi của bạn luôn khỏe mạnh và hạnh phúc.
-            Chúng tôi cung cấp dịch vụ vệ sinh hồ cá, kiểm tra chất lượng nước, cho ăn đúng cách và các dịch vụ bảo trì khác.
-        </p>
-
-        <h2>Lợi Ích Khi Sử Dụng Dịch Vụ Của Chúng Tôi</h2>
-        <ul class="list-unstyled">
-            <li>✔️ Chuyên gia có kinh nghiệm trong việc chăm sóc cá koi</li>
-            <li>✔️ Dịch vụ tận nơi, tiết kiệm thời gian cho bạn</li>
-            <li>✔️ Sử dụng sản phẩm và thiết bị an toàn, chất lượng cao</li>
-            <li>✔️ Đảm bảo sức khỏe và sự phát triển tốt nhất cho cá koi của bạn</li>
-        </ul>
-
-        <h2>Liên Hệ Với Chúng Tôi</h2>
-        <p>
-            Nếu bạn muốn biết thêm thông tin hoặc đặt lịch hẹn, hãy liên hệ với chúng tôi qua:
-        </p>
-        <p>
-            📞 Điện thoại: <strong>(123) 456-7890</strong><br />
-            📧 Email: <strong>info@koihealthcare.com</strong><br />
-            🌐 Website: <strong><a href="https://www.koihealthcare.com " style="color: #FFD700;">www.koihealthcare.com</a></strong>
-        </p>
-    </div>
+<div class="content-container">
+    <h1 class="main-title">Chăm Sóc Cá Koi Chuyên Nghiệp Tại Nhà</h1>
+    <h3 class="sub-title">Đảm bảo sức khỏe và sự phát triển tốt nhất cho cá koi của bạn.</h3>
+    <button class="btn-book-now" onclick="window.location.href='#'">Book Now</button>
 </div>
 
 <style>
     body {
         margin: 0;
-        font-family: Arial, sans-serif; 
-        color: white; 
+        font-family: Arial, sans-serif;
+        color: white;
+        height: 100vh;
+        overflow: hidden;
     }
 
     .background-image {
-        position: fixed; 
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -1; 
-        object-fit: cover; 
+        z-index: -1;
+        object-fit: cover;
     }
 
-    .text-center {
-        position: relative; 
-        z-index: 1; /
-        text-align: center; 
+    .content-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
     }
 
-    .display-4 {
-        color: #FFD700; 
+    .main-title {
+        font-size: 3rem;
+        color: white; /* Updated color */
+        margin-bottom: 20px;
     }
 
-    .lead {
+    .sub-title {
+        font-size: 1.5rem;
+        color: #f0f0f0;
+        margin-bottom: 30px;
+    }
+
+    .btn-book-now {
+        padding: 12px 24px;
+        background-color: #007bff; /* Blue background */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
         font-size: 1.25rem;
-        color: #f0f0f0; 
+    }
+
+    .btn-book-now:hover {
+        background-color: #0056b3; /* Darker blue on hover */
     }
 </style>
