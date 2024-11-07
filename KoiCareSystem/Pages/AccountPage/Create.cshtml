@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Account.Username" class="control-label"></label>
@@ -39,19 +39,14 @@
                 <span asp-validation-for="Account.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Account.Avatar" class="control-label"></label>
-                <input asp-for="Account.Avatar" class="form-control" />
-                <span asp-validation-for="Account.Avatar" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Account.Role" class="control-label"></label>
                 <input asp-for="Account.Role" class="form-control" />
                 <span asp-validation-for="Account.Role" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Account.Status" class="control-label"></label>
-                <input asp-for="Account.Status" class="form-control" />
-                <span asp-validation-for="Account.Status" class="text-danger"></span>
+                <label asp-for="AvatarFile" class="control-label"></label>
+                <input type="file" asp-for="AvatarFile" class="form-control" />
+                <span asp-validation-for="AvatarFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

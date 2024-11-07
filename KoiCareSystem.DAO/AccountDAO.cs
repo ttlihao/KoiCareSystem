@@ -118,7 +118,7 @@ namespace KoiCareSystem.DAO
 
                     // Cập nhật thông tin tài khoản
                     existingAccount.Username = account.Username;
-                    existingAccount.Password = HashPassword(account.Password); // Hash the new password
+                    existingAccount.Password = account.Password;
                     existingAccount.Name = account.Name;
                     existingAccount.Email = account.Email;
                     existingAccount.Address = account.Address;

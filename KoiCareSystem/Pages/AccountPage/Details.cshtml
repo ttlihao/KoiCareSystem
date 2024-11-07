@@ -41,12 +41,21 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Account.Address)
         </dd>
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Account.Avatar)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Account.Avatar)
+            @if (!string.IsNullOrEmpty(Model.Account.Avatar))
+            {
+                <img src="@Model.Account.Avatar" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%;" />
+            }
+            else
+            {
+                <span>No avatar available</span>
+            }
         </dd>
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Account.Role)
         </dt>
