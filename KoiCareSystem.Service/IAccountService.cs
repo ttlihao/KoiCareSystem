@@ -12,6 +12,9 @@ namespace KoiCareSystem.Service
 
         public Account? GetAccountById(int id);
         public Account? GetAccountByUsername(string username);
+        public Account? GetAccountByEmail(string email);
+
+        public Account? CheckLogin(string email, string password);
         public List<Account> GetAllAccounts();
         public void Register(Account account);
         public void UpdateAccount(Account account);

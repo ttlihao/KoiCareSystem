@@ -17,10 +17,18 @@ namespace KoiCareSystem.Repository
             _accountDAO = accountDAO;
         }
 
+        public Account? CheckLogin(string email, string password)
+        {
+           return _accountDAO.CheckLogin(email, password);
+        }
+
         public void DeleteAccount(int accountId)
         {
             _accountDAO.DeleteAccount(accountId);   
         }
+
+        public Account? GetAccountByEmail(string email) => _accountDAO.GetAccountByEmail(email);
+
 
         public Account? GetAccountById(int id) => _accountDAO.GetAccountById(id);
 
