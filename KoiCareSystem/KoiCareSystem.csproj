@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\images\download.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\KoiCareSystem.Service\KoiCareSystem.Service.csproj" />
   </ItemGroup>
 
