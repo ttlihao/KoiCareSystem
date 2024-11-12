@@ -20,33 +20,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <style>
-        /* Đặt hình nền cho body */
-        body {
-            background-image: url('/images/background-History.jpg'); /* Đường dẫn hình nền */
-            background-size: cover; /* Làm cho hình nền phủ đầy màn hình */
-            background-position: center; /* Căn giữa hình nền */
-            background-attachment: fixed; /* Đảm bảo hình nền không di chuyển khi cuộn trang */
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Custom CSS cho Tiêu đề */
+        /* Custom CSS for Title */
         .page-title {
-            font-size: 22px;
-            text-align: left;
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 30px;
+            font-size: 22px; /* Slightly larger title */
+            text-align: left; /* Left align */
+            font-weight: bold; /* Bold text */
+            color: #007bff; /* Blue color */
+            margin-bottom: 30px; /* Margin below the title */
         }
 
-        /* Card style cho phần chứa */
+        /* Card style for the container */
         .payment-history-card {
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            background-color: rgba(255, 255, 255, 0.8); /* Nền card hơi trong suốt để dễ nhìn */
         }
 
         /* Table styling */
@@ -71,13 +59,13 @@
 </head>
 <body>
     <div class="container mt-5">
-        <!-- Card cho phần lịch sử thanh toán -->
+        <!-- Card for the entire payment history section -->
         <div class="card payment-history-card">
-            <!-- Tiêu đề và Hiển thị Tên người dùng -->
+            <!-- Title and Username Display -->
             <h2 class="page-title">Payment History for @Model.UserName</h2>
             <hr>
 
-            <!-- Bảng Lịch sử Thanh toán -->
+            <!-- Payment History Table -->
             @if (Model.Payments != null && Model.Payments.Count > 0)
             {
                 <table class="table payment-history-table table-bordered table-striped">
@@ -104,11 +92,11 @@
             }
             else
             {
-                <!-- Thông báo khi không có lịch sử thanh toán -->
+                <!-- Message when there is no payment history -->
                 <p class="text-center mt-4 text-muted">No payment history available for this user.</p>
             }
 
-            <!-- Nút Quay lại -->
+            <!-- Back Button -->
             <div class="text-center mt-4">
                 <a class="btn btn-primary back-btn" href="/Index">Back</a>
             </div>
