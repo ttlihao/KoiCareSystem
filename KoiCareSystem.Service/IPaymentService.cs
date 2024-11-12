@@ -15,5 +15,8 @@ namespace KoiCareSystem.Service
         // Thêm phương thức bất đồng bộ
         Task<IList<Payment>> GetAllPaymentsAsync();
         void AddPayment(Payment payment);
+
+        List<Payment> GetHistoryPayments(int orderId);
+        List<Payment> GetPaymentsByUserId(int userId);
     }
 }
