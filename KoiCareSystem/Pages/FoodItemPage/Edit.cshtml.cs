@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 
-namespace KoiCareSystem.Pages.FeedingPage
+namespace KoiCareSystem.Pages.FoodItemPage
 {
     public class EditModel : PageModel
     {

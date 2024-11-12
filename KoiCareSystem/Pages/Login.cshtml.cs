@@ -3,7 +3,7 @@ using KoiCareSystem.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace KoiCareSystem.Pages.AccountPage
+namespace KoiCareSystem.Pages
 {
     public class LoginModel : PageModel
     {

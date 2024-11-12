@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CareSchdulePage
+namespace KoiCareSystem.Pages.CarePropertyPage
 {
     public class DetailsModel : PageModel
     {
@@ -16,7 +16,7 @@ namespace KoiCareSystem.Pages.CareSchdulePage
 
         public DetailsModel(ICarePropertyService carePropertyService)
         {
-            this.carePropertyService = carePropertyService; 
+            this.carePropertyService = carePropertyService;
         }
 
         public CareProperty CareProperty { get; set; } = default!;

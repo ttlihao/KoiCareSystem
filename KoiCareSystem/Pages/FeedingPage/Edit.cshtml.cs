@@ -23,14 +23,14 @@ namespace KoiCareSystem.Pages.FeedingPage
         [BindProperty]
         public Feeding Feeding { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public  IActionResult OnGet(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var feeding =  feedingService.GetFeedingByPondID(id);
+            var feeding = feedingService.GetFeedingByPondID(id);
             if (feeding == null)
             {
                 return NotFound();
@@ -52,7 +52,5 @@ namespace KoiCareSystem.Pages.FeedingPage
 
             return RedirectToPage("./Index");
         }
-
-
     }
 }
