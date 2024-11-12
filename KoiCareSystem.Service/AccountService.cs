@@ -17,12 +17,22 @@ namespace KoiCareSystem.Service
             _accountRepository = accountRepository;
         }
 
+        public Account? CheckLogin(string email, string password)
+        {
+            return _accountRepository.CheckLogin(email, password);
+        }
+
         public void DeleteAccount(int accountId)
         {
             _accountRepository.DeleteAccount(accountId);
         }
 
-        public Account? GetAccountById(int id) => _accountRepository?.GetAccountById(id);
+        public Account? GetAccountByEmail(string email)
+        {
+            return _accountRepository.GetAccountByEmail(email);
+        }
+
+        public Account GetAccountById(int id) => _accountRepository?.GetAccountById(id);
 
         public Account? GetAccountByUsername(string username)
         {

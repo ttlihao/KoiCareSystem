@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.FeedingPage
 {
     public class DeleteModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly IFeedingService feedingService;
 
-        public DeleteModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public DeleteModel(IFeedingService feedingService)
         {
-            _context = context;
+            this.feedingService = feedingService;
         }
 
         [BindProperty]
@@ -28,7 +29,7 @@ namespace KoiCareSystem.Pages.FeedingPage
                 return NotFound();
             }
 
-            var feeding = await _context.Feedings.FirstOrDefaultAsync(m => m.Id == id);
+            var feeding = feedingService.GetFeedingByPondID(id);
 
             if (feeding == null)
             {
@@ -48,12 +49,11 @@ namespace KoiCareSystem.Pages.FeedingPage
                 return NotFound();
             }
 
-            var feeding = await _context.Feedings.FindAsync(id);
+            var feeding = feedingService.GetFeedingByPondID(id);
             if (feeding != null)
             {
                 Feeding = feeding;
-                _context.Feedings.Remove(Feeding);
-                await _context.SaveChangesAsync();
+                feedingService.DeleteFeeding(feeding);
             }
 
             return RedirectToPage("./Index");

@@ -14,20 +14,25 @@ namespace KoiCareSystem.Pages.AccountPage
     public class CreateModel : PageModel
     {
         private readonly IAccountService _accountService;
-        public CreateModel(IAccountService accountService)
+        private readonly IWebHostEnvironment _environment;
+
+        public CreateModel(IAccountService accountService, IWebHostEnvironment environment)
         {
-           _accountService = accountService;
+            _accountService = accountService;
+            _environment = environment;
         }
+
+        [BindProperty]
+        public Account Account { get; set; } = default!;
+
+        [BindProperty]
+        public IFormFile AvatarFile { get; set; } // Thuộc tính cho file upload
 
         public IActionResult OnGet()
         {
             return Page();
         }
 
-        [BindProperty]
-        public Account Account { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -35,33 +40,34 @@ namespace KoiCareSystem.Pages.AccountPage
                 return Page();
             }
 
+            // Xử lý file avatar upload nếu có
+            if (AvatarFile != null)
+            {
+                var fileName = $"{Guid.NewGuid()}_{AvatarFile.FileName}"; // Đặt tên file duy nhất
+                var filePath = Path.Combine(_environment.WebRootPath, "uploads", fileName);
+
+                // Tạo thư mục nếu chưa có
+                Directory.CreateDirectory(Path.Combine(_environment.WebRootPath, "uploads"));
+
+                // Lưu file vào thư mục
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await AvatarFile.CopyToAsync(stream);
+                }
+
+                // Lưu đường dẫn ảnh vào thuộc tính Avatar của Account
+                Account.Avatar = $"/uploads/{fileName}";
+            }
 
             try
             {
-                // Hash the password before saving
-                Account.Password = HashPassword(Account.Password);
-
-                // Call the service to add the account
-                _accountService.Register(Account); // Assuming Register is the method in the service
-
-                // Redirect to Index page after successful creation
+                _accountService.Register(Account);
                 return RedirectToPage("./Index");
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
                 return Page();
-            }
-
-        }
-
-        private string HashPassword(string password)
-        {
-            using (var sha256 = System.Security.Cryptography.SHA256.Create())
-            {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(password);
-                var hash = sha256.ComputeHash(bytes);
-                return Convert.ToBase64String(hash);
             }
         }
     }

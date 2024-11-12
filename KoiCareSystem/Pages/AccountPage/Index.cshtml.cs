@@ -13,18 +13,32 @@ namespace KoiCareSystem.Pages.AccountPage
 {
     public class IndexModel : PageModel
     {
-        private readonly IAccountService _accountService;
+        private readonly IAccountService accountService;
+        private readonly IKoiFishService koiFishService;
 
-        public IndexModel(IAccountService accountService)
+        public IList<Account> Account { get; set; } = new List<Account>()!;
+        public IList<KoiFish> KoiFish { get; set; } = new List<KoiFish>()!;
+
+        public IndexModel(IAccountService accountService, IKoiFishService koiFishService)
         {
-            _accountService = accountService;
+            this.accountService = accountService;
+            this.koiFishService = koiFishService;
         }
-
-        public IList<Account> Account { get;set; } = default!;
-
         public void OnGet()
         {
-            Account = _accountService.GetAllAccounts();
+            LoadUsers();
+            LoadKoiFishs();
+        }
+
+        // ** USER ** //
+        private void LoadUsers()
+        {
+            Account = accountService.GetAllAccounts();
+        }
+
+        private void LoadKoiFishs()
+        {
+            KoiFish = koiFishService.GetAllKoiFish();
         }
     }
 }

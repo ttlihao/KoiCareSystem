@@ -5,13 +5,74 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create new Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #3498db, #8e44ad);
+            height: 100vh;
+        }
 
-<h4>Account</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
+        .register-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 10%;
+            left: 40%;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .register-container h2 {
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .btn-register {
+            background-color: #3498db;
+            color: white;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .btn-register:hover {
+            background-color: #2980b9;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .links a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Create new Account</h2>
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Account.Username" class="control-label"></label>
@@ -39,31 +100,30 @@
                 <span asp-validation-for="Account.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Account.Avatar" class="control-label"></label>
-                <input asp-for="Account.Avatar" class="form-control" />
-                <span asp-validation-for="Account.Avatar" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Account.Role" class="control-label"></label>
                 <input asp-for="Account.Role" class="form-control" />
                 <span asp-validation-for="Account.Role" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Account.Status" class="control-label"></label>
-                <input asp-for="Account.Status" class="form-control" />
-                <span asp-validation-for="Account.Status" class="text-danger"></span>
+                <label asp-for="AvatarFile" class="control-label"></label>
+                <input type="file" asp-for="AvatarFile" class="form-control" />
+                <span asp-validation-for="AvatarFile" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn-register" />
             </div>
         </form>
+        <div class="links">
+            <a asp-page="Index">Back to List</a>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

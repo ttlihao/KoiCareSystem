@@ -10,51 +10,48 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Feeding[0].PondFeedingId)
+                @Html.DisplayNameFor(model => model.Feeding.FirstOrDefault().PondFeedingId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Feeding[0].FoodType)
+                @Html.DisplayNameFor(model => model.Feeding.FirstOrDefault().FoodType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Feeding[0].FeedAmount)
+                @Html.DisplayNameFor(model => model.Feeding.FirstOrDefault().FeedAmount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Feeding[0].FeedingTime)
+                @Html.DisplayNameFor(model => model.Feeding.FirstOrDefault().FeedingTime)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Feeding[0].IsDeleted)
-            </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Feeding) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PondFeedingId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedingTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @if (Model.Feeding != null && Model.Feeding.Any())
+        {
+            @foreach (var item in Model.Feeding)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.PondFeedingId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FoodType)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FeedAmount)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FeedingTime)</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No feeding records available.</td>
+            </tr>
+        }
     </tbody>
 </table>

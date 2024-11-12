@@ -17,7 +17,7 @@ public partial class WaterParameter
 
     public decimal? No2 { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public bool IsDeleted { get; set; }
 
     public virtual Pond Pond { get; set; } = null!;
 }

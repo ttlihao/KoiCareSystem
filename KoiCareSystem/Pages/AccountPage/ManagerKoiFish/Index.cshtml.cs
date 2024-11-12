@@ -9,7 +9,7 @@ using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
 using KoiCareSystem.Service;
 
-namespace KoiCareSystem.Pages.KoiFishPage
+namespace KoiCareSystem.Pages.AccountPage.ManagerKoiFish
 {
     public class IndexModel : PageModel
     {
@@ -17,10 +17,10 @@ namespace KoiCareSystem.Pages.KoiFishPage
 
         public IndexModel(IKoiFishService koiFishService)
         {
-           this.koiFishService = koiFishService;
+            this.koiFishService = koiFishService;
         }
 
-        public IList<KoiFish> KoiFish { get;set; } = default!;
+        public IList<KoiFish> KoiFish { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
