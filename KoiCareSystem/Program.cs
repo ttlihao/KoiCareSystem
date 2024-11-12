@@ -41,6 +41,9 @@ builder.Services.AddScoped<ICareScheduleService, CareScheduleService>();
 builder.Services.AddScoped<IPondFeedingRepos, PondFeedingRepos>();
 builder.Services.AddScoped<IPondFeedingService, PondFeedingService>();
 
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+
 builder.Services.AddScoped<CarekoisystemContext>();
 builder.Services.AddScoped<PondDAO>();
 builder.Services.AddScoped<CarePropertyDAO>();
