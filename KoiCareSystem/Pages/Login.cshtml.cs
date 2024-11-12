@@ -25,7 +25,6 @@ namespace KoiCareSystem.Pages.AccountPage
             if (account != null && account.Password.Equals(password))
             {
                 // Lưu thông tin người dùng vào Session
-                HttpContext.Session.SetString("AccountID", account.Id.ToString());
                 HttpContext.Session.SetString("RoleID", account.Role.ToString());
                 HttpContext.Session.SetString("FullName", account.Name);
                 HttpContext.Session.SetString("AvatarUrl", account.Avatar);

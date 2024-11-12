@@ -10,7 +10,7 @@ namespace KoiCareSystem.Repository
 {
     public interface IAccountRepository
     {
-        public Account? GetAccountById(int id);
+        public Account GetAccountById(int id);
         public Account? GetAccountByUsername(string username);
 
         public Account? GetAccountByEmail(string email);

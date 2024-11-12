@@ -30,7 +30,7 @@ namespace KoiCareSystem.Repository
         public Account? GetAccountByEmail(string email) => _accountDAO.GetAccountByEmail(email);
 
 
-        public Account? GetAccountById(int id) => _accountDAO.GetAccountById(id);
+        public Account GetAccountById(int id) => _accountDAO.GetAccountById(id);
 
         public Account? GetAccountByUsername(string username) => _accountDAO.GetAccountByUsername(username);
 

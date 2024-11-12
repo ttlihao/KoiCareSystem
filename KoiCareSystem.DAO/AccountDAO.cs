@@ -17,7 +17,7 @@ namespace KoiCareSystem.DAO
         }
 
         // Lấy tài khoản theo ID
-        public Account? GetAccountById(int id)
+        public Account GetAccountById(int id)
         {
             return _context.Accounts.Find(id);
         }
