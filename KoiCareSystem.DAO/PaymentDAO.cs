@@ -10,7 +10,9 @@ namespace KoiCareSystem.DAO
     public class PaymentDAO
     {
         private CarekoisystemContext dbContext;
+
         private static PaymentDAO instance;
+
         public static PaymentDAO Instance
         {
             get
@@ -26,6 +28,9 @@ namespace KoiCareSystem.DAO
         {
             dbContext = new CarekoisystemContext();
         }
+
+
+
         public List<Payment> GetHistoryPayments(int orderId)
         {
             return dbContext.Payments

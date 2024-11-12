@@ -11,7 +11,7 @@ namespace KoiCareSystem.Service.Interfaces
     public interface IAccountService
     {
 
-        public Account? GetAccountById(int id);
+        public Account GetAccountById(int id);
         public Account? GetAccountByUsername(string username);
         public Account? GetAccountByEmail(string email);
 

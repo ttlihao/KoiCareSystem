@@ -39,8 +39,8 @@ builder.Services.AddScoped<ICareScheduleService, CareScheduleService>();
 builder.Services.AddScoped<IPondFeedingRepos, PondFeedingRepos>();
 builder.Services.AddScoped<IPondFeedingService, PondFeedingService>();
 
-//builder.Services.AddScoped<IPaymentRepository, Payment>();
-//builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 
 builder.Services.AddTransient<EmailService>();
