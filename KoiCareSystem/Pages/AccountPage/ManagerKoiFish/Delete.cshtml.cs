@@ -9,7 +9,7 @@ using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
 using KoiCareSystem.Service;
 
-namespace KoiCareSystem.Pages.KoiFishPage
+namespace KoiCareSystem.Pages.AccountPage.ManagerKoiFish
 {
     public class DeleteModel : PageModel
     {
@@ -57,7 +57,7 @@ namespace KoiCareSystem.Pages.KoiFishPage
                 koiFishService.DeleteKoiFish(id);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/AccountPage/Index");
         }
     }
 }

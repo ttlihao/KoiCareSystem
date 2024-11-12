@@ -98,12 +98,20 @@
                     <input name="txtPassword" id="password" type="password" class="form-control" />
                 </div>
 
+                <!-- Display validation error -->
+                @if (!ModelState.IsValid)
+                {
+                    <div class="text-danger">
+                        @ModelState[""].Errors.FirstOrDefault()?.ErrorMessage
+                    </div>
+                }
+
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Login</button>
                 </div>
             </form>
             <div class="links text-center mt-3">
-                <a href="/AccountPage/Create">Create an Account</a> |
+                <a href="/Register">Create an Account</a> |
                 <a href="/Index">View Koi Page</a>
             </div>
         </div>

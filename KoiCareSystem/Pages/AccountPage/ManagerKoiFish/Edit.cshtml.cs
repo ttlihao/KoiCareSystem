@@ -10,19 +10,24 @@ using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
 using KoiCareSystem.Service;
 
-namespace KoiCareSystem.Pages.KoiFishPage
+namespace KoiCareSystem.Pages.AccountPage.ManagerKoiFish
 {
     public class EditModel : PageModel
     {
         private readonly IKoiFishService koiFishService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public EditModel(IKoiFishService koiFishService)
+        public EditModel(IKoiFishService koiFishService, IWebHostEnvironment webHostEnvironment)
         {
             this.koiFishService = koiFishService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [BindProperty]
         public KoiFish KoiFish { get; set; } = default!;
+
+        [BindProperty]
+        public IFormFile ImageFile { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -40,8 +45,6 @@ namespace KoiCareSystem.Pages.KoiFishPage
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -49,11 +52,24 @@ namespace KoiCareSystem.Pages.KoiFishPage
                 return Page();
             }
 
+            if (ImageFile != null)
+            {
+                var fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
+                var extension = Path.GetExtension(ImageFile.FileName);
+                var newFileName = $"{fileName}_{DateTime.Now.Ticks}{extension}";
+                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", newFileName);
 
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ImageFile.CopyToAsync(fileStream);
+                }
+
+                KoiFish.ImagePath = "/images/" + newFileName;
+            }
 
             try
             {
-               koiFishService.UpdateKoiFish(KoiFish);
+                koiFishService.UpdateKoiFish(KoiFish);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -67,7 +83,7 @@ namespace KoiCareSystem.Pages.KoiFishPage
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/AccountPage/Index");
         }
 
         private bool KoiFishExists(int id)

@@ -11,12 +11,25 @@ namespace KoiCareSystem.DAO
     public class PondDAO
     {
 
-        private readonly CarekoisystemContext _context;
+        private CarekoisystemContext _context;
+        private static PondDAO instance;
 
-
-        public PondDAO(CarekoisystemContext context)
+        public PondDAO()
         {
-            _context = context;
+            _context = new CarekoisystemContext();
+        }
+
+        public static PondDAO Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new PondDAO();
+                }
+
+                return instance;
+            }
         }
 
         public void CreatePond(Pond pond)

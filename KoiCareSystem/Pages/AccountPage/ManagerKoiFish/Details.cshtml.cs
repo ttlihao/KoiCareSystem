@@ -9,7 +9,7 @@ using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
 using KoiCareSystem.Service;
 
-namespace KoiCareSystem.Pages.KoiFishPage
+namespace KoiCareSystem.Pages.AccountPage.ManagerKoiFish
 {
     public class DetailsModel : PageModel
     {

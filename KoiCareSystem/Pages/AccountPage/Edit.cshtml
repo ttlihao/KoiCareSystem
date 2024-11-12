@@ -2,12 +2,11 @@
 @model KoiCareSystem.Pages.AccountPage.EditModel
 
 @{
+    String RoleID = HttpContext.Session.GetString("RoleID");
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Account</h4>
+<h1>Edit Account</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -55,12 +54,16 @@
                     <img src="@Model.Account.Avatar" alt="Avatar" style="width: 100px; height: 100px;" />
                 }
             </div>
-
-            <div class="form-group">
-                <label asp-for="Account.Role" class="control-label"></label>
-                <input asp-for="Account.Role" class="form-control" />
-                <span asp-validation-for="Account.Role" class="text-danger"></span>
-            </div>
+            @{
+                if (RoleID == "admin")
+                {
+                    <div class="form-group">
+                        <label asp-for="Account.Role" class="control-label"></label>
+                        <input asp-for="Account.Role" class="form-control" />
+                        <span asp-validation-for="Account.Role" class="text-danger"></span>
+                    </div>
+                }
+                }
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

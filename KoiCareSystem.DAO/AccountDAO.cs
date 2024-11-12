@@ -9,11 +9,25 @@ namespace KoiCareSystem.DAO
 {
     public class AccountDAO
     {
-        private readonly CarekoisystemContext _context;
+        private CarekoisystemContext _context;
+        private static AccountDAO instance;
 
-        public AccountDAO(CarekoisystemContext context)
+        public AccountDAO()
         {
-            _context = context;
+            _context = new CarekoisystemContext();
+        }
+
+        public static AccountDAO Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new AccountDAO();
+                }
+
+                return instance;
+            }
         }
 
         // Lấy tài khoản theo ID
