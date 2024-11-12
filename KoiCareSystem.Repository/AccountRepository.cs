@@ -20,7 +20,7 @@ namespace KoiCareSystem.Repository
         public Account? GetAccountByEmail(string email) => AccountDAO.Instance.GetAccountByEmail(email);
 
 
-        public Account? GetAccountById(int id) => AccountDAO.Instance.GetAccountById(id);
+        public Account GetAccountById(int id) => AccountDAO.Instance.GetAccountById(id);
 
         public Account? GetAccountByUsername(string username) => AccountDAO.Instance.GetAccountByUsername(username);
 

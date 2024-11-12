@@ -9,5 +9,8 @@ namespace KoiCareSystem.Repository
         void CreatePayment(Payment payment);
         void UpdatePayment(Payment payment);
         void DeletePayment(int id);
+
+        List<Payment> GetHistoryPayments(int orderId);
+        List<Payment> GetPaymentsByUserId(int userId);
     }
 }
