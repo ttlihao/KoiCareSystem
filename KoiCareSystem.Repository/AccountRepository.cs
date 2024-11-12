@@ -10,17 +10,17 @@ namespace KoiCareSystem.Repository
 {
     public class AccountRepository : IAccountRepository
     {
+        public void ActivateAccount(string email) => AccountDAO.Instance.ActivateAccount(email);
+
         public Account? CheckLogin(string email, string password) => AccountDAO.Instance.CheckLogin(email, password);
 
         public void DeleteAccount(int accountId) => AccountDAO.Instance.DeleteAccount(accountId);
 
-   
 
         public Account? GetAccountByEmail(string email) => AccountDAO.Instance.GetAccountByEmail(email);
 
 
-
-        public Account GetAccountById(int id) => AccountDAO.Instance.GetAccountById(id);
+        public Account? GetAccountById(int id) => AccountDAO.Instance.GetAccountById(id);
 
         public Account? GetAccountByUsername(string username) => AccountDAO.Instance.GetAccountByUsername(username);
 

@@ -31,7 +31,7 @@ namespace KoiCareSystem.DAO
         }
 
         // Lấy tài khoản theo ID
-        public Account GetAccountById(int id)
+        public Account? GetAccountById(int id)
         {
             return _context.Accounts.Find(id);
         }
@@ -82,6 +82,16 @@ namespace KoiCareSystem.DAO
 
             // Nếu không tìm thấy người dùng, trả về null (đăng nhập thất bại)
             return null;
+        }
+
+        public void ActivateAccount(string email)
+        {
+            var account = GetAccountByEmail(email);
+            if (account != null && account.Status == "INACTIVE")
+            {
+                account.Status = "ACTIVE";
+                _context.SaveChanges();
+            }
         }
 
 

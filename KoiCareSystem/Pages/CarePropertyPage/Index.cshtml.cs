@@ -9,7 +9,7 @@ using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CareSchdulePage
+namespace KoiCareSystem.Pages.CarePropertyPage
 {
     public class IndexModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace KoiCareSystem.Pages.CareSchdulePage
             this.carePropertyService = carePropertyService;
         }
 
-        public IList<CareProperty> CareProperty { get;set; } = default!;
+        public IList<CareProperty> CareProperty { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

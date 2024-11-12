@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CareSchdulePage
+namespace KoiCareSystem.Pages.CarePropertyPage
 {
     public class EditModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace KoiCareSystem.Pages.CareSchdulePage
         public EditModel(ICarePropertyService carePropertyService, ICareScheduleService careScheduleService)
         {
             this.carePropertyService = carePropertyService;
-            this.careScheduleService = careScheduleService; 
+            this.careScheduleService = careScheduleService;
         }
 
         [BindProperty]
@@ -38,7 +38,7 @@ namespace KoiCareSystem.Pages.CareSchdulePage
                 return NotFound();
             }
             CareProperty = careproperty;
-           ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
+            ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
             return Page();
         }
 

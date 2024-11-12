@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CareSchdulePage
+namespace KoiCareSystem.Pages.CarePropertyPage
 {
     public class CreateModel : PageModel
     {
@@ -23,7 +23,7 @@ namespace KoiCareSystem.Pages.CareSchdulePage
 
         public async Task<IActionResult> OnGet()
         {
-        ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
+            ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
             return Page();
         }
 
