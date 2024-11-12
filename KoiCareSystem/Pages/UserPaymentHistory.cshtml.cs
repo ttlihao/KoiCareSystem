@@ -1,6 +1,7 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Repository;
 using KoiCareSystem.Repository.Interfaces;
+using KoiCareSystem.Service;
 using KoiCareSystem.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

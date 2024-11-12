@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
-using KoiCareSystem.Service;
 
 namespace KoiCareSystem.Pages.CareSchedulePage
 {

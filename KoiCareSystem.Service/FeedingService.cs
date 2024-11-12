@@ -1,13 +1,14 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Repository;
 using KoiCareSystem.Repository.Interfaces;
+using KoiCareSystem.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KoiCareSystem.Service.Interfaces
+namespace KoiCareSystem.Service
 {
     public class FeedingService : IFeedingService
     {
@@ -34,12 +35,12 @@ namespace KoiCareSystem.Service.Interfaces
 
         public List<Feeding> GetListFeeding()
         {
-           return feedingRepos.GetListFeeding();
+            return feedingRepos.GetListFeeding();
         }
 
         public bool UpdateFeeding(Feeding feeding)
         {
-           return feedingRepos.UpdateFeeding(feeding);
+            return feedingRepos.UpdateFeeding(feeding);
         }
     }
 }

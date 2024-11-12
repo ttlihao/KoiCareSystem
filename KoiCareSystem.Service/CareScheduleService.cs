@@ -6,7 +6,7 @@ using KoiCareSystem.Repository;
 using KoiCareSystem.Repository.Interfaces;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Services
+namespace KoiCareSystem.Service
 {
     public class CareScheduleService : ICareScheduleService
     {

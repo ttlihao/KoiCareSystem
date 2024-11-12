@@ -1,5 +1,5 @@
 ﻿using KoiCareSystem.BussinessObject;
-using KoiCareSystem.Service.Interfaces;
+using KoiCareSystem.Service;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Threading.Tasks;

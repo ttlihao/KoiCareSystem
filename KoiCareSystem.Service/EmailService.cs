@@ -6,6 +6,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Service
 {
