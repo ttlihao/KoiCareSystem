@@ -1,6 +1,7 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
 using KoiCareSystem.Repository;
+using KoiCareSystem.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
