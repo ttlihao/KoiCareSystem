@@ -1,104 +1,54 @@
 ﻿using KoiCareSystem.BussinessObject;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace KoiCareSystem.DAO
 {
     public class PaymentDAO
     {
-        // Create a new Payment
-        public void CreatePayment(Payment payment)
+        private CarekoisystemContext dbContext;
+
+        private static PaymentDAO instance;
+
+        public static PaymentDAO Instance
         {
-            try
+            get
             {
-                using (var context = new CarekoisystemContext())
+                if (instance == null)
                 {
-                    context.Payments.Add(payment);
-                    context.SaveChanges();
+                    instance = new PaymentDAO();
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error creating payment: {ex.Message}");
+                return instance;
             }
         }
 
-        // Retrieve all Payments
-        public List<Payment> GetAllPayments()
+        public PaymentDAO()
         {
-            try
-            {
-                using (var context = new CarekoisystemContext())
-                {
-                    return context.Payments.ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error retrieving payments: {ex.Message}");
-                return new List<Payment>();
-            }
+            dbContext = new CarekoisystemContext();
         }
 
-        // Retrieve Payment by Id
-        public Payment GetPaymentById(int id)
+
+
+        public List<Payment> GetHistoryPayments(int orderId)
         {
-            try
-            {
-                using (var context = new CarekoisystemContext())
-                {
-                    return context.Payments.FirstOrDefault(p => p.Id == id);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error retrieving payment by id: {ex.Message}");
-                return null;
-            }
+            return dbContext.Payments
+                           .Where(p => p.OrderId == orderId)
+                           .Include(p => p.Order) 
+                           .OrderByDescending(p => p.PaymentDate)
+                           .ToList();
         }
 
-        // Update an existing Payment
-        public void UpdatePayment(Payment updatedPayment)
+        public List<Payment> GetPaymentsByUserId(int userId)
         {
-            try
-            {
-                using (var context = new CarekoisystemContext())
-                {
-                    var existingPayment = context.Payments.FirstOrDefault(p => p.Id == updatedPayment.Id);
-                    if (existingPayment != null)
-                    {
-                        existingPayment.OrderId = updatedPayment.OrderId;
-                        existingPayment.PaymentDate = updatedPayment.PaymentDate;
-                        existingPayment.Total = updatedPayment.Total;
-                        existingPayment.Status = updatedPayment.Status;
-
-                        context.SaveChanges();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error updating payment: {ex.Message}");
-            }
-        }
-
-        // Delete a Payment (no soft delete logic)
-        public void DeletePayment(int id)
-        {
-            try
-            {
-                using (var context = new CarekoisystemContext())
-                {
-                    var payment = context.Payments.FirstOrDefault(p => p.Id == id);
-                    if (payment != null)
-                    {
-                        context.Payments.Remove(payment);
-                        context.SaveChanges();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error deleting payment: {ex.Message}");
-            }
+            return dbContext.Payments
+                           .Where(p => p.Order.AccountId == userId) 
+                           .Include(p => p.Order)
+                           .OrderByDescending(p => p.PaymentDate)
+                           .ToList();
         }
     }
 }

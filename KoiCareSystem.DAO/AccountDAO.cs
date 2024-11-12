@@ -9,15 +9,29 @@ namespace KoiCareSystem.DAO
 {
     public class AccountDAO
     {
-        private readonly CarekoisystemContext _context;
+        private CarekoisystemContext _context;
+        private static AccountDAO instance;
 
-        public AccountDAO(CarekoisystemContext context)
+        public AccountDAO()
         {
-            _context = context;
+            _context = new CarekoisystemContext();
+        }
+
+        public static AccountDAO Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new AccountDAO();
+                }
+
+                return instance;
+            }
         }
 
         // Lấy tài khoản theo ID
-        public Account? GetAccountById(int id)
+        public Account GetAccountById(int id)
         {
             return _context.Accounts.Find(id);
         }
@@ -28,6 +42,13 @@ namespace KoiCareSystem.DAO
         {
             return _context.Accounts.SingleOrDefault(x => x.Username.ToLower() == username.ToLower());
         }
+
+        // Lấy tài khoản theo Email
+        public Account? GetAccountByEmail(string email)
+        {
+            return _context.Accounts.SingleOrDefault(x => x.Email.ToLower() == email.ToLower());
+        }
+
 
         // Lấy tất cả tài khoản
         public List<Account> GetAllAccounts()
@@ -48,6 +69,22 @@ namespace KoiCareSystem.DAO
             }
         }
 
+        public Account? CheckLogin(string email, string password)
+        {
+            // Kiểm tra xem người dùng có tồn tại không
+            var user = _context.Accounts.SingleOrDefault(u => u.Email == email && u.Password == password);
+
+            // Nếu tìm thấy người dùng, trả về dữ liệu (đăng nhập thành công)
+            if (user != null)
+            {
+                return user;
+            }
+
+            // Nếu không tìm thấy người dùng, trả về null (đăng nhập thất bại)
+            return null;
+        }
+
+
         public void Register(Account account)
         {
             try
@@ -66,8 +103,8 @@ namespace KoiCareSystem.DAO
                 if (_context.Accounts.Any(a => a.Email == account.Email))
                     throw new InvalidOperationException("Email already exists.");
 
-                // Mã hóa mật khẩu 
-                account.Password = HashPassword(account.Password);
+                //// Mã hóa mật khẩu 
+                //account.Password = HashPassword(account.Password);
 
                 // Thêm tài khoản mới vào cơ sở dữ liệu
                 _context.Accounts.Add(account);
@@ -95,7 +132,7 @@ namespace KoiCareSystem.DAO
 
                     // Cập nhật thông tin tài khoản
                     existingAccount.Username = account.Username;
-                    existingAccount.Password = HashPassword(account.Password); // Hash the new password
+                    existingAccount.Password = account.Password;
                     existingAccount.Name = account.Name;
                     existingAccount.Email = account.Email;
                     existingAccount.Address = account.Address;

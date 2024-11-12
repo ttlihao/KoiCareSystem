@@ -7,7 +7,7 @@ public partial class Feeding
 {
     public int Id { get; set; }
 
-    public int? PondFeedingId { get; set; }
+    public int PondFeedingId { get; set; }
 
     public string? FoodType { get; set; }
 
@@ -15,7 +15,7 @@ public partial class Feeding
 
     public DateTime? FeedingTime { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public bool IsDeleted { get; set; }
 
     public virtual ICollection<PondFeeding> PondFeedings { get; set; } = new List<PondFeeding>();
 }

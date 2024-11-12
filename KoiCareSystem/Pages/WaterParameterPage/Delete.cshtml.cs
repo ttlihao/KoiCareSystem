@@ -6,30 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.WaterParameterPage
 {
     public class DeleteModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly IWaterParameterService waterParameterService;
 
-        public DeleteModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public DeleteModel(IWaterParameterService waterParameterService)
         {
-            _context = context;
+            this.waterParameterService = waterParameterService;
         }
 
         [BindProperty]
         public WaterParameter WaterParameter { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var waterparameter = await _context.WaterParameters.FirstOrDefaultAsync(m => m.PondId == id);
-
+            var waterparameter = waterParameterService.GetWaterParameterByID(id);
             if (waterparameter == null)
             {
                 return NotFound();
@@ -41,19 +41,17 @@ namespace KoiCareSystem.Pages.WaterParameterPage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var waterparameter = await _context.WaterParameters.FindAsync(id);
+            var waterparameter = waterParameterService.GetWaterParameterByID(id);
             if (waterparameter != null)
             {
-                WaterParameter = waterparameter;
-                _context.WaterParameters.Remove(WaterParameter);
-                await _context.SaveChangesAsync();
+                waterParameterService.DeleteWaterParameter(waterparameter);
             }
 
             return RedirectToPage("./Index");

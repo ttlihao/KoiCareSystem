@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
-using KoiCareSystem.DAO;
 using KoiCareSystem.Service;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KoiCareSystem.Pages.AccountPage
 {
     public class EditModel : PageModel
     {
         private readonly IAccountService _accountService;
+        private readonly IWebHostEnvironment _environment;
 
-        public EditModel(IAccountService accountService)
+        public EditModel(IAccountService accountService, IWebHostEnvironment environment)
         {
             _accountService = accountService;
+            _environment = environment;
         }
 
         [BindProperty]
         public Account Account { get; set; } = default!;
+
+        [BindProperty]
+        public IFormFile AvatarFile { get; set; }  // For avatar upload
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,12 +40,11 @@ namespace KoiCareSystem.Pages.AccountPage
             {
                 return NotFound();
             }
-            
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+        // To handle file uploads and other updates
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -50,9 +52,35 @@ namespace KoiCareSystem.Pages.AccountPage
                 return Page();
             }
 
+            // Handle file upload if a file is provided
+            if (AvatarFile != null)
+            {
+                // Define the folder to save the avatar image (in wwwroot/avatars)
+                var uploadsFolder = Path.Combine(_environment.WebRootPath, "avatars");
+
+                // Ensure the folder exists
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Create a unique file name to avoid overwriting existing files
+                var fileName = Path.GetFileName(AvatarFile.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                // Save the uploaded file
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await AvatarFile.CopyToAsync(fileStream);
+                }
+
+                // Set the new avatar path
+                Account.Avatar = $"/avatars/{fileName}";
+            }
 
             try
             {
+                // Update the account details in the database
                 _accountService.UpdateAccount(Account);
             }
             catch (DbUpdateConcurrencyException)
@@ -72,7 +100,7 @@ namespace KoiCareSystem.Pages.AccountPage
 
         private bool AccountExists(int id)
         {
-            return _accountService.GetAccountById(id) is not null;
+            return _accountService.GetAccountById(id) != null;
         }
     }
 }

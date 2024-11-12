@@ -11,22 +11,16 @@ namespace KoiCareSystem.Repository
 {
     public class KoiFishRepository : IKoiFishRepository
     {
-        private readonly KoiFishDAO _koiFishDAO;
+        public void CreateKoiFish(KoiFish koiFish) => KoiFishDAO.Instance.CreateKoiFish(koiFish);
 
-        public KoiFishRepository(KoiFishDAO koiFishDAO)
-        {
-            _koiFishDAO = koiFishDAO;
-        }
-        public void CreateKoiFish(KoiFish koiFish) => _koiFishDAO.CreateKoiFish(koiFish);
-
-        public void DeleteKoiFish(int koiFishId) => _koiFishDAO.DeleteKoiFish(koiFishId);
+        public void DeleteKoiFish(int koiFishId) => KoiFishDAO.Instance.DeleteKoiFish(koiFishId);
 
 
-        public List<KoiFish> GetAllKoiFish() => _koiFishDAO.GetAllKoiFish();
+        public List<KoiFish> GetAllKoiFish() =>KoiFishDAO.Instance.GetAllKoiFish();
 
 
-        public KoiFish GetKoiFishById(int id) => _koiFishDAO.GetKoiFishById(id);
+        public KoiFish GetKoiFishById(int id) => KoiFishDAO.Instance.GetKoiFishById(id);
 
-        public void UpdateKoiFish(KoiFish updatedKoiFish) => _koiFishDAO.UpdateKoiFish(updatedKoiFish);
+        public void UpdateKoiFish(KoiFish updatedKoiFish) => KoiFishDAO.Instance.UpdateKoiFish(updatedKoiFish);
     }
 }

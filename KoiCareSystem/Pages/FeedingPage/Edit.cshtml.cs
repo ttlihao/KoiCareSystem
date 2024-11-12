@@ -1,22 +1,27 @@
-﻿using KoiCareSystem.BussinessObject;
-using KoiCareSystem.Service.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.FoodItemPage
+namespace KoiCareSystem.Pages.FeedingPage
 {
     public class EditModel : PageModel
     {
-        private readonly IFoodItemService _foodItemService;
+        private readonly IFeedingService feedingService;
 
-        public EditModel(IFoodItemService foodItemService)
+        public EditModel(IFeedingService feedingService)
         {
-            _foodItemService = foodItemService;
+            this.feedingService = feedingService;
         }
 
         [BindProperty]
-        public FoodItem FoodItem { get; set; } = default!;
+        public Feeding Feeding { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -25,15 +30,17 @@ namespace KoiCareSystem.Pages.FoodItemPage
                 return NotFound();
             }
 
-            FoodItem = await _foodItemService.GetFoodItemByIdAsync(id.Value);
-
-            if (FoodItem == null)
+            var feeding =  feedingService.GetFeedingByPondID(id);
+            if (feeding == null)
             {
                 return NotFound();
             }
+            Feeding = feeding;
             return Page();
         }
 
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -41,8 +48,11 @@ namespace KoiCareSystem.Pages.FoodItemPage
                 return Page();
             }
 
-            await _foodItemService.UpdateFoodItemAsync(FoodItem);
+            feedingService.UpdateFeeding(Feeding);
+
             return RedirectToPage("./Index");
         }
+
+
     }
 }

@@ -1,41 +1,18 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
+using KoiCareSystem.Repository.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace KoiCareSystem.Repository
 {
-    public class PaymentRepository : IPaymentRepository
+    public class PaymentRepository:IPaymentRepository
     {
-        private readonly PaymentDAO _paymentDAO;
+        public List<Payment> GetHistoryPayments(int orderId) => PaymentDAO.Instance.GetHistoryPayments(orderId);
 
-        // Constructor
-        public PaymentRepository()
-        {
-            _paymentDAO = new PaymentDAO(); // You can use dependency injection here if needed
-        }
-
-        public void CreatePayment(Payment payment)
-        {
-            _paymentDAO.CreatePayment(payment);
-        }
-
-        public List<Payment> GetAllPayments()
-        {
-            return _paymentDAO.GetAllPayments();
-        }
-
-        public Payment GetPaymentById(int id)
-        {
-            return _paymentDAO.GetPaymentById(id);
-        }
-
-        public void UpdatePayment(Payment payment)
-        {
-            _paymentDAO.UpdatePayment(payment);
-        }
-
-        public void DeletePayment(int id)
-        {
-            _paymentDAO.DeletePayment(id);
-        }
+        public List<Payment> GetPaymentsByUserId(int userId) => PaymentDAO.Instance.GetPaymentsByUserId(userId);
     }
 }

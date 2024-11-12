@@ -9,14 +9,28 @@ namespace KoiCareSystem.DAO
 {
     public class KoiFishDAO
     {
-        private readonly CarekoisystemContext _context;
+        private CarekoisystemContext _context;
+        private static KoiFishDAO instance;
 
-        public KoiFishDAO(CarekoisystemContext context)
+        public KoiFishDAO()
         {
-            _context = context;
+            _context = new CarekoisystemContext();
         }
 
-        
+        public static KoiFishDAO Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new KoiFishDAO();
+                }
+
+                return instance;
+            }
+        }
+
+
         public KoiFish GetKoiFishById(int id)
         {
             var koiFish = _context.KoiFishes.FirstOrDefault(k => k.Id == id && k.Deleted == false);
