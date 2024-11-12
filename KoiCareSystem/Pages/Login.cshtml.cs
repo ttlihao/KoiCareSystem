@@ -26,7 +26,12 @@ namespace KoiCareSystem.Pages
             if (account != null)
             {
                 // Kiểm tra trạng thái tài khoản
-          
+                    if (account.Status != "ACTIVE")
+                      {
+                      // Nếu tài khoản chưa kích hoạt, hiển thị thông báo yêu cầu xác minh email
+                          ModelState.AddModelError(string.Empty, "Please check your email to verify your account!!");
+                          return;
+                      }
                 // Kiểm tra mật khẩu
                 if (account.Password.Equals(password))
                 {
