@@ -23,7 +23,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
 
         public IActionResult OnGet()
         {
-        ViewData["PondId"] = new SelectList(_context.Ponds, "Id", "Name");
+        ViewData["PondId"] = new SelectList(pondService.GetAllPonds(), "Id", "Name");
             return Page();
         }
 
