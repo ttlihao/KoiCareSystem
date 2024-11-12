@@ -32,7 +32,7 @@ namespace KoiCareSystem.Service
             return _accountRepository.GetAccountByEmail(email);
         }
 
-        public Account GetAccountById(int id) => _accountRepository?.GetAccountById(id);
+        public Account? GetAccountById(int id) => _accountRepository?.GetAccountById(id);
 
         public Account? GetAccountByUsername(string username)
         {
