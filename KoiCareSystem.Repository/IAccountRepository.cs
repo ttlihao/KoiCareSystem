@@ -15,6 +15,8 @@ namespace KoiCareSystem.Repository
 
         public Account? GetAccountByEmail(string email);
 
+        public void ActivateAccount(string email);
+
         public Account? CheckLogin(string email, string password);
 
         public List<Account> GetAllAccounts();

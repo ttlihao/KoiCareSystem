@@ -2,6 +2,8 @@
 using KoiCareSystem.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NuGet.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace KoiCareSystem.Pages
 {
@@ -9,11 +11,13 @@ namespace KoiCareSystem.Pages
     {
         private readonly IAccountService _accountService;
         private readonly IWebHostEnvironment _environment;
+        private readonly EmailService emailService;
 
-        public RegisterModel(IAccountService accountService, IWebHostEnvironment environment)
+        public RegisterModel(IAccountService accountService, IWebHostEnvironment environment, EmailService emailService)
         {
             _accountService = accountService;
             _environment = environment;
+            this.emailService = emailService;
         }
 
         [BindProperty]
@@ -55,7 +59,29 @@ namespace KoiCareSystem.Pages
 
             try
             {
-                Account.Role = "user";
+                Account.Role = "Customer";
+                Account.Status = "INACTIVE";
+
+                // Tạo token xác minh đơn giản bằng Guid
+                var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+
+                var verificationLink = $"{Request.Scheme}://{Request.Host}/Verify?email={Account.Email}&token={token}";
+
+
+                Console.WriteLine($"Scheme: {Request.Scheme}");
+
+                if (string.IsNullOrEmpty(verificationLink))
+                {
+                    throw new Exception("Verification link is null or empty.");
+                }
+
+                var subject = "Verify Account Request";
+                var body = $"<p>Click <a href='{verificationLink}'>here</a> to verify your account.</p>";
+
+
+                await emailService.SendEmailAsync(Account.Email, subject, body);
+                Console.WriteLine(verificationLink);
+
                 _accountService.Register(Account);
                 return RedirectToPage("./Login");
             }

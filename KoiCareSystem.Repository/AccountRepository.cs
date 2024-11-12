@@ -10,6 +10,8 @@ namespace KoiCareSystem.Repository
 {
     public class AccountRepository : IAccountRepository
     {
+        public void ActivateAccount(string email) => AccountDAO.Instance.ActivateAccount(email);
+
         public Account? CheckLogin(string email, string password) => AccountDAO.Instance.CheckLogin(email, password);
 
         public void DeleteAccount(int accountId) => AccountDAO.Instance.DeleteAccount(accountId);

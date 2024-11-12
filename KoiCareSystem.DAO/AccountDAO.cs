@@ -84,6 +84,16 @@ namespace KoiCareSystem.DAO
             return null;
         }
 
+        public void ActivateAccount(string email)
+        {
+            var account = GetAccountByEmail(email);
+            if (account != null && account.Status == "INACTIVE")
+            {
+                account.Status = "ACTIVE";
+                _context.SaveChanges();
+            }
+        }
+
 
         public void Register(Account account)
         {
