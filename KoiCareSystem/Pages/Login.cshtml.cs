@@ -24,18 +24,28 @@ namespace KoiCareSystem.Pages.AccountPage
 
             if (account != null && account.Password.Equals(password))
             {
-                // Lưu thông tin người dùng vào Session
+                // Store user information in Session
                 HttpContext.Session.SetString("RoleID", account.Role.ToString());
                 HttpContext.Session.SetString("FullName", account.Name);
                 HttpContext.Session.SetString("AvatarUrl", account.Avatar);
                 HttpContext.Session.SetInt32("UserId", account.Id);
-                Response.Redirect("/Index");
+
+                // Redirect based on role
+                if (account.Role.ToLower() == "admin")
+                {
+                    Response.Redirect("/AccountPage/Index"); // Admin page
+                }
+                else
+                {
+                    Response.Redirect("/Index"); // Default page for other roles
+                }
             }
             else
             {
-                Response.Redirect("/Error");
+                ModelState.AddModelError(string.Empty, "Invalid email or password. Please try again.");
             }
         }
+
 
 
         //private bool VerifyPassword(string enteredPassword, string storedPasswordHash)

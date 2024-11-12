@@ -42,8 +42,6 @@ builder.Services.AddScoped<IPondFeedingRepos, PondFeedingRepos>();
 builder.Services.AddScoped<IPondFeedingService, PondFeedingService>();
 
 builder.Services.AddScoped<CarekoisystemContext>();
-builder.Services.AddScoped<AccountDAO>();
-builder.Services.AddScoped<KoiFishDAO>();
 builder.Services.AddScoped<PondDAO>();
 builder.Services.AddScoped<CarePropertyDAO>();
 builder.Services.AddScoped<CareScheduleDAO>();

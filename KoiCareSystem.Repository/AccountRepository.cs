@@ -10,35 +10,23 @@ namespace KoiCareSystem.Repository
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly AccountDAO _accountDAO;
+        public Account? CheckLogin(string email, string password) => AccountDAO.Instance.CheckLogin(email, password);
 
-        public AccountRepository(AccountDAO accountDAO)
-        {
-            _accountDAO = accountDAO;
-        }
-
-        public Account? CheckLogin(string email, string password)
-        {
-           return _accountDAO.CheckLogin(email, password);
-        }
-
-        public void DeleteAccount(int accountId)
-        {
-            _accountDAO.DeleteAccount(accountId);   
-        }
-
-        public Account? GetAccountByEmail(string email) => _accountDAO.GetAccountByEmail(email);
+        public void DeleteAccount(int accountId) => AccountDAO.Instance.DeleteAccount(accountId);
 
 
-        public Account? GetAccountById(int id) => _accountDAO.GetAccountById(id);
+        public Account? GetAccountByEmail(string email) => AccountDAO.Instance.GetAccountByEmail(email);
 
-        public Account? GetAccountByUsername(string username) => _accountDAO.GetAccountByUsername(username);
 
-        public List<Account> GetAllAccounts() => _accountDAO.GetAllAccounts();
-        
+        public Account? GetAccountById(int id) => AccountDAO.Instance.GetAccountById(id);
 
-        public void Register(Account account) => _accountDAO.Register(account); 
+        public Account? GetAccountByUsername(string username) => AccountDAO.Instance.GetAccountByUsername(username);
 
-        public void UpdateAccount(Account account) =>_accountDAO.UpdateAccount(account);
+        public List<Account> GetAllAccounts() => AccountDAO.Instance.GetAllAccounts();
+
+
+        public void Register(Account account) => AccountDAO.Instance.Register(account); 
+
+        public void UpdateAccount(Account account) => AccountDAO.Instance.UpdateAccount(account);
     }
 }

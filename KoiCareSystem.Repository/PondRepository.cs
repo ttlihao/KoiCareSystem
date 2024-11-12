@@ -10,23 +10,17 @@ namespace KoiCareSystem.Repository
 {
     public class PondRepository : IPondRepository
     {
-        private readonly PondDAO _pondDAO;
-
-        public PondRepository(PondDAO pondDAO)
-        {
-            _pondDAO = pondDAO;
-        }
-        public void CreatePond(Pond pond) => _pondDAO.CreatePond(pond);
+        public void CreatePond(Pond pond) => PondDAO.Instance.CreatePond(pond);
 
 
-        public void DeletePond(int pondId) => _pondDAO.DeletePond(pondId);
+        public void DeletePond(int pondId) => PondDAO.Instance.DeletePond(pondId);
 
-        public List<Pond> GetAllPonds() => _pondDAO.GetAllPonds();  
+        public List<Pond> GetAllPonds() => PondDAO.Instance.GetAllPonds(); 
 
 
-        public Pond GetPondById(int id) => _pondDAO.GetPondById(id);
+        public Pond GetPondById(int id) => PondDAO.Instance.GetPondById(id);
 
-        public void UpdatePond(Pond updatedPond) => _pondDAO.UpdatePond(updatedPond);
+        public void UpdatePond(Pond updatedPond) => PondDAO.Instance.UpdatePond(updatedPond);
 
     }
 }
