@@ -1,0 +1,260 @@
+﻿@page
+@model KoiCareSystem.Pages.CustomerPage.IndexModel
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <div class="admin-container">
+        <div class="sidebar">
+            <h3>Management</h3>
+            <ul>
+                <li><a href="#" onclick="showContent('pond')" id="user-tab">Manage Pond</a></li>
+                <li><a href="#" onclick="showContent('koifish')" id="koifish-tab">Manage Koi Fish</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <div id="pond-content" class="tab-content">
+                <h1>Manage Pond</h1>
+
+<p>
+    <a asp-page="./ManagePond/Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pond[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pond[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pond[0].Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pond[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pond[0].Deleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pond[0].Account)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Pond) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.Password)
+            </td>
+            <td>
+                <a asp-page="./ManagePond/Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./ManagePond/Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./ManagePond/Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+            </div>
+
+            <!-- Danh sách Koi fish trong hệ thống -->
+            <div id="koifish-content" class="tab-content" style="display: none;">
+                <h1>Manage Koi Fish</h1>
+
+                <p>
+                    <a asp-page="./ManageKoiFish/Create">Create New</a>
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.KoiFish[0].FishName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.KoiFish[0].ImagePath)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.KoiFish[0].Age)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.KoiFish[0].Species)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.KoiFish[0].Gender)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.KoiFish[0].Origin)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.KoiFish[0].Note)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.KoiFish[0].CreatedTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.KoiFish[0].Deleted)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.KoiFish)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FishName)
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                                    {
+                                        <img src="@item.ImagePath" alt="Koi Fish Image" style="width: 50px; height: 50px; border-radius: 5px;" />
+                                    }
+                                    else
+                                    {
+                                        <span>No image available</span>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Age)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Species)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Gender)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Origin)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Note)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Deleted)
+                                </td>
+                                <td>
+                                    <a asp-page="./ManageKoiFish/Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-page="./ManageKoiFish/Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-page="./ManageKoiFish/Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<style>
+    /* Styles for layout and appearance */
+    .admin-container {
+        display: flex;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 250px;
+        background-color: #343a40;
+        color: #fff;
+        padding: 20px;
+        border-right: 1px solid #444;
+    }
+
+        .sidebar h3 {
+            margin-top: 0;
+            font-size: 1.2em;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .sidebar ul li {
+                margin: 15px 0;
+            }
+
+                .sidebar ul li a {
+                    text-decoration: none;
+                    color: #adb5bd;
+                    font-size: 1.1em;
+                    transition: color 0.3s;
+                }
+
+                    .sidebar ul li a:hover {
+                        color: #fff;
+                    }
+
+    .content {
+        margin-left: 100px;
+        margin-right: -100px;
+        padding: 20px;
+        flex: 1;
+        background-color: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+        .tab-content.active {
+            display: block;
+        }
+</style>
+
+<script>
+    function showContent(tab) {
+        // Hide all tab content
+        var contents = document.querySelectorAll('.tab-content');
+        contents.forEach(function (content) {
+            content.style.display = 'none';
+        });
+
+        // Remove 'active' class from all sidebar links
+        var tabs = document.querySelectorAll('.sidebar ul li a');
+        tabs.forEach(function (tab) {
+            tab.classList.remove('active');
+        });
+
+        // Show selected tab content
+        document.getElementById(tab + '-content').style.display = 'block';
+
+        // Set active class for clicked tab
+        document.getElementById(tab + '-tab').classList.add('active');
+    }
+
+    // Set default active tab on page load
+    window.onload = function () {
+        showContent('user');
+    };
+</script>
