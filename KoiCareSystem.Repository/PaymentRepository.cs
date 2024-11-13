@@ -2,41 +2,51 @@
 using KoiCareSystem.DAO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KoiCareSystem.Repository
 {
     public class PaymentRepository : IPaymentRepository
     {
+        // Create a new payment
         public void CreatePayment(Payment payment)
         {
-            throw new NotImplementedException();
+            PaymentDAO.Instance.AddPayment(payment);
         }
 
+        // Delete a payment by its ID
         public void DeletePayment(int id)
         {
-            throw new NotImplementedException();
+            PaymentDAO.Instance.DeletePayment(id);
         }
 
+        // Retrieve all payments
         public List<Payment> GetAllPayments()
         {
-            throw new NotImplementedException();
+            return PaymentDAO.Instance.GetAllPayments();
         }
 
-        public List<Payment> GetHistoryPayments(int orderId) => PaymentDAO.Instance.GetHistoryPayments(orderId);
+        // Retrieve payment history for a specific order
+        public List<Payment> GetHistoryPayments(int orderId)
+        {
+            return PaymentDAO.Instance.GetHistoryPayments(orderId);
+        }
 
+        // Retrieve a payment by its ID
         public Payment GetPaymentById(int id)
         {
-            throw new NotImplementedException();
+            return PaymentDAO.Instance.GetPaymentById(id);
         }
 
-        public List<Payment> GetPaymentsByUserId(int userId) => PaymentDAO.Instance.GetPaymentsByUserId(userId);
+        // Retrieve payments by user ID
+        public List<Payment> GetPaymentsByUserId(int userId)
+        {
+            return PaymentDAO.Instance.GetPaymentsByUserId(userId);
+        }
 
+        // Update an existing payment
         public void UpdatePayment(Payment payment)
         {
-            throw new NotImplementedException();
+            PaymentDAO.Instance.UpdatePayment(payment);
         }
     }
 }

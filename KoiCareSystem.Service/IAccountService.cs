@@ -17,6 +17,7 @@ namespace KoiCareSystem.Service
 
         public void StoreVerificationToken(string email, string token);
 
+        public bool ResetPassword(int id, string newPassword);
         public bool ValidateVerificationToken(string email, string token);
         public void ActivateAccount(string email);
         public Account? CheckLogin(string email, string password);
