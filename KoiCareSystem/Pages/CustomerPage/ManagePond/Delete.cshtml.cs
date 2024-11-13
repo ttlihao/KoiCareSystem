@@ -57,7 +57,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManagePond
                 pondService.DeletePond(id);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }

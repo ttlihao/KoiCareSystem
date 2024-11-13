@@ -70,7 +70,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
             // Gọi service để tạo mới cá Koi
             koiFishService.CreateKoiFish(KoiFish);
 
-            return RedirectToPage("/AccountPage/Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }

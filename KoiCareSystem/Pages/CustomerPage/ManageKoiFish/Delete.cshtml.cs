@@ -57,7 +57,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }
