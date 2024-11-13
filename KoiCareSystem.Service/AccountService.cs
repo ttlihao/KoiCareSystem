@@ -85,5 +85,10 @@ namespace KoiCareSystem.Service
         {
             _accountRepository.ActivateAccount(email);
         }
+
+        public bool ResetPassword(int id, string newPassword)
+        {
+            return _accountRepository.ResetPassword(id, newPassword);    
+        }
     }
 }

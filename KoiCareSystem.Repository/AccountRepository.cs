@@ -27,7 +27,9 @@ namespace KoiCareSystem.Repository
         public List<Account> GetAllAccounts() => AccountDAO.Instance.GetAllAccounts();
 
 
-        public void Register(Account account) => AccountDAO.Instance.Register(account); 
+        public void Register(Account account) => AccountDAO.Instance.Register(account);
+
+        public bool ResetPassword(int id, string newPassword) => AccountDAO.Instance.ResetPassword(id, newPassword);
 
         public void UpdateAccount(Account account) => AccountDAO.Instance.UpdateAccount(account);
     }

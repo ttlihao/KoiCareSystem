@@ -107,5 +107,27 @@ namespace KoiCareSystem.DAO
             // Lưu thay đổi vào cơ sở dữ liệu
             _context.SaveChanges();
         }
+
+        public List<KoiFish> GetKoiFishByAccountId(int accountId)
+        {
+            var koiFishes = _context.PondKoiFishes
+                .Where(pkf => pkf.Pond != null && pkf.Pond.AccountId == accountId) // Đảm bảo Pond không null trước khi lấy AccountId
+                .Select(pkf => pkf.Koifish)
+                .Where(kf => kf != null && kf.Deleted == false) // Đảm bảo KoiFish không null và chưa bị xóa
+                .ToList();
+
+            if (!koiFishes.Any())
+            {
+                Console.WriteLine("No koi fish found for the specified account.");
+            }
+            else
+            {
+                Console.WriteLine($"Found {koiFishes.Count} koi fish(es) for the specified account.");
+            }
+
+            return koiFishes;
+        }
+
+
     }
 }

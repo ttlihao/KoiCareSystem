@@ -18,5 +18,7 @@ namespace KoiCareSystem.Service.Interfaces
         public Pond GetPondById(int id);
 
         public List<Pond> GetAllPonds();
+
+        public List<Pond> GetPondsByAccountId(int accountId);
     }
 }

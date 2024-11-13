@@ -22,5 +22,7 @@ namespace KoiCareSystem.Service.Interfaces
         public void UpdateKoiFish(KoiFish updatedKoiFish);
 
         public void DeleteKoiFish(int koiFishId);
+
+        public List<KoiFish> GetKoiFishByAccountId(int accountId);
     }
 }

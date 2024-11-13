@@ -1,0 +1,53 @@
+﻿@page
+@model KoiCareSystem.Pages.CustomerPage.ManagePond.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Pond</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@*             <div class="form-group">
+                <label asp-for="Pond.AccountId" class="control-label"></label>
+                <select asp-for="Pond.AccountId" class ="form-control" asp-items="ViewBag.AccountId"></select>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="Pond.Name" class="control-label"></label>
+                <input asp-for="Pond.Name" class="form-control" />
+                <span asp-validation-for="Pond.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pond.Description" class="control-label"></label>
+                <input asp-for="Pond.Description" class="form-control" />
+                <span asp-validation-for="Pond.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pond.Location" class="control-label"></label>
+                <input asp-for="Pond.Location" class="form-control" />
+                <span asp-validation-for="Pond.Location" class="text-danger"></span>
+            </div>
+           @*  <div class="form-group">
+                <label asp-for="Pond.Status" class="control-label"></label>
+                <input asp-for="Pond.Status" class="form-control" />
+                <span asp-validation-for="Pond.Status" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="/CustomerPage/Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

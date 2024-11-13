@@ -38,6 +38,11 @@ namespace KoiCareSystem.Service
             return pondRepository.GetPondById(id);
         }
 
+        public List<Pond> GetPondsByAccountId(int accountId)
+        {
+            return pondRepository.GetPondsByAccountId(accountId);
+        }
+
         public void UpdatePond(Pond updatedPond)
         {
              pondRepository.UpdatePond(updatedPond);

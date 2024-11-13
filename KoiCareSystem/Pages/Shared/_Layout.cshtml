@@ -54,21 +54,22 @@
                         @if (string.IsNullOrEmpty(fullName))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="/Login">Login</a>
+                                <a class="nav-link text-white" href="/Login">Login</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="@avatarUrl" alt="Avatar" class="rounded-circle" style="width: 30px; height: 30px;" />
                                     @fullName
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" href="/AccountPage/Details?id=@userId">Profile</a></li>
-                                    <li><a class="dropdown-item" href="/AccountPage/Settings">Settings</a></li>
-                                    <li><a class="dropdown-item" href="/Logout">Logout</a></li>
+                                    <li><a class="dropdown-item" href="/ResetPassword">Reset Password</a></li>
                                     <li><a class="dropdown-item" href="/UserPaymentHistory">Payment History</a></li>
+                                    <li><a class="dropdown-item" href="/CustomerPage">Manage</a></li>
+                                    <li><a class="dropdown-item" href="/Logout">Logout</a></li>
                                 </ul>
                             </li>
                         }

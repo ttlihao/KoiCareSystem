@@ -18,6 +18,8 @@ namespace KoiCareSystem.Repository
 
         public List<KoiFish> GetAllKoiFish() =>KoiFishDAO.Instance.GetAllKoiFish();
 
+        public List<KoiFish> GetKoiFishByAccountId(int accountId) => KoiFishDAO.Instance.GetKoiFishByAccountId(accountId);
+
 
         public KoiFish GetKoiFishById(int id) => KoiFishDAO.Instance.GetKoiFishById(id);
 
