@@ -19,7 +19,7 @@ public partial class Pond
 
     public bool? Deleted { get; set; }
 
-    public virtual Account Account { get; set; } = null!;
+    public virtual Account? Account { get; set; }
 
     public virtual ICollection<CareSchedule> CareSchedules { get; set; } = new List<CareSchedule>();
 

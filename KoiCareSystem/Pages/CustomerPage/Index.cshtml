@@ -34,9 +34,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Pond[0].Location)
             </th>
-            <th>
+@*             <th>
                 @Html.DisplayNameFor(model => model.Pond[0].Status)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Pond[0].Deleted)
             </th>
@@ -58,14 +58,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Location)
             </td>
-            <td>
+@*             <td>
                 @Html.DisplayFor(modelItem => item.Status)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Deleted)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Account.Password)
+                @Html.DisplayFor(modelItem => item.Account.Email)
             </td>
             <td>
                 <a asp-page="./ManagePond/Edit" asp-route-id="@item.Id">Edit</a> |

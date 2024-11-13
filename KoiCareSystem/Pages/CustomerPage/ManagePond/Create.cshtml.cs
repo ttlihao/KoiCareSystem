@@ -46,8 +46,10 @@ namespace KoiCareSystem.Pages.CustomerPage.ManagePond
         {
             try
             {
+
                 int? accountId = HttpContext.Session.GetInt32("UserId");
                 Pond.AccountId = accountId.Value;
+                Pond.Account = accountService.GetAccountById(accountId.Value);
                 pondService.CreatePond(Pond);
             }
             catch (Exception ex)
@@ -56,7 +58,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManagePond
                 return Page();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }

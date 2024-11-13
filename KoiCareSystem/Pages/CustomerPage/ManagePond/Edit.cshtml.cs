@@ -24,7 +24,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManagePond
         }
 
         [BindProperty]
-        public Pond Pond { get; set; } = default!;
+        public Pond Pond { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -39,7 +39,14 @@ namespace KoiCareSystem.Pages.CustomerPage.ManagePond
                 return NotFound();
             }
             Pond = pond;
-            ViewData["AccountId"] = new SelectList(accountService.GetAllAccounts(), "Id", "Name");
+            int? accountId = HttpContext.Session.GetInt32("UserId");
+
+            // If AccountId is null, redirect the user to the login page (or handle accordingly)
+            if (!accountId.HasValue)
+            {
+                // Optionally, redirect to the login page if the user is not logged in
+                return RedirectToPage("/Login");
+            }
             return Page();
         }
 
@@ -52,25 +59,48 @@ namespace KoiCareSystem.Pages.CustomerPage.ManagePond
                 return Page();
             }
 
+            int? accountId = HttpContext.Session.GetInt32("UserId");
+            if (!accountId.HasValue)
+            {
+                ModelState.AddModelError(string.Empty, "User is not logged in. Please log in first.");
+                return Page();
+            }
 
             try
             {
+                // Retrieve and set the Account object
+                var account = accountService.GetAccountById(accountId.Value);
+                if (account == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Account not found. Please log in again.");
+                    return Page();
+                }
+
+                Pond.AccountId = accountId.Value;
+                Pond.Account = account;  // Set the Account object
+                Pond.Deleted = false;
+
                 pondService.UpdatePond(Pond);
             }
             catch (DbUpdateConcurrencyException)
             {
                 if (!PondExists(Pond.Id))
                 {
+                    ModelState.AddModelError(string.Empty, "The pond could not be found. It may have been deleted.");
                     return NotFound();
                 }
                 else
                 {
+                    ModelState.AddModelError(string.Empty, "An unexpected error occurred while updating the pond.");
                     throw;
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
+
+
+
 
         private bool PondExists(int id)
         {
