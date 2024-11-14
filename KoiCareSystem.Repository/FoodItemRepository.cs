@@ -1,5 +1,7 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KoiCareSystem.Repository
 {
@@ -7,40 +9,40 @@ namespace KoiCareSystem.Repository
     {
         private readonly FoodItemDAO _foodItemDAO;
 
-        // Constructor
-        public FoodItemRepository()
+        // Constructor with Dependency Injection
+        public FoodItemRepository(FoodItemDAO foodItemDAO)
         {
-            _foodItemDAO = new FoodItemDAO(); // Alternatively, use dependency injection
+            _foodItemDAO = foodItemDAO;
         }
 
-        // Create a new FoodItem
-        public void CreateFoodItem(FoodItem foodItem)
+        // Create a new FoodItem asynchronously
+        public async Task CreateFoodItemAsync(FoodItem foodItem)
         {
-            _foodItemDAO.CreateFoodItem(foodItem);
+            await _foodItemDAO.CreateFoodItemAsync(foodItem);
         }
 
-        // Retrieve all FoodItems
-        public List<FoodItem> GetAllFoodItems()
+        // Retrieve all FoodItems asynchronously
+        public async Task<List<FoodItem>> GetAllFoodItemsAsync()
         {
-            return _foodItemDAO.GetAllFoodItems();
+            return await _foodItemDAO.GetAllFoodItemsAsync();
         }
 
-        // Retrieve a FoodItem by Id
-        public FoodItem GetFoodItemById(int id)
+        // Retrieve a FoodItem by Id asynchronously
+        public async Task<FoodItem> GetFoodItemByIdAsync(int id)
         {
-            return _foodItemDAO.GetFoodItemById(id);
+            return await _foodItemDAO.GetFoodItemByIdAsync(id);
         }
 
-        // Update a FoodItem
-        public void UpdateFoodItem(FoodItem foodItem)
+        // Update a FoodItem asynchronously
+        public async Task UpdateFoodItemAsync(FoodItem foodItem)
         {
-            _foodItemDAO.UpdateFoodItem(foodItem);
+            await _foodItemDAO.UpdateFoodItemAsync(foodItem);
         }
 
-        // Delete (soft delete) a FoodItem
-        public void DeleteFoodItem(int id)
+        // Delete (soft delete) a FoodItem asynchronously
+        public async Task DeleteFoodItemAsync(int id)
         {
-            _foodItemDAO.DeleteFoodItem(id);
+            await _foodItemDAO.DeleteFoodItemAsync(id);
         }
     }
 }

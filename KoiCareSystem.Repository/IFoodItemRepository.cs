@@ -1,14 +1,12 @@
 ﻿using KoiCareSystem.BussinessObject;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace KoiCareSystem.Repository
+public interface IFoodItemRepository
 {
-    public interface IFoodItemRepository
-    {
-        // Define CRUD operations
-        List<FoodItem> GetAllFoodItems();
-        FoodItem GetFoodItemById(int id);
-        void CreateFoodItem(FoodItem foodItem);
-        void UpdateFoodItem(FoodItem foodItem);
-        void DeleteFoodItem(int id);
-    }
+    Task CreateFoodItemAsync(FoodItem foodItem);
+    Task<List<FoodItem>> GetAllFoodItemsAsync();
+    Task<FoodItem> GetFoodItemByIdAsync(int id);
+    Task UpdateFoodItemAsync(FoodItem foodItem);
+    Task DeleteFoodItemAsync(int id);
 }
