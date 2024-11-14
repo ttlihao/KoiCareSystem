@@ -47,19 +47,34 @@ namespace KoiCareSystem.Pages.CustomerPage.ManagePond
         {
             try
             {
-
                 int? accountId = HttpContext.Session.GetInt32("UserId");
+
+                if (accountId == null)
+                {
+                    ModelState.AddModelError(string.Empty, "User is not logged in.");
+                    return Page();
+                }
+
                 Pond.AccountId = accountId.Value;
+                Pond.Status = "ACTIVE";
                 Pond.Account = accountService.GetAccountById(accountId.Value);
+                if (Pond.Account == null)
+                {
+                    ModelState.AddModelError(string.Empty, "The specified account does not exist.");
+                    return Page();
+                }
+
                 pondService.CreatePond(Pond);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                // Add an error message to ModelState
+                ModelState.AddModelError(string.Empty, $"Error: {ex.InnerException?.Message}"); // For debugging; remove in production
                 return Page();
             }
 
             return RedirectToPage("/CustomerPage/Index");
         }
+
     }
 }

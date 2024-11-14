@@ -6,6 +6,7 @@ using KoiCareSystem.Service.Interfaces;
 
 using KoiCareSystem.DAO;
 using KoiCareSystem.BussinessObject;
+using FluentAssertions.Common;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,10 +26,12 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddScoped<IKoiFishRepository, KoiFishRepository>();
 builder.Services.AddScoped<IKoiFishService, KoiFishService>();
-
+builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
+builder.Services.AddScoped<IFoodItemService, FoodItemService>();
 builder.Services.AddScoped<IPondService, PondService>();
 builder.Services.AddScoped<IPondRepository, PondRepository>();
-
+builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
 builder.Services.AddScoped<ICarePropertyRepository, CarePropertyRepository>();
 builder.Services.AddScoped<ICarePropertyService, CarePropertyService>();
 
@@ -41,14 +44,26 @@ builder.Services.AddScoped<IPondFeedingService, PondFeedingService>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
-
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<OrderDetailDAO>();
+builder.Services.AddScoped<OrderDAO>();
+builder.Services.AddScoped<FoodItemDAO>();
 builder.Services.AddTransient<EmailService>();
 builder.Services.AddScoped<CarekoisystemContext>();
 builder.Services.AddScoped<PondDAO>();
+builder.Services.AddScoped<OrderDAO>();
 builder.Services.AddScoped<CarePropertyDAO>();
 builder.Services.AddScoped<CareScheduleDAO>();
 builder.Services.AddScoped<FeedingDAO>();
-builder.Services.AddSession();
+builder.Services.AddScoped<OrderDAO>();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set as needed
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 
 

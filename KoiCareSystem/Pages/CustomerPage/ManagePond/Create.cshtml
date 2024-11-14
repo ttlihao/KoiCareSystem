@@ -5,49 +5,129 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>Pond</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-@*             <div class="form-group">
-                <label asp-for="Pond.AccountId" class="control-label"></label>
-                <select asp-for="Pond.AccountId" class ="form-control" asp-items="ViewBag.AccountId"></select>
-            </div> *@
-            <div class="form-group">
-                <label asp-for="Pond.Name" class="control-label"></label>
-                <input asp-for="Pond.Name" class="form-control" />
-                <span asp-validation-for="Pond.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pond.Description" class="control-label"></label>
-                <input asp-for="Pond.Description" class="form-control" />
-                <span asp-validation-for="Pond.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pond.Location" class="control-label"></label>
-                <input asp-for="Pond.Location" class="form-control" />
-                <span asp-validation-for="Pond.Location" class="text-danger"></span>
-            </div>
-           @*  <div class="form-group">
-                <label asp-for="Pond.Status" class="control-label"></label>
-                <input asp-for="Pond.Status" class="form-control" />
-                <span asp-validation-for="Pond.Status" class="text-danger"></span>
-            </div> *@
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create new Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #3498db, #8e44ad);
+            height: 100vh;
+        }
+
+        .create-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 7%;
+            left: 40%;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .create-container h2 {
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .btn-submit {
+            background-color: #3498db;
+            color: white;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+            .btn-submit:hover {
+            background-color: #2980b9;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .links a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="create-container">
+
+        <!-- Display validation summary for any errors -->
+        <div class="text-danger">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        </div>
+
+        <h2>Create new Pond</h2>
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @*             <div class="form-group">
+                    <label asp-for="Pond.AccountId" class="control-label"></label>
+                    <select asp-for="Pond.AccountId" class ="form-control" asp-items="ViewBag.AccountId"></select>
+                    </div> *@
+                    <div class="form-group">
+                        <label asp-for="Pond.Name" class="control-label"></label>
+                        <input asp-for="Pond.Name" class="form-control" />
+                        <span asp-validation-for="Pond.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Pond.Description" class="control-label"></label>
+                        <input asp-for="Pond.Description" class="form-control" />
+                        <span asp-validation-for="Pond.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Pond.Location" class="control-label"></label>
+                        <input asp-for="Pond.Location" class="form-control" />
+                        <span asp-validation-for="Pond.Location" class="text-danger"></span>
+                    </div>
+                    @*  <div class="form-group">
+                    <label asp-for="Pond.Status" class="control-label"></label>
+                    <input asp-for="Pond.Status" class="form-control" />
+                    <span asp-validation-for="Pond.Status" class="text-danger"></span>
+                    </div> *@
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn-submit" />
+                    </div>
+                </form>
+
+        <div class="links">
+            <a asp-page="/CustomerPage/Index">Back to List</a>
+        </div>
+
     </div>
-</div>
 
-<div>
-    <a asp-page="/CustomerPage/Index">Back to List</a>
-</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+</body>
+
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
