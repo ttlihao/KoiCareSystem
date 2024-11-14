@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace KoiCareSystem.Repository
+namespace KoiCareSystem.Repository.Interfaces
 {
     public interface IOrderRepository
     {

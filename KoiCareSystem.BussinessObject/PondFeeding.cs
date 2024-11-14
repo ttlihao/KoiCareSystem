@@ -5,7 +5,7 @@ namespace KoiCareSystem.BussinessObject;
 
 public partial class PondFeeding
 {
-    public int Id { get; set; }
+    public int? Id { get; set; }
 
     public int? PondId { get; set; }
 

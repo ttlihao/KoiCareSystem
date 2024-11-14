@@ -12,6 +12,7 @@
             <ul>
                 <li><a href="#" onclick="showContent('pond')" id="user-tab">Manage Pond</a></li>
                 <li><a href="#" onclick="showContent('koifish')" id="koifish-tab">Manage Koi Fish</a></li>
+            <li><a href="#" onclick="showContent('feeding')" id="koifish-tab">Manage Feeding</a></li>
             </ul>
         </div>
 
@@ -132,6 +133,58 @@
                     </tbody>
                 </table>
             </div>
+
+        <div id="feeding-content" class="tab-content" style="display: none;">
+            <h1>Manage Feeding</h1>
+
+            <p>
+                <a asp-page="./FeedingPage/Create" class="btn btn-primary">Create New</a>
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Feeding.FirstOrDefault().PondFeedingId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Feeding.FirstOrDefault().FoodType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Feeding.FirstOrDefault().FeedAmount)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Feeding.FirstOrDefault().FeedingTime)
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Feeding != null && Model.Feeding.Any())
+                    {
+                        @foreach (var item in Model.Feeding)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.PondFeedingId)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FoodType)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FeedAmount)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FeedingTime)</td>
+                                <td>
+                                    <a asp-page="./FeedingPage/Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-page="./FeedingPage/Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-page="./FeedingPage/Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center">No feeding records available.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         </div>
     </div>
 

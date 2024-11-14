@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.FeedingPage
+namespace KoiCareSystem.Pages.CustomerPage.FeedingPage
 {
     public class CreateModel : PageModel
     {
@@ -43,14 +43,14 @@ namespace KoiCareSystem.Pages.FeedingPage
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || feedingService.GetListFeeding()== null)
+            if (!ModelState.IsValid || feedingService.GetListFeeding() == null)
             {
                 return Page();
             }
 
             feedingService.AddFeeding(Feeding);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }
