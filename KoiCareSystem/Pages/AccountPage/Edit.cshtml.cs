@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Threading.Tasks;
 using KoiCareSystem.BussinessObject;
-using KoiCareSystem.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.AccountPage
 {

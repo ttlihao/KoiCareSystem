@@ -12,17 +12,17 @@ namespace KoiCareSystem.Pages.CareSchedulePage
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private IPondService pondService;
         private ICareScheduleService careScheduleService;
-        public CreateModel(KoiCareSystem.DAO.CarekoisystemContext context, ICareScheduleService careScheduleService)
+        public CreateModel(IPondService pondService, ICareScheduleService careScheduleService)
         {
-            _context = context;
+            this.pondService = pondService;
             this.careScheduleService = careScheduleService;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["PondId"] = new SelectList(_context.Ponds, "Id", "Name");
+        ViewData["PondId"] = new SelectList(pondService.GetAllPonds(), "Id", "Name");
             return Page();
         }
 

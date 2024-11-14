@@ -1,3 +1,5 @@
+using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -5,16 +7,16 @@ namespace KoiCareSystem.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IPondFeedingService _pondFeedingService;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IPondFeedingService pondFeedingService)
         {
-            _logger = logger;
+            _pondFeedingService = pondFeedingService;
         }
-
+        public IList<PondFeeding> PondFeedings { get; set; } = default;
         public void OnGet()
         {
-
+            PondFeedings = _pondFeedingService.GetListPondFeeding();
         }
     }
 }

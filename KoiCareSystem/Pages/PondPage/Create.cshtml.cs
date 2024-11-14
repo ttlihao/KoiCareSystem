@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
-using KoiCareSystem.Service;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.PondPage
 {

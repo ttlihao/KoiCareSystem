@@ -9,6 +9,7 @@ using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
 using KoiCareSystem.Service;
 using Microsoft.Identity.Client;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CustomerPage.ManagePond
 {

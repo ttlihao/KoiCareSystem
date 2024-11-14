@@ -2,6 +2,7 @@ using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CustomerPage
 {
