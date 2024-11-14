@@ -5,6 +5,7 @@
     var userId = Context.Session.GetInt32("UserId");
     var fullName = Context.Session.GetString("FullName");
     var avatarUrl = Context.Session.GetString("AvatarUrl");
+    var RoleID = Context.Session.GetString("RoleID");
     var cartItemCount = Context.Session.GetInt32("CartItemCount") ?? 0; // Example of getting cart item count
 }
 <head>
@@ -36,7 +37,7 @@
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
-                        @if (!string.IsNullOrEmpty(fullName)) <!-- Show cart icon only if user is logged in -->
+                        @if (!string.IsNullOrEmpty(fullName)) 
                         {
                             <!-- Cart Icon -->
                             <li class="nav-item">
@@ -62,7 +63,9 @@
                                     <li><a class="dropdown-item" href="/AccountPage/Details?id=@userId">Profile</a></li>
                                     <li><a class="dropdown-item" href="/ResetPassword">Reset Password</a></li>
                                     <li><a class="dropdown-item" href="/UserPaymentHistory">Payment History</a></li>
-                                    <li><a class="dropdown-item" href="/CustomerPage">Manage</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="@(RoleID == "admin" ? "/AccountPage" : "/CustomerPage")">Manage</a>
+                                    </li>
                                     <li><a class="dropdown-item" href="/Logout">Logout</a></li>
                                 </ul>
                             </li>
