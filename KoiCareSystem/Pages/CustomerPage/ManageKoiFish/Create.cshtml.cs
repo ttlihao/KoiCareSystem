@@ -38,7 +38,8 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
         public IActionResult OnGet()
         {
             // Lấy danh sách các ao và khởi tạo PondSelectList
-            PondSelectList = new SelectList(pondService.GetAllPonds(), "Id", "Name");
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            PondSelectList = new SelectList(pondService.GetPondsByAccountId(userId.Value), "Id", "Name");
             return Page();
         }
 
