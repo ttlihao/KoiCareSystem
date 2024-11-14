@@ -1,0 +1,70 @@
+﻿@page
+@model KoiCareSystem.Pages.CartPageModel
+
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<h1>Your Cart</h1>
+
+@if (Model.CartItems.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.FoodName</td>
+                    <td>$@item.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>$@item.Total</td>
+                    <td>
+                        <!-- Remove Button with data attribute for FoodItemId -->
+                        <button type="button" class="btn btn-danger btn-sm remove-from-cart" data-fooditemid="@item.FoodItemId">Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p><strong>Total Amount:</strong> $@Model.TotalAmount</p>
+    <form method="post" asp-page-handler="Checkout">
+        <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+    </form>
+}
+else
+{
+    <p>Your cart is empty.</p>
+}
+
+<script>
+    document.querySelectorAll('.remove-from-cart').forEach(button => {
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const foodItemId = event.target.getAttribute('data-fooditemid');
+
+            // Call server to remove item
+            const response = await fetch(`?handler=RemoveFromCart&foodItemId=${foodItemId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                // Reload or update cart UI
+                location.reload(); // Reload the page to show updated cart
+            } else {
+                alert('Failed to remove item from cart');
+            }
+        });
+    });
+</script>

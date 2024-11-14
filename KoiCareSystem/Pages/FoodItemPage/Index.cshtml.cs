@@ -11,10 +11,12 @@ namespace KoiCareSystem.Pages.FoodItemPage
     public class IndexModel : PageModel
     {
         private readonly IFoodItemService _foodItemService;
+        private readonly IOrderService _orderService;
 
-        public IndexModel(IFoodItemService foodItemService)
+        public IndexModel(IFoodItemService foodItemService, IOrderService orderService)
         {
             _foodItemService = foodItemService;
+            _orderService = orderService;
         }
 
         // Properties for search and sort
@@ -29,13 +31,12 @@ namespace KoiCareSystem.Pages.FoodItemPage
         // Load food items with search and sort applied
         public async Task<IActionResult> OnGetAsync()
         {
-            // Get all food items
             var foodItems = await _foodItemService.GetAllFoodItemsAsync();
 
             // Filter by search term
             if (!string.IsNullOrEmpty(SearchTerm))
             {
-                foodItems = foodItems.Where(f => f.FoodName.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+                foodItems = foodItems.Where(f => f.FoodName.Contains(SearchTerm, System.StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
             // Sort food items
@@ -50,6 +51,35 @@ namespace KoiCareSystem.Pages.FoodItemPage
 
             FilteredFoodItems = foodItems;
             return Page();
+        }
+
+
+        public async Task<IActionResult> OnPostAddToCart(int itemId, int quantity)
+        {
+            var foodItem = await _foodItemService.GetFoodItemByIdAsync(itemId);
+
+            if (foodItem == null)
+            {
+                return new JsonResult(new { success = false, message = "Item not found." });
+            }
+
+            int accountId = GetUserAccountId();
+            var order = await _orderService.GetOrCreateOrderAsync(accountId);
+
+            await _orderService.AddOrderDetailAsync(order.Id, itemId, quantity, foodItem.Price ?? 0);
+
+            // Return JSON with success message
+            return new JsonResult(new { success = true, message = "Item added to cart successfully." });
+        }
+
+
+
+
+
+        private int GetUserAccountId()
+        {
+            // Replace this with actual logic to get the logged-in user's account ID
+            return HttpContext.Session.GetInt32("UserId") ?? 0;
         }
     }
 }

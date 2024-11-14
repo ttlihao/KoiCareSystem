@@ -1,19 +1,27 @@
 ﻿using KoiCareSystem.BussinessObject;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KoiCareSystem.DAO
 {
     public class OrderDetailDAO
     {
-        // Create a new OrderDetail
-        public void CreateOrderDetail(OrderDetail orderDetail)
+        private readonly CarekoisystemContext _context;
+
+        public OrderDetailDAO(CarekoisystemContext context)
+        {
+            _context = context;
+        }
+
+     
+        public async Task CreateOrderDetailAsync(OrderDetail orderDetail)
         {
             try
             {
-                using (var context = new CarekoisystemContext())
-                {
-                    context.OrderDetails.Add(orderDetail);
-                    context.SaveChanges();
-                }
+                await _context.OrderDetails.AddAsync(orderDetail);
+                await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -21,15 +29,11 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Retrieve all OrderDetails
-        public List<OrderDetail> GetAllOrderDetails()
+        public async Task<List<OrderDetail>> GetAllOrderDetailsAsync()
         {
             try
             {
-                using (var context = new CarekoisystemContext())
-                {
-                    return context.OrderDetails.ToList();
-                }
+                return await _context.OrderDetails.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -38,15 +42,11 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Retrieve OrderDetail by Id
-        public OrderDetail GetOrderDetailById(int id)
+        public async Task<OrderDetail?> GetOrderDetailByIdAsync(int id)
         {
             try
             {
-                using (var context = new CarekoisystemContext())
-                {
-                    return context.OrderDetails.FirstOrDefault(od => od.Id == id);
-                }
+                return await _context.OrderDetails.FirstOrDefaultAsync(od => od.Id == id);
             }
             catch (Exception ex)
             {
@@ -55,24 +55,39 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Update an existing OrderDetail
-        public void UpdateOrderDetail(OrderDetail updatedOrderDetail)
+        public async Task<OrderDetail?> GetOrderDetailAsync(int orderId, int foodItemId)
         {
             try
             {
-                using (var context = new CarekoisystemContext())
-                {
-                    var existingOrderDetail = context.OrderDetails.FirstOrDefault(od => od.Id == updatedOrderDetail.Id);
-                    if (existingOrderDetail != null)
-                    {
-                        existingOrderDetail.OrderId = updatedOrderDetail.OrderId;
-                        existingOrderDetail.FoodItemId = updatedOrderDetail.FoodItemId;
-                        existingOrderDetail.Price = updatedOrderDetail.Price;
-                        existingOrderDetail.Quantity = updatedOrderDetail.Quantity;
-                        existingOrderDetail.Total = updatedOrderDetail.Total;
+                return await _context.OrderDetails
+                                     .FirstOrDefaultAsync(od => od.OrderId == orderId && od.FoodItemId == foodItemId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving order detail by OrderId and FoodItemId: {ex.Message}");
+                return null;
+            }
+        }
 
-                        context.SaveChanges();
-                    }
+       
+        public async Task UpdateOrderDetailAsync(OrderDetail updatedOrderDetail)
+        {
+            try
+            {
+                var existingOrderDetail = await _context.OrderDetails.FirstOrDefaultAsync(od => od.Id == updatedOrderDetail.Id);
+                if (existingOrderDetail != null)
+                {
+                    existingOrderDetail.OrderId = updatedOrderDetail.OrderId;
+                    existingOrderDetail.FoodItemId = updatedOrderDetail.FoodItemId;
+                    existingOrderDetail.Price = updatedOrderDetail.Price;
+                    existingOrderDetail.Quantity = updatedOrderDetail.Quantity;
+                    existingOrderDetail.Total = updatedOrderDetail.Total;
+
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    Console.WriteLine($"Order detail with ID {updatedOrderDetail.Id} not found for update.");
                 }
             }
             catch (Exception ex)
@@ -81,20 +96,20 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Delete (soft delete) an OrderDetail
-        public void DeleteOrderDetail(int id)
+        public async Task DeleteOrderDetailAsync(int id)
         {
             try
             {
-                using (var context = new CarekoisystemContext())
+                var orderDetail = await _context.OrderDetails.FirstOrDefaultAsync(od => od.Id == id);
+                if (orderDetail != null)
                 {
-                    var orderDetail = context.OrderDetails.FirstOrDefault(od => od.Id == id);
-                    if (orderDetail != null)
-                    {
-                        // If you have a 'Deleted' column, use soft delete logic here
-                        context.OrderDetails.Remove(orderDetail);
-                        context.SaveChanges();
-                    }
+                    
+                    _context.OrderDetails.Remove(orderDetail);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    Console.WriteLine($"Order detail with ID {id} not found for deletion.");
                 }
             }
             catch (Exception ex)
