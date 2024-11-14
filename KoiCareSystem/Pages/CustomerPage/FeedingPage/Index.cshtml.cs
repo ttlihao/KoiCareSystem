@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.FeedingPage
+namespace KoiCareSystem.Pages.CustomerPage.FeedingPage
 {
     public class IndexModel : PageModel
-    {   
+    {
         private readonly IFeedingService feedingService;
 
         public IndexModel(IFeedingService feedingService)
@@ -19,7 +19,7 @@ namespace KoiCareSystem.Pages.FeedingPage
             this.feedingService = feedingService;
         }
 
-        public IList<Feeding> Feeding { get;set; } = default!;
+        public IList<Feeding> Feeding { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

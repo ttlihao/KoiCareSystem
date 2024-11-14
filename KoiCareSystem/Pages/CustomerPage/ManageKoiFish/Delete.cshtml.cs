@@ -7,29 +7,30 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
 {
     public class DeleteModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly IKoiFishService koiFishService;
 
-        public DeleteModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public DeleteModel(IKoiFishService koiFishService)
         {
-            _context = context;
+            this.koiFishService = koiFishService;
         }
 
         [BindProperty]
         public KoiFish KoiFish { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var koifish = await _context.KoiFishes.FirstOrDefaultAsync(m => m.Id == id);
+            var koifish = koiFishService.GetKoiFishById(id);
 
             if (koifish == null)
             {
@@ -42,19 +43,18 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var koifish = await _context.KoiFishes.FindAsync(id);
+            var koifish = koiFishService.GetKoiFishById(id);
             if (koifish != null)
             {
                 KoiFish = koifish;
-                _context.KoiFishes.Remove(KoiFish);
-                await _context.SaveChangesAsync();
+                koiFishService.DeleteKoiFish(id);
             }
 
             return RedirectToPage("/CustomerPage/Index");
