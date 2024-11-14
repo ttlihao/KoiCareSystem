@@ -20,6 +20,8 @@ namespace KoiCareSystem.Repository
 
         public Pond GetPondById(int id) => PondDAO.Instance.GetPondById(id);
 
+        public List<Pond> GetPondsByAccountId(int accountId) => PondDAO.Instance.GetPondsByAccountId(accountId);
+
         public void UpdatePond(Pond updatedPond) => PondDAO.Instance.UpdatePond(updatedPond);
 
     }

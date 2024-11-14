@@ -31,6 +31,11 @@ namespace KoiCareSystem.Service
            return _koiFishRepo.GetAllKoiFish();
         }
 
+        public List<KoiFish> GetKoiFishByAccountId(int accountId)
+        {
+            return _koiFishRepo.GetKoiFishByAccountId(accountId);
+        }
+
         public KoiFish GetKoiFishById(int id)
         {
            return _koiFishRepo.GetKoiFishById (id);

@@ -1,0 +1,86 @@
+﻿@page
+@model KoiCareSystem.Pages.CustomerPage.ManageKoiFish.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KoiFish[0].FishName)
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KoiFish[0].Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KoiFish[0].Species)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KoiFish[0].Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KoiFish[0].Origin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KoiFish[0].Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KoiFish[0].CreatedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KoiFish[0].Deleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.KoiFish)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FishName)
+                </td>
+                <td>
+                    <!-- Display uploaded image -->
+                    <img src="@item.ImagePath" alt="Koi Fish Image" style="width: 100px; height: auto;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Species)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Origin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deleted)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

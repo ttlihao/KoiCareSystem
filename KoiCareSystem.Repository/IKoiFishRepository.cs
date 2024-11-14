@@ -20,5 +20,7 @@ namespace KoiCareSystem.Repository
 
         public void DeleteKoiFish(int koiFishId);
 
+        public List<KoiFish> GetKoiFishByAccountId(int accountId);
+
     }
 }
