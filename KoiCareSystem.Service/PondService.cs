@@ -38,9 +38,9 @@ namespace KoiCareSystem.Service
             return pondRepository.GetPondById(id);
         }
 
-        public List<Pond> GetPondsByAccountId(int accountId)
+        public async Task<List<Pond>> GetPondsByAccountId(int accountId)
         {
-            return pondRepository.GetPondsByAccountId(accountId);
+            return await pondRepository.GetPondsByAccountId(accountId);
         }
 
         public void UpdatePond(Pond updatedPond)

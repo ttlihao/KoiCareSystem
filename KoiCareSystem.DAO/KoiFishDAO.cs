@@ -1,4 +1,5 @@
 ﻿using KoiCareSystem.BussinessObject;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,6 +112,8 @@ namespace KoiCareSystem.DAO
         public List<KoiFish> GetKoiFishByAccountId(int accountId)
         {
             var koiFishes = _context.PondKoiFishes
+                .Include(c => c.Pond)
+                .Include(c => c.Koifish)
                 .Where(pkf => pkf.Pond != null && pkf.Pond.AccountId == accountId) // Đảm bảo Pond không null trước khi lấy AccountId
                 .Select(pkf => pkf.Koifish)
                 .Where(kf => kf != null && kf.Deleted == false) // Đảm bảo KoiFish không null và chưa bị xóa

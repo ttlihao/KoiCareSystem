@@ -35,7 +35,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManagePond
             else
             {
                 // Get ponds by account ID
-                Pond = pondService.GetPondsByAccountId(userId.Value);
+                Pond = await pondService.GetPondsByAccountId(userId.Value);
             }
         }
 

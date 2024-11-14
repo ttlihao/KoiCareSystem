@@ -19,6 +19,6 @@ namespace KoiCareSystem.Service.Interfaces
 
         public List<Pond> GetAllPonds();
 
-        public List<Pond> GetPondsByAccountId(int accountId);
+        public Task<List<Pond>> GetPondsByAccountId(int accountId);
     }
 }

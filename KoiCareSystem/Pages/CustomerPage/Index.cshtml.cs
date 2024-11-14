@@ -12,7 +12,9 @@ namespace KoiCareSystem.Pages.CustomerPage
         private readonly IKoiFishService koiFishService;
         private readonly IFeedingService feedingService;
 
+        [BindProperty]
         public IList<Pond> Pond { get; set; } = new List<Pond>()!;
+        [BindProperty]
         public IList<KoiFish> KoiFish { get; set; } = new List<KoiFish>()!;
         public IList<Feeding> Feeding { get; set; } = new List<Feeding>()!;
 
@@ -35,21 +37,21 @@ namespace KoiCareSystem.Pages.CustomerPage
 
             // Load ponds and koi fish for the logged-in user
             LoadPonds(userId.Value);
-            LoadKoiFishs();
+            LoadKoiFishs(userId.Value);
 
             return Page();
         }
 
-        private void LoadPonds(int userId)
+        private async void LoadPonds(int userId)
         {
             // Get ponds by account ID
-            Pond = pondService.GetPondsByAccountId(userId);
+            Pond = await pondService.GetPondsByAccountId(userId);
         }
 
-        private void LoadKoiFishs()
+        private void LoadKoiFishs(int userId)
         {
             // Get koi fish by account ID
-            KoiFish = koiFishService.GetAllKoiFish();
+            KoiFish = koiFishService.GetKoiFishByAccountId(userId);
         }
 
         private void LoadFeedings()
