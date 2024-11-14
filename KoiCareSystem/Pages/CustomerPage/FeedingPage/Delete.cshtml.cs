@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.FeedingPage
+namespace KoiCareSystem.Pages.CustomerPage.FeedingPage
 {
     public class DeleteModel : PageModel
     {
@@ -56,7 +56,7 @@ namespace KoiCareSystem.Pages.FeedingPage
                 feedingService.DeleteFeeding(feeding);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }

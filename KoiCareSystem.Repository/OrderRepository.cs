@@ -1,5 +1,6 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
+using KoiCareSystem.Repository.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

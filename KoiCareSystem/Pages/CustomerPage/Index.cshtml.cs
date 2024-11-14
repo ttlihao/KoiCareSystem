@@ -10,9 +10,12 @@ namespace KoiCareSystem.Pages.CustomerPage
     {
         private readonly IPondService pondService;
         private readonly IKoiFishService koiFishService;
+        private readonly IFeedingService feedingService;
 
         public IList<Pond> Pond { get; set; } = new List<Pond>()!;
         public IList<KoiFish> KoiFish { get; set; } = new List<KoiFish>()!;
+        public IList<Feeding> Feeding { get; set; } = new List<Feeding>()!;
+
 
         public IndexModel(IPondService pondService, IKoiFishService koiFishService)
         {
@@ -47,6 +50,12 @@ namespace KoiCareSystem.Pages.CustomerPage
         {
             // Get koi fish by account ID
             KoiFish = koiFishService.GetAllKoiFish();
+        }
+
+        private void LoadFeedings()
+        {
+            // Get koi fish by account ID
+            Feeding = feedingService.GetListFeeding();
         }
     }
 }
