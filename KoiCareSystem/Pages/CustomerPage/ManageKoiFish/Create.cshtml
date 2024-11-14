@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create new Account</title>
+    <title>Create new Koi Fish</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         body {
@@ -29,11 +29,11 @@
             max-width: 400px;
         }
 
-        .create-container h2 {
-            margin-bottom: 20px;
-            font-weight: bold;
-            color: #333;
-        }
+            .create-container h2 {
+                margin-bottom: 20px;
+                font-weight: bold;
+                color: #333;
+            }
 
         .form-control {
             margin-bottom: 15px;
@@ -50,108 +50,99 @@
         }
 
             .btn-submit:hover {
-            background-color: #2980b9;
-        }
+                background-color: #2980b9;
+            }
 
         .links {
             text-align: center;
             margin-top: 10px;
         }
 
-        .links a {
-            color: #3498db;
-            text-decoration: none;
-        }
+            .links a {
+                color: #3498db;
+                text-decoration: none;
+            }
 
-        .links a:hover {
-            text-decoration: underline;
-        }
+                .links a:hover {
+                    text-decoration: underline;
+                }
     </style>
 </head>
 <body>
-  
-
     <div class="create-container">
         <h2>Create new Koi Fish</h2>
 
-        <!-- Update enctype for file upload -->
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <!-- Pond Selection -->
             <div class="form-group">
                 <label asp-for="Pond.Id" class="control-label">Select Pond</label>
                 <select asp-for="Pond.Id" class="form-control" asp-items="Model.PondSelectList"></select>
                 <span asp-validation-for="Pond.Id" class="text-danger"></span>
             </div>
 
+            <!-- Koi Fish Name -->
             <div class="form-group">
-                <label asp-for="KoiFish.FishName" class="control-label"></label>
+                <label asp-for="KoiFish.FishName" class="control-label">Fish Name</label>
                 <input asp-for="KoiFish.FishName" class="form-control" />
                 <span asp-validation-for="KoiFish.FishName" class="text-danger"></span>
             </div>
 
-            <!-- Image upload field -->
+            <!-- Image Upload -->
             <div class="form-group">
                 <label asp-for="ImageFile" class="control-label">Upload Image</label>
                 <input type="file" asp-for="ImageFile" class="form-control" />
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
 
+            <!-- Age -->
             <div class="form-group">
-                <label asp-for="KoiFish.Age" class="control-label"></label>
+                <label asp-for="KoiFish.Age" class="control-label">Age</label>
                 <input asp-for="KoiFish.Age" class="form-control" />
                 <span asp-validation-for="KoiFish.Age" class="text-danger"></span>
             </div>
 
+            <!-- Species -->
             <div class="form-group">
-                <label asp-for="KoiFish.Species" class="control-label"></label>
+                <label asp-for="KoiFish.Species" class="control-label">Species</label>
                 <input asp-for="KoiFish.Species" class="form-control" />
                 <span asp-validation-for="KoiFish.Species" class="text-danger"></span>
             </div>
 
+            <!-- Gender -->
             <div class="form-group">
-                <label asp-for="KoiFish.Gender" class="control-label"></label>
+                <label asp-for="KoiFish.Gender" class="control-label">Gender</label>
                 <input asp-for="KoiFish.Gender" class="form-control" />
                 <span asp-validation-for="KoiFish.Gender" class="text-danger"></span>
             </div>
 
+            <!-- Origin -->
             <div class="form-group">
-                <label asp-for="KoiFish.Origin" class="control-label"></label>
+                <label asp-for="KoiFish.Origin" class="control-label">Origin</label>
                 <input asp-for="KoiFish.Origin" class="form-control" />
                 <span asp-validation-for="KoiFish.Origin" class="text-danger"></span>
             </div>
 
+            <!-- Note -->
             <div class="form-group">
-                <label asp-for="KoiFish.Note" class="control-label"></label>
+                <label asp-for="KoiFish.Note" class="control-label">Note</label>
                 <input asp-for="KoiFish.Note" class="form-control" />
                 <span asp-validation-for="KoiFish.Note" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="KoiFish.CreatedTime" class="control-label"></label>
-                <input asp-for="KoiFish.CreatedTime" class="form-control" />
-                <span asp-validation-for="KoiFish.CreatedTime" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn-submit" />
             </div>
         </form>
+
         <div class="links">
             <a asp-page="/CustomerPage/Index">Back to List</a>
         </div>
     </div>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
 </body>
-
-
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+</html>
