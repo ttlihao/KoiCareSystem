@@ -32,7 +32,7 @@ namespace KoiCareSystem.DAO
 
         public PondFeeding GetPondFeedingId(int? id)
         {
-            return dbContext.PondFeedings.SingleOrDefault(m => m.Id.Equals(id));
+            return dbContext.PondFeedings.SingleOrDefault(m => m.PondId.Equals(id));
         }
 
         public List<PondFeeding> GetListPondFeeding() {

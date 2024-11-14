@@ -14,12 +14,15 @@ namespace KoiCareSystem.DAO
 
         private readonly PondDAO pondDAO;
 
+        private readonly PondFeedingDAO PondFeedingDAO;
+
   
 
-        public FeedingDAO(PondDAO pondDAO)
+        public FeedingDAO(PondDAO pondDAO, PondFeedingDAO PondFeedingDAO)
         {
             this.pondDAO = pondDAO;
             dbContext = new CarekoisystemContext();
+            this.PondFeedingDAO = PondFeedingDAO;
         }
 
         public Feeding GetFeedingByPondID(int? PondId)
@@ -47,7 +50,7 @@ namespace KoiCareSystem.DAO
                     dbContext.Feedings.Add(feeding);
                     dbContext.SaveChanges();
 
-                    PondFeeding pondFeeding = new PondFeeding();
+                    PondFeeding pondFeeding = PondFeedingDAO.Instance.GetPondFeedingId(feedingPond.Id);
                     pondFeeding.FeedingId = feeding.Id;
                     dbContext.PondFeedings.Add(pondFeeding);
                     dbContext.SaveChanges();
