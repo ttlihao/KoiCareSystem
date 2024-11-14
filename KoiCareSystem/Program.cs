@@ -5,7 +5,6 @@ using KoiCareSystem.Service;
 using KoiCareSystem.Service.Interfaces;
 
 using KoiCareSystem.DAO;
-using KoiCareSystem.Repository;
 using KoiCareSystem.BussinessObject;
 
 
