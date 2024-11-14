@@ -61,8 +61,14 @@ namespace KoiCareSystem.DAO
             _context.PondFeedings.Add(pondFeeding);
 
             _context.SaveChanges();
-            
-           
+
+            PondKoiFish pondKoiFish = new PondKoiFish();
+            pondKoiFish.PondId = pond.Id;
+            _context.PondKoiFishes.Add(pondKoiFish);
+            pondKoiFish.KoifishId = null;
+            pondKoiFish.Koifish = null;
+            _context.SaveChanges();
+
         }
 
 

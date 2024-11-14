@@ -69,12 +69,20 @@
     </style>
 </head>
 <body>
+  
+
     <div class="create-container">
         <h2>Create new Koi Fish</h2>
 
         <!-- Update enctype for file upload -->
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Pond.Id" class="control-label">Select Pond</label>
+                <select asp-for="Pond.Id" class="form-control" asp-items="Model.PondSelectList"></select>
+                <span asp-validation-for="Pond.Id" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <label asp-for="KoiFish.FishName" class="control-label"></label>

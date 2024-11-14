@@ -12,6 +12,8 @@ namespace KoiCareSystem.DAO
         private CarekoisystemContext _context;
         private static KoiFishDAO instance;
 
+        private PondDAO pondDAO;
+
         public KoiFishDAO()
         {
             _context = new CarekoisystemContext();
@@ -55,6 +57,7 @@ namespace KoiCareSystem.DAO
             {
                 throw new ArgumentNullException(nameof(koiFish));
             }
+
 
             // Đánh dấu thời gian tạo mới
             koiFish.CreatedTime = DateTime.Now;

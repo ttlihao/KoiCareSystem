@@ -16,6 +16,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
         private readonly IKoiFishService koiFishService;
         private readonly IWebHostEnvironment environment;
 
+
         public CreateModel(IKoiFishService koiFishService, IWebHostEnvironment environment)
         {
             this.koiFishService = koiFishService;
@@ -26,14 +27,18 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
         public KoiFish KoiFish { get; set; } = default!;
 
         [BindProperty]
-        public IFormFile ImageFile { get; set; } // Thuộc tính để lưu trữ file ảnh upload
+        public Pond Pond { get; set; } = default!;
 
+        [BindProperty]
+        public IFormFile ImageFile { get; set; } // Thuộc tính để lưu trữ file ảnh upload
+        public SelectList PondSelectList { get; set; } = default!;
         public IActionResult OnGet()
         {
             return Page();
         }
 
         // Xử lý post để tạo cá Koi mới
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -69,6 +74,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
 
             // Gọi service để tạo mới cá Koi
             koiFishService.CreateKoiFish(KoiFish);
+
 
             return RedirectToPage("/CustomerPage/Index");
         }
