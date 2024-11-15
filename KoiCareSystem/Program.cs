@@ -59,7 +59,6 @@ builder.Services.AddScoped<PondDAO>();
 builder.Services.AddScoped<OrderDAO>();
 builder.Services.AddScoped<CarePropertyDAO>();
 builder.Services.AddScoped<CareScheduleDAO>();
-builder.Services.AddScoped<FeedingDAO>();
 builder.Services.AddScoped<OrderDAO>();
 builder.Services.AddSession(options =>
 {

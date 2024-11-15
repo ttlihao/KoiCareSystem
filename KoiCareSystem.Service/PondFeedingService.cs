@@ -19,6 +19,12 @@ namespace KoiCareSystem.Service
         {
             pondFeedingRepos = new PondFeedingRepos();
         }
+
+        public bool AddPondFeeding(int FeedingID, int PondID)
+        {
+            return pondFeedingRepos.AddPondFeeding(FeedingID, PondID);
+        }
+
         public List<PondFeeding> GetListPondFeeding()
         {
             return pondFeedingRepos.GetListPondFeeding();

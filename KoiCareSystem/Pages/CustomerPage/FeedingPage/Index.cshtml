@@ -1,19 +1,20 @@
 ﻿@page
-@model             IndexModel
+@model KoiCareSystem.Pages.CustomerPage.FeedingPage.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Feeding Index";
 }
 
-<h1>Index</h1>
+<h1>Feeding Records</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Create New Feeding</a>
 </p>
 
 <table class="table">
     <thead>
         <tr>
+            <th>Pond Name</th>
             <th>
                 @Html.DisplayNameFor(model => model.Feeding.FirstOrDefault().PondFeedingId)
             </th>
@@ -35,10 +36,13 @@
             @foreach (var item in Model.Feeding)
             {
                 <tr>
+                    <td>
+                        @item.PondFeedings.FirstOrDefault()?.Pond?.Name ?? "N/A"
+                    </td>
                     <td>@Html.DisplayFor(modelItem => item.PondFeedingId)</td>
                     <td>@Html.DisplayFor(modelItem => item.FoodType)</td>
                     <td>@Html.DisplayFor(modelItem => item.FeedAmount)</td>
-                    <td>@Html.DisplayFor(modelItem => item.FeedingTime)</td>
+                    <td>@item.FeedingTime?.ToString("yyyy-MM-dd HH:mm:ss")</td>
                     <td>
                         <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                         <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
@@ -50,7 +54,7 @@
         else
         {
             <tr>
-                <td colspan="5" class="text-center">No feeding records available.</td>
+                <td colspan="6" class="text-center">No feeding records available.</td>
             </tr>
         }
     </tbody>

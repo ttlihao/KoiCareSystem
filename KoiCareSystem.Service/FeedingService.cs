@@ -18,7 +18,7 @@ namespace KoiCareSystem.Service
         {
             this.feedingRepos = feedingRepos;
         }
-        public bool AddFeeding(Feeding feeding)
+        public Feeding AddFeeding(Feeding feeding)
         {
             return feedingRepos.AddFeeding(feeding);
         }
@@ -31,6 +31,11 @@ namespace KoiCareSystem.Service
         public Feeding GetFeedingByPondID(int? PondId)
         {
             return feedingRepos.GetFeedingByPondID(PondId);
+        }
+
+        public List<Feeding> GetFeedingsByAccount(int accountId)
+        {
+            return feedingRepos.GetFeedingsByAccount(accountId);
         }
 
         public List<Feeding> GetListFeeding()

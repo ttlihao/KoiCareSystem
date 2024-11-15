@@ -46,6 +46,11 @@ namespace KoiCareSystem.Service
     
         }
 
+        public List<WaterParameter> GetListWaterParametersByPond(int pondId)
+        {
+            return waterParameterRepos.GetListWaterParametersByPond(pondId);
+        }
+
         public WaterParameter GetWaterParameterByID(int PondID)
         {
             return waterParameterRepos.GetWaterParameterByID(PondID);

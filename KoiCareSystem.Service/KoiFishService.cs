@@ -17,9 +17,9 @@ namespace KoiCareSystem.Service
         {
             _koiFishRepo = koiFishRepo;
         }
-        public void CreateKoiFish(KoiFish koiFish)
+        public void CreateKoiFish(KoiFish koiFish, int pondId)
         {
-            _koiFishRepo.CreateKoiFish(koiFish);
+            _koiFishRepo.CreateKoiFish(koiFish, pondId);
         }
 
         public void DeleteKoiFish(int koiFishId)
