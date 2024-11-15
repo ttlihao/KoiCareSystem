@@ -9,7 +9,7 @@ using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Repository.Interfaces;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.WaterParameterPage
+namespace KoiCareSystem.Pages.CustomerPage.ManageWaterParameter
 {
     public class CreateModel : PageModel
     {
@@ -22,7 +22,7 @@ namespace KoiCareSystem.Pages.WaterParameterPage
 
         public IActionResult OnGet()
         {
-        ViewData["PondId"] = new SelectList(waterParameterservice.GetListWaterParameters(), "Id", "Name");
+            ViewData["PondId"] = new SelectList(waterParameterservice.GetListWaterParameters(), "Id", "Name");
             return Page();
         }
 
