@@ -18,6 +18,7 @@ namespace KoiCareSystem.Pages.CustomerPage.FeedingPage
 
         private readonly IPondService pondService;
 
+
         public CreateModel(IFeedingService feedingService, IPondFeedingService pondFeedingService, IPondService pondService)
         {
             this.feedingService = feedingService;
@@ -25,30 +26,48 @@ namespace KoiCareSystem.Pages.CustomerPage.FeedingPage
             this.pondService = pondService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            PondSelectList = new SelectList(pondService.GetAllPonds(), "Id", "Name");
+            // Lấy danh sách các ao và khởi tạo PondSelectList
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            PondSelectList = new SelectList(await pondService.GetPondsByAccountId(userId.Value), "Id", "Name");
             return Page();
         }
 
         [BindProperty]
         public Feeding Feeding { get; set; } = default!;
 
+        [BindProperty]
+        public Pond Pond { get; set; } = default!;
+
 
         public SelectList PondSelectList { get; set; } = default!; // SelectList để truyền danh sách hồ
-
-
 
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || feedingService.GetListFeeding() == null)
+            try
             {
+                int? accountId = HttpContext.Session.GetInt32("UserId");
+
+                if (accountId == null)
+                {
+                    ModelState.AddModelError(string.Empty, "User is not logged in.");
+                    return Page();
+                }
+
+                Feeding feeding = feedingService.AddFeeding(Feeding);
+
+                pondFeedingService.AddPondFeeding(feeding.Id, Pond.Id);
+            }
+            catch (Exception ex)
+            {
+                // Add an error message to ModelState
+                ModelState.AddModelError(string.Empty, $"Error: {ex.InnerException?.Message}"); // For debugging; remove in production
                 return Page();
             }
 
-            feedingService.AddFeeding(Feeding);
 
             return RedirectToPage("/CustomerPage/Index");
         }

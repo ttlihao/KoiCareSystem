@@ -16,25 +16,36 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
     {
         private readonly IKoiFishService koiFishService;
         private readonly IWebHostEnvironment environment;
+        private readonly IPondService pondService;
 
-        public CreateModel(IKoiFishService koiFishService, IWebHostEnvironment environment)
+        public CreateModel(IKoiFishService koiFishService, IWebHostEnvironment environment, IPondService pondService)
         {
             this.koiFishService = koiFishService;
             this.environment = environment;
+            this.pondService = pondService;
         }
 
         [BindProperty]
         public KoiFish KoiFish { get; set; } = default!;
 
         [BindProperty]
-        public IFormFile ImageFile { get; set; } // Thuộc tính để lưu trữ file ảnh upload
+        public Pond Pond { get; set; } = default!;
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public IFormFile ImageFile { get; set; } // Thuộc tính để lưu trữ file ảnh upload
+        public SelectList PondSelectList { get; set; } = default!;
+
+        public async Task<IActionResult> OnGet()
         {
+            // Lấy danh sách các ao và khởi tạo PondSelectList
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            PondSelectList = new SelectList(await pondService.GetPondsByAccountId(userId.Value), "Id", "Name");
             return Page();
         }
 
+
         // Xử lý post để tạo cá Koi mới
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -70,6 +81,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
 
             // Gọi service để tạo mới cá Koi
             koiFishService.CreateKoiFish(KoiFish);
+
 
             return RedirectToPage("/CustomerPage/Index");
         }

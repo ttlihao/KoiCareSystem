@@ -11,5 +11,7 @@ namespace KoiCareSystem.Service.Interfaces
     {
         public PondFeeding GetPondFeedingId(int Id);
         public List<PondFeeding> GetListPondFeeding();
+
+        public bool AddPondFeeding(int FeedingID, int PondID);
     }
 }
