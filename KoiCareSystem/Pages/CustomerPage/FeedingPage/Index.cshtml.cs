@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
+using KoiCareSystem.Service;
+using Microsoft.Identity.Client;
 
 namespace KoiCareSystem.Pages.CustomerPage.FeedingPage
 {
@@ -23,7 +25,18 @@ namespace KoiCareSystem.Pages.CustomerPage.FeedingPage
 
         public async Task OnGetAsync()
         {
-            Feeding = feedingService.GetListFeeding();
+            int? userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+            {
+                // Redirect to login if user ID is not in session
+                RedirectToPage("/Login");
+            }
+            else
+            {
+                // Get ponds by account ID
+                Feeding = feedingService.GetFeedingsByAccount(userId.Value);
+            }
         }
     }
 }

@@ -35,11 +35,11 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
         public IFormFile ImageFile { get; set; } // Thuộc tính để lưu trữ file ảnh upload
         public SelectList PondSelectList { get; set; } = default!;
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             // Lấy danh sách các ao và khởi tạo PondSelectList
             int? userId = HttpContext.Session.GetInt32("UserId");
-            PondSelectList = new SelectList(pondService.GetPondsByAccountId(userId.Value), "Id", "Name");
+            PondSelectList = new SelectList(await pondService.GetPondsByAccountId(userId.Value), "Id", "Name");
             return Page();
         }
 

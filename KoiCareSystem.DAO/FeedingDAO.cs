@@ -1,4 +1,5 @@
 ﻿using KoiCareSystem.BussinessObject;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,27 @@ namespace KoiCareSystem.DAO
 
         private readonly PondFeedingDAO PondFeedingDAO;
 
-  
+        private static FeedingDAO instance;
 
-        public FeedingDAO(PondDAO pondDAO, PondFeedingDAO PondFeedingDAO)
+
+        public FeedingDAO()
         {
-            this.pondDAO = pondDAO;
             dbContext = new CarekoisystemContext();
-            this.PondFeedingDAO = PondFeedingDAO;
+        }
+ 
+
+
+        public static FeedingDAO Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new FeedingDAO();
+                }
+
+                return instance;
+            }
         }
 
         public Feeding GetFeedingByPondID(int? PondId)
@@ -30,33 +45,15 @@ namespace KoiCareSystem.DAO
             return dbContext.Feedings.SingleOrDefault(m => m.PondFeedingId.Equals(PondId));
         }
 
-
-
-
-        public bool AddFeeding(Feeding feeding)
+        public Feeding AddFeeding(Feeding feeding)
         {
-            bool isSuccess = false;
             
-          
-            Feeding feed = GetFeedingByPondID(feeding.Id);
-            try
-            {
-                
-                if (feed == null)
-                {
-                    dbContext.Feedings.Add(feeding);
-                    dbContext.SaveChanges();
-                    isSuccess = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Can not save");
-            }
-            return isSuccess;
+            dbContext.Feedings.Add(feeding);
+            dbContext.SaveChanges(); 
+            return feeding;
         }
 
-        public bool DeleteWaterParameter(Feeding feeding)
+        public bool DeleteFeeding(Feeding feeding)
         {
             bool isSuccess = false;
             Feeding feed = GetFeedingByPondID(feeding.Id);
@@ -104,5 +101,34 @@ namespace KoiCareSystem.DAO
             .Where(f => f.IsDeleted == false)
             .ToList();
         }
+
+
+
+        public List<Feeding> GetFeedingsByAccount(int accountId)
+        {
+            try
+            {
+                // Retrieve feedings along with Pond data
+                var feedings = dbContext.Feedings
+                    .Include(f => f.PondFeedings) // Include PondFeedings relationship
+                    .ThenInclude(pf => pf.Pond)   // Include the Pond within each PondFeeding
+                    .Where(f => f.PondFeedings.Any(pf => pf.Pond.AccountId == accountId))
+                    .ToList();
+
+                if (feedings == null || !feedings.Any())
+                {
+                    throw new Exception("No feedings found for this account.");
+                }
+
+                return feedings;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving feedings", ex);
+            }
+        }
+
+
+
     }
 }

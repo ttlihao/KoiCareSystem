@@ -26,11 +26,11 @@ namespace KoiCareSystem.Pages.CustomerPage.FeedingPage
             this.pondService = pondService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             // Lấy danh sách các ao và khởi tạo PondSelectList
             int? userId = HttpContext.Session.GetInt32("UserId");
-            PondSelectList = new SelectList(pondService.GetPondsByAccountId(userId.Value), "Id", "Name");
+            PondSelectList = new SelectList(await pondService.GetPondsByAccountId(userId.Value), "Id", "Name");
             return Page();
         }
 
@@ -56,14 +56,10 @@ namespace KoiCareSystem.Pages.CustomerPage.FeedingPage
                     ModelState.AddModelError(string.Empty, "User is not logged in.");
                     return Page();
                 }
-                if (!ModelState.IsValid || feedingService.GetListFeeding() == null)
-                {
-                    return Page();
-                }
 
-                feedingService.AddFeeding(Feeding);
+                Feeding feeding = feedingService.AddFeeding(Feeding);
 
-                pondFeedingService.AddPondFeeding(Feeding.Id, Pond.Id);
+                pondFeedingService.AddPondFeeding(feeding.Id, Pond.Id);
             }
             catch (Exception ex)
             {

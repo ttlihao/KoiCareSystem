@@ -45,19 +45,24 @@ namespace KoiCareSystem.DAO
 
             try
             {
-                    PondFeeding pondFeeding  = new PondFeeding();
-                    pondFeeding.FeedingId = FeedingID;
-                    pondFeeding.PondId = PondID;
-                    pondFeeding.FeedingDate = DateTime.Now;
-                    dbContext.SaveChanges();
-                    isSuccess = true;
-                
+                PondFeeding pondFeeding = new PondFeeding
+                {
+                    FeedingId = FeedingID,
+                    PondId = PondID,
+                    FeedingDate = DateTime.Now
+                };
+
+                dbContext.PondFeedings.Add(pondFeeding); 
+                dbContext.SaveChanges();
+                isSuccess = true;
             }
             catch (Exception ex)
             {
-                throw new Exception("Can not save");
+                throw new Exception("Cannot save", ex);
             }
+
             return isSuccess;
         }
+
     }
 }
