@@ -106,8 +106,7 @@ namespace KoiCareSystem.DAO
 
         public List<Feeding> GetFeedingsByAccount(int accountId)
         {
-            try
-            {
+    
                 // Retrieve feedings along with Pond data
                 var feedings = dbContext.Feedings
                     .Include(f => f.PondFeedings) // Include PondFeedings relationship
@@ -115,17 +114,10 @@ namespace KoiCareSystem.DAO
                     .Where(f => f.PondFeedings.Any(pf => pf.Pond.AccountId == accountId))
                     .ToList();
 
-                if (feedings == null || !feedings.Any())
-                {
-                    throw new Exception("No feedings found for this account.");
-                }
+              
 
                 return feedings;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error retrieving feedings", ex);
-            }
+         
         }
 
 
