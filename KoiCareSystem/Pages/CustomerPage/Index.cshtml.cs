@@ -8,6 +8,7 @@ namespace KoiCareSystem.Pages.CustomerPage
 {
     public class IndexModel : PageModel
     {
+        private readonly IAccountService accountService;
         private readonly IPondService pondService;
         private readonly IKoiFishService koiFishService;
         private readonly IFeedingService feedingService;
@@ -20,13 +21,15 @@ namespace KoiCareSystem.Pages.CustomerPage
         [BindProperty]
         public IList<Feeding> Feeding { get; set; } = new List<Feeding>()!;
         [BindProperty]
-        public IList<WaterParameter> WaterParameter { get; set; }
+        public IList<WaterParameter> WaterParameter { get; set; } = new List<WaterParameter>();
 
-
-        public IndexModel(IPondService pondService, IKoiFishService koiFishService)
+        public IndexModel(IPondService pondService, IKoiFishService koiFishService, IAccountService accountService, IFeedingService feedingService, IWaterParameterService waterParameterService)
         {
             this.pondService = pondService;
             this.koiFishService = koiFishService;
+            this.accountService = accountService;
+            this.feedingService = feedingService;
+            this.waterParameterService = waterParameterService;
         }
 
         public IActionResult OnGet()
@@ -42,6 +45,7 @@ namespace KoiCareSystem.Pages.CustomerPage
             // Load ponds and koi fish for the logged-in user
             LoadPonds(userId.Value);
             LoadKoiFishs(userId.Value);
+            LoadFeedings(userId.Value);
 
             return Page();
         }
@@ -58,10 +62,16 @@ namespace KoiCareSystem.Pages.CustomerPage
             KoiFish = koiFishService.GetKoiFishByAccountId(userId);
         }
 
-        private void LoadFeedings()
+        private void LoadFeedings(int userId)
         {
             // Get koi fish by account ID
-            Feeding = feedingService.GetListFeeding();
+            Feeding = feedingService.GetFeedingsByAccount(userId);
+        }
+
+        private void LoadWaters(int pondId)
+        {
+            // Get koi fish by account ID
+            WaterParameter = waterParameterService.GetListWaterParametersByPond(pondId);
         }
     }
 }

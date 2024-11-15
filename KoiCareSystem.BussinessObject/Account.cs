@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace KoiCareSystem.BussinessObject;
 
@@ -13,6 +14,7 @@ public partial class Account
 
     public string? Name { get; set; }
 
+    [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
     public string? Email { get; set; }
 
     public string? Address { get; set; }

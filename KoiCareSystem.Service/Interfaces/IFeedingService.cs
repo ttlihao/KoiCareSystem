@@ -13,10 +13,12 @@ namespace KoiCareSystem.Service.Interfaces
 
         public List<Feeding> GetListFeeding();
 
-        public bool AddFeeding(Feeding feeding);
+        public Feeding AddFeeding(Feeding feeding);
 
         public bool UpdateFeeding(Feeding feeding);
 
         public bool DeleteFeeding(Feeding feeding);
+
+        List<Feeding> GetFeedingsByAccount(int accountId);
     }
 }

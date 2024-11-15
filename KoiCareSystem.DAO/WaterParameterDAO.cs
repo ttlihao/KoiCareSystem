@@ -106,5 +106,12 @@ namespace KoiCareSystem.DAO
                     .Where(f => !f.IsDeleted)
                     .ToList();
         }
+
+        public List<WaterParameter> GetListWaterParametersByPond(int pondId)
+        {
+            return dbContext.WaterParameters
+                            .Where(f => f.PondId == pondId && !f.IsDeleted)
+                            .ToList();
+        }
     }
 }

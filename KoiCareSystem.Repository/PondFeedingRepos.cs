@@ -11,6 +11,7 @@ namespace KoiCareSystem.Repository
 {
     public class PondFeedingRepos : IPondFeedingRepos
     {
+        public bool AddPondFeeding(int FeedingID, int PondID) => PondFeedingDAO.Instance.AddPondFeeding(FeedingID, PondID);
 
         public List<PondFeeding> GetListPondFeeding() => PondFeedingDAO.Instance.GetListPondFeeding();
 

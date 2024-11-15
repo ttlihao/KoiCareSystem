@@ -84,7 +84,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
                 }
             }
 
-            return RedirectToPage("/AccountPage/Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
 
         private bool KoiFishExists(int id)

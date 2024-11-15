@@ -20,5 +20,8 @@ namespace KoiCareSystem.Repository
         public List<WaterParameter> GetListWaterParameters() => WaterParameterDAO.Instance.GetListWaterParameters();
 
         public bool UpdateWaterParameter(WaterParameter waterParameter) => WaterParameterDAO.Instance.UpdateWaterParameter(waterParameter);
+
+        public List<WaterParameter> GetListWaterParametersByPond(int pondId) => WaterParameterDAO.Instance.GetListWaterParametersByPond(pondId);
+
     }
 }

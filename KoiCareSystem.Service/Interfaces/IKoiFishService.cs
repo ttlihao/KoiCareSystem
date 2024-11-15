@@ -17,7 +17,7 @@ namespace KoiCareSystem.Service.Interfaces
 
         public List<KoiFish> GetAllKoiFish();
 
-        public void CreateKoiFish(KoiFish koiFish);
+        public void CreateKoiFish(KoiFish koiFish, int pontId);
 
         public void UpdateKoiFish(KoiFish updatedKoiFish);
 
