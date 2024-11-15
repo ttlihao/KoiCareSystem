@@ -1,53 +1,62 @@
 ﻿using KoiCareSystem.BussinessObject;
-using KoiCareSystem.Repository.Interfaces;
-using KoiCareSystem.Service.Interfaces;
+using KoiCareSystem.Repository;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 namespace KoiCareSystem.Service
 {
     public class PaymentService : IPaymentService
     {
-        private readonly IPaymentRepository _paymentRepository;
+        private readonly IPaymentRepository paymentRepository;
 
         public PaymentService(IPaymentRepository paymentRepository)
         {
             _paymentRepository = paymentRepository ?? throw new ArgumentNullException(nameof(paymentRepository));
         }
 
-        public List<Payment> GetAllPayments()
+        // Add a payment to the repository
+        public void AddPayment(Payment payment)
         {
-            return GetAllPaymentsAsync().GetAwaiter().GetResult();
+            paymentRepository.CreatePayment(payment);
         }
 
-        public Payment GetPaymentById(int id)
-        {
-            return GetPaymentByIdAsync(id).GetAwaiter().GetResult();
-        }
-
+        // Create a new payment (similar to AddPayment; you may want to remove one if redundant)
         public void CreatePayment(Payment payment)
         {
-            CreatePaymentAsync(payment).GetAwaiter().GetResult();
+            paymentRepository.CreatePayment(payment);
         }
 
-        public void UpdatePayment(Payment payment)
-        {
-            UpdatePaymentAsync(payment).GetAwaiter().GetResult();
-        }
-
+        // Delete a payment by ID
         public void DeletePayment(int id)
         {
-            DeletePaymentAsync(id).GetAwaiter().GetResult();
+            paymentRepository.DeletePayment(id);
         }
 
+        // Retrieve all payments
+        public List<Payment> GetAllPayments()
+        {
+            return paymentRepository.GetAllPayments();
+        }
+
+        // Retrieve all payments asynchronously
+        public async Task<IList<Payment>> GetAllPaymentsAsync()
+        {
+            return await Task.Run(() => paymentRepository.GetAllPayments());
+        }
+
+        // Retrieve payment history for a specific order
         public List<Payment> GetHistoryPayments(int orderId)
         {
             return GetHistoryPaymentsAsync(orderId).GetAwaiter().GetResult();
         }
 
+        // Retrieve a payment by its ID
+        public Payment GetPaymentById(int id)
+        {
+            return paymentRepository.GetPaymentById(id);
+        }
+
+        // Retrieve payments by user ID
         public List<Payment> GetPaymentsByUserId(int userId)
         {
             return GetPaymentsByUserIdAsync(userId).GetAwaiter().GetResult();
@@ -89,6 +98,12 @@ namespace KoiCareSystem.Service
         public async Task<List<Payment>> GetPaymentsByUserIdAsync(int userId)
         {
             return await _paymentRepository.GetPaymentsByUserIdAsync(userId);
+        }
+
+        // Update an existing payment
+        public void UpdatePayment(Payment payment)
+        {
+            paymentRepository.UpdatePayment(payment);
         }
     }
 }

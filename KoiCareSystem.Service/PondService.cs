@@ -1,6 +1,7 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
 using KoiCareSystem.Repository;
+using KoiCareSystem.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,11 @@ namespace KoiCareSystem.Service
         public Pond GetPondById(int id)
         {
             return pondRepository.GetPondById(id);
+        }
+
+        public async Task<List<Pond>> GetPondsByAccountId(int accountId)
+        {
+            return await pondRepository.GetPondsByAccountId(accountId);
         }
 
         public void UpdatePond(Pond updatedPond)

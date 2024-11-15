@@ -1,5 +1,5 @@
 ﻿@page
-@model KoiCareSystem.Pages.AccountPage.LoginModel
+@model LoginModel
 @{
     ViewData["Title"] = "Login";
 }
@@ -77,6 +77,13 @@
     </style>
 </head>
 <body>
+    @if (TempData["Message"] != null)
+    {
+        <div id="successMessage" class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
 
     <div class="login-container">
         <!-- Left Koi fish image -->
@@ -119,3 +126,13 @@
 
 </body>
 </html>
+
+<script>
+    // Hide the message after 5 seconds (5.000 milliseconds)
+    setTimeout(function () {
+        var successMessage = document.getElementById("successMessage");
+        if (successMessage) {
+            successMessage.style.display = "none";
+        }
+    }, 5000);
+</script>

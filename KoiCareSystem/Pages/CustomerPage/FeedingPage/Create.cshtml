@@ -1,0 +1,146 @@
+﻿@page
+@model             CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<img src="/images/food.jpg" class="background-image" alt="Hình nền chăm sóc cá koi" />
+<!-- Thêm ảnh nền vào toàn trang -->
+<style>
+
+    .background-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        object-fit: cover;
+    }
+    body {
+        
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: Arial, sans-serif;
+        
+        color: #333;
+    }
+
+    .form-card {
+        background-color: rgba(255, 255, 255, 0.9); /* Độ trong suốt để nhìn rõ nền */
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .form-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+    .btn-primary {
+        background: #007bff;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+    .card-header {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .text-primary {
+        color: #007bff !important;
+    }
+
+    .btn-outline-secondary:hover {
+        color: white;
+        background: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-outline-secondary {
+        background-color: #6c757d; /* Màu nền cho nút */
+        color: white; /* Màu chữ */
+        border: 1px solid #6c757d; /* Viền nút */
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: #5a6268; /* Màu khi di chuột */
+            color: white;
+            border-color: #5a6268;
+        }
+
+</style>
+
+<h1 class="text-center text-primary">Create Feeding Entry</h1>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card form-card">
+                <div class="card-header text-center">
+                    <h4 class="mb-0">Feeding Details</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <!-- Dropdown chọn hồ cá -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Feeding.PondFeedingId" class="form-label">Select Pond</label>
+                            <select asp-for="Feeding.PondFeedingId" class="form-select" asp-items="Model.PondSelectList">
+                                <option value="">-- Select Pond --</option>
+                            </select>
+                            <span asp-validation-for="Feeding.PondFeedingId" class="text-danger"></span>
+                        </div>
+
+                        <!-- Các trường nhập dữ liệu khác -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Feeding.FoodType" class="form-label">Food Type</label>
+                            <input asp-for="Feeding.FoodType" class="form-control" placeholder="e.g., Pellet, Flake" />
+                            <span asp-validation-for="Feeding.FoodType" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Feeding.FeedAmount" class="form-label">Feed Amount (grams)</label>
+                            <input asp-for="Feeding.FeedAmount" class="form-control" placeholder="Enter amount in grams" />
+                            <span asp-validation-for="Feeding.FeedAmount" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Feeding.FeedingTime" class="form-label">Feeding Time</label>
+                            <input asp-for="Feeding.FeedingTime" type="datetime-local" class="form-control" />
+                            <span asp-validation-for="Feeding.FeedingTime" class="text-danger"></span>
+                        </div>
+
+                        <!-- Nút tạo -->
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a asp-page="/CustomerPage/Index" class="btn btn-outline-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

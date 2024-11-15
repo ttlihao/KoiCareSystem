@@ -1,13 +1,15 @@
 ﻿@page
+
+
 @model UserPaymentHistoryModel
 
 @{
-    // Lấy giá trị userId từ session
+    
     var userId = HttpContext.Session.GetString("UserId");
 
     if (string.IsNullOrEmpty(userId))
     {
-        Response.Redirect("/Login"); // Ví dụ: chuyển hướng về trang login nếu không có session
+        Response.Redirect("/Login");
     }
 
     ViewData["Title"] = "Payment History for " + Model.UserName;
@@ -22,17 +24,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <style>
-        /* Đặt hình nền cho body */
+       
         body {
-            background-image: url('/images/background-History.jpg'); /* Đường dẫn hình nền */
-            background-size: cover; /* Làm cho hình nền phủ đầy màn hình */
-            background-position: center; /* Căn giữa hình nền */
-            background-attachment: fixed; /* Đảm bảo hình nền không di chuyển khi cuộn trang */
+            background-image: url('/images/background-History.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
             margin: 0;
             padding: 0;
         }
 
-        /* Custom CSS cho Tiêu đề */
+    
         .page-title {
             font-size: 22px;
             text-align: left;
@@ -41,15 +43,15 @@
             margin-bottom: 30px;
         }
 
-        /* Card style cho phần chứa */
+        
         .payment-history-card {
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            background-color: rgba(255, 255, 255, 0.8); /* Nền card hơi trong suốt để dễ nhìn */
+            background-color: rgba(255, 255, 255, 0.8); 
         }
 
-        /* Table styling */
+      
         .payment-history-table thead {
             background-color: #f8f9fa;
             color: #495057;
@@ -60,7 +62,7 @@
             vertical-align: middle;
         }
 
-        /* Back Button Styling */
+       
         .back-btn {
             margin-top: 20px;
             display: inline-block;
@@ -71,13 +73,13 @@
 </head>
 <body>
     <div class="container mt-5">
-        <!-- Card cho phần lịch sử thanh toán -->
+      
         <div class="card payment-history-card">
-            <!-- Tiêu đề và Hiển thị Tên người dùng -->
+           
             <h2 class="page-title">Payment History for @Model.UserName</h2>
             <hr>
 
-            <!-- Bảng Lịch sử Thanh toán -->
+          
             @if (Model.Payments != null && Model.Payments.Count > 0)
             {
                 <table class="table payment-history-table table-bordered table-striped">

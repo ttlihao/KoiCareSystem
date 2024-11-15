@@ -1,5 +1,6 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Repository;
+using KoiCareSystem.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,11 @@ namespace KoiCareSystem.Service
         public List<KoiFish> GetAllKoiFish()
         {
            return _koiFishRepo.GetAllKoiFish();
+        }
+
+        public List<KoiFish> GetKoiFishByAccountId(int accountId)
+        {
+            return _koiFishRepo.GetKoiFishByAccountId(accountId);
         }
 
         public KoiFish GetKoiFishById(int id)

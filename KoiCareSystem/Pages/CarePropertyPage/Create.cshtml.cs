@@ -8,24 +8,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CareSchdulePage
+namespace KoiCareSystem.Pages.CarePropertyPage
 {
     public class CreateModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
         private readonly ICarePropertyService carePropertyService;
         private readonly ICareScheduleService careScheduleService;
 
-        public CreateModel(KoiCareSystem.DAO.CarekoisystemContext context, ICarePropertyService carePropertyService, ICareScheduleService careScheduleService)
+        public CreateModel(ICarePropertyService carePropertyService, ICareScheduleService careScheduleService)
         {
-            _context = context;
             this.carePropertyService = carePropertyService; 
             this.careScheduleService = careScheduleService; 
         }
 
         public async Task<IActionResult> OnGet()
         {
-        ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
+            ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
             return Page();
         }
 
@@ -40,8 +38,7 @@ namespace KoiCareSystem.Pages.CareSchdulePage
             //    return Page();
             //}
 
-            _context.CareProperties.Add(CareProperty);
-            await _context.SaveChangesAsync();
+            await carePropertyService.AddCareProperty(CareProperty);
 
             return RedirectToPage("./Index");
         }

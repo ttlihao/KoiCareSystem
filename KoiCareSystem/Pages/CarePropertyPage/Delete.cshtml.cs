@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CareSchdulePage
+namespace KoiCareSystem.Pages.CarePropertyPage
 {
     public class DeleteModel : PageModel
     {
@@ -29,7 +29,7 @@ namespace KoiCareSystem.Pages.CareSchdulePage
                 return NotFound();
             }
 
-            var careproperty = await carePropertyService.GetCareProperty((int) id);
+            var careproperty = await carePropertyService.GetCareProperty((int)id);
 
             if (careproperty == null)
             {

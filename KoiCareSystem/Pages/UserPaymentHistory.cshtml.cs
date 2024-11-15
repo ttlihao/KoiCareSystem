@@ -35,7 +35,6 @@ namespace KoiCareSystem.Pages
                 if (account != null)
                 {
                     UserName = account.Name ?? "Unknown User"; //get user's name
-                                                               
                     Payments = paymentService.GetPaymentsByUserId(account.Id); // get user's payment history
                 }
                 else

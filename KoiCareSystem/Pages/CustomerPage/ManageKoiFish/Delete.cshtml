@@ -1,0 +1,95 @@
+﻿@page
+@model KoiCareSystem.Pages.CustomerPage.ManageKoiFish.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>KoiFish</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KoiFish.FishName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KoiFish.FishName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KoiFish.ImagePath)
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.KoiFish.ImagePath))
+            {
+                <img src="@Model.KoiFish.ImagePath" alt="KoiFish Image" style="max-width: 200px; max-height: 200px; object-fit: contain;" />
+            }
+            else
+            {
+                <span>No image uploaded</span>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KoiFish.Age)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KoiFish.Age)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KoiFish.Species)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KoiFish.Species)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KoiFish.Gender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KoiFish.Gender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KoiFish.HealthStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KoiFish.HealthStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KoiFish.Origin)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KoiFish.Origin)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KoiFish.Note)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KoiFish.Note)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KoiFish.CreatedTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KoiFish.CreatedTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KoiFish.Deleted)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KoiFish.Deleted)
+        </dd>
+    </dl>
+
+    <form method="post" onsubmit="return confirmDelete()">
+        <input type="hidden" asp-for="KoiFish.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="/AccountPage/Index">Back to List</a>
+    </form>
+</div>
+
+<script>
+    function confirmDelete() {
+        return window.confirm("Are you sure you want to delete this Koi Fish?");
+    }
+</script>

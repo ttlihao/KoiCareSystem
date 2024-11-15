@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.DAO;
-using KoiCareSystem.Service;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.PondPage
 {

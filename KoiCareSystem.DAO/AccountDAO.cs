@@ -1,4 +1,5 @@
 ﻿using KoiCareSystem.BussinessObject;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,6 +85,16 @@ namespace KoiCareSystem.DAO
             return null;
         }
 
+        public void ActivateAccount(string email)
+        {
+            var account = GetAccountByEmail(email);
+            if (account != null && account.Status == "INACTIVE")
+            {
+                account.Status = "ACTIVE";
+                _context.SaveChanges();
+            }
+        }
+
 
         public void Register(Account account)
         {
@@ -166,6 +177,31 @@ namespace KoiCareSystem.DAO
             {
                 Console.WriteLine($"Error deleting account: {ex.Message}");
                 throw;
+            }
+        }
+
+        public bool ResetPassword(int id, string newPassword)
+        {
+            try
+            {
+          
+                var user = GetAccountById(id);
+      
+                if (user == null)
+                {
+                    return false; 
+                }
+
+                user.Password = newPassword;
+
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error resetting password: {ex.Message}");
+                throw; 
             }
         }
 

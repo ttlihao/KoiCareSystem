@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace KoiCareSystem.DAO
@@ -13,17 +12,16 @@ namespace KoiCareSystem.DAO
 
         public OrderDetailDAO(CarekoisystemContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
-        // Create a new OrderDetail in the database
+     
         public async Task CreateOrderDetailAsync(OrderDetail orderDetail)
         {
             try
             {
                 await _context.OrderDetails.AddAsync(orderDetail);
                 await _context.SaveChangesAsync();
-                Console.WriteLine("OrderDetail created successfully.");
             }
             catch (Exception ex)
             {
@@ -31,15 +29,11 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Retrieve all OrderDetails from the database
         public async Task<List<OrderDetail>> GetAllOrderDetailsAsync()
         {
             try
             {
-                using (var context = new CarekoisystemContext())
-                {
-                    return context.OrderDetails.ToList();
-                }
+                return await _context.OrderDetails.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -48,15 +42,11 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Retrieve a single OrderDetail by its ID
         public async Task<OrderDetail?> GetOrderDetailByIdAsync(int id)
         {
             try
             {
-                using (var context = new CarekoisystemContext())
-                {
-                    return context.OrderDetails.FirstOrDefault(od => od.Id == id);
-                }
+                return await _context.OrderDetails.FirstOrDefaultAsync(od => od.Id == id);
             }
             catch (Exception ex)
             {
@@ -65,7 +55,6 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Retrieve a single OrderDetail by OrderId and FoodItemId
         public async Task<OrderDetail?> GetOrderDetailAsync(int orderId, int foodItemId)
         {
             try
@@ -111,13 +100,13 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Delete an OrderDetail by its ID
         public async Task DeleteOrderDetailAsync(int id)
         {
             Console.WriteLine($"Attempting to delete OrderDetail with ID {id}...");
             try
             {
-                using (var context = new CarekoisystemContext())
+                var orderDetail = await _context.OrderDetails.FirstOrDefaultAsync(od => od.Id == id);
+                if (orderDetail != null)
                 {
                     _context.OrderDetails.Remove(orderDetail);
                     await _context.SaveChangesAsync();

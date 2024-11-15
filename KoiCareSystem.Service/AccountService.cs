@@ -1,5 +1,8 @@
 ﻿using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Repository;
+using KoiCareSystem.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +15,34 @@ namespace KoiCareSystem.Service
     {
         private IAccountRepository _accountRepository;
 
-        public AccountService(IAccountRepository accountRepository)
+        private readonly IMemoryCache _cache;
+
+        public AccountService(IAccountRepository accountRepository, IMemoryCache cache)
         {
             _accountRepository = accountRepository;
+            _cache = cache;
         }
+
+        public void StoreVerificationToken(string email, string token)
+        {
+            var cacheEntryOptions = new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) // Thời gian hết hạn của token
+            };
+            _cache.Set(email, token, cacheEntryOptions);
+        }
+
+        public bool ValidateVerificationToken(string email, string token)
+        {
+            if (_cache.TryGetValue(email, out string? cachedToken) && cachedToken == token)
+            {
+                _cache.Remove(email); // Xóa token sau khi xác minh thành công
+                return true;
+            }
+            return false;
+        }
+
+        
 
         public Account? CheckLogin(string email, string password)
         {
@@ -32,7 +59,7 @@ namespace KoiCareSystem.Service
             return _accountRepository.GetAccountByEmail(email);
         }
 
-        public Account GetAccountById(int id) => _accountRepository?.GetAccountById(id);
+        public Account GetAccountById(int id) => _accountRepository.GetAccountById(id);
 
         public Account? GetAccountByUsername(string username)
         {
@@ -52,6 +79,16 @@ namespace KoiCareSystem.Service
         public void UpdateAccount(Account account)
         {
             _accountRepository.UpdateAccount(account);
+        }
+
+        public void ActivateAccount(string email)
+        {
+            _accountRepository.ActivateAccount(email);
+        }
+
+        public bool ResetPassword(int id, string newPassword)
+        {
+            return _accountRepository.ResetPassword(id, newPassword);    
         }
     }
 }

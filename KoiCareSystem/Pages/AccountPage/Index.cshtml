@@ -20,7 +20,7 @@ else
             <h3>Management</h3>
             <ul>
                 <li><a href="#" onclick="showContent('user')" id="user-tab">Manage User</a></li>
-                <li><a href="#" onclick="showContent('koifish')" id="koifish-tab">Manage Koi Fish</a></li>
+@*                 <li><a href="#" onclick="showContent('koifish')" id="koifish-tab">Manage Koi Fish</a></li> *@
             </ul>
         </div>
 
@@ -29,7 +29,7 @@ else
                 <h1>Manage User</h1>
 
                 <p>
-                    <a asp-page="Create">Create New</a>
+                    <a asp-page="Create" class="btn btn-primary">Create New</a>
                 </p>
 
                 <table class="table">
@@ -88,13 +88,13 @@ else
                                 <td>
                                     @if (item.Role != "admin")
                                     {
-                                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a>
                                     }
                                     |
-                                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-warning">Details</a> |
                                     @if (item.Role != "admin")
                                     {
-                                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
                                     }
                                 </td>
                             </tr>
@@ -104,7 +104,7 @@ else
             </div>
 
             <!-- Danh sách Koi fish trong hệ thống -->
-            <div id="koifish-content" class="tab-content" style="display: none;">
+@*             <div id="koifish-content" class="tab-content" style="display: none;">
                 <h1>Manage Koi Fish</h1>
 
                 <p>
@@ -190,7 +190,7 @@ else
                         }
                     </tbody>
                 </table>
-            </div>
+            </div> *@
         </div>
     </div>
 }
