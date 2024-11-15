@@ -65,11 +65,6 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             if (ImageFile != null)
             {
                 var uploadsFolder = Path.Combine(environment.WebRootPath, "images");

@@ -8,6 +8,7 @@ public partial class KoiFish
 {
     public int Id { get; set; }
 
+    [Required(ErrorMessage = "The Fish Name field is required.")]
     public string? FishName { get; set; }
 
     public string? ImagePath { get; set; }
