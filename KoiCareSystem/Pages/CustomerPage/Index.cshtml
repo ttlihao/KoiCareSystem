@@ -184,9 +184,9 @@
                                 @Html.DisplayFor(modelItem => item.Pond.Name)
                             </td>
                             <td>
-                                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                <a asp-page="./ManageCareSchedule/Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-page="./ManageCareSchedule/Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-page="./ManageCareSchedule/Delete" asp-route-id="@item.Id">Delete</a>
                             </td>
                         </tr>
                     }
@@ -199,6 +199,7 @@
             <p>
                 <a asp-page="./ManageCareProperty/Create" class="btn btn-primary">Create New</a>
             </p>
+            <table class="table">
             <thead>
                 <tr>
                     <th>
@@ -227,13 +228,14 @@
                             @Html.DisplayFor(modelItem => item.Schedule.Id)
                         </td>
                         <td>
-                            <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-page="./ManageCareSchedule/Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-page="./ManageCareSchedule/Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-page="./ManageCareSchedule/Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }
             </tbody>
+            </table>
         </div>
 
         <div id="waterparameter-content" class="tab-content" style="display: none;">

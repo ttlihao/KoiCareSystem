@@ -23,7 +23,13 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageCareProperty
 
         public async Task<IActionResult> OnGet()
         {
-            ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+            {
+                return RedirectToPage("/Login");
+            }
+            ViewData["ScheduleId"] = new SelectList( careScheduleService.GetCareScheduleByAccountId(userId.Value), "Id", "Id");
             return Page();
         }
 

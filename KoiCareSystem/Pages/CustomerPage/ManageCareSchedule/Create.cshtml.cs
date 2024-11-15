@@ -20,9 +20,15 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageCareSchedule
             this.careScheduleService = careScheduleService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            ViewData["PondId"] = new SelectList(pondService.GetAllPonds(), "Id", "Name");
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+            {
+                return RedirectToPage("/Login");
+            }
+            ViewData["PondId"] = new SelectList(await pondService.GetPondsByAccountId(userId.Value), "Id", "Name");
             return Page();
         }
 
