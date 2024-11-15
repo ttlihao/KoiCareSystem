@@ -19,5 +19,7 @@ namespace KoiCareSystem.Repository.Interfaces
 
         public bool DeleteWaterParameter(WaterParameter waterParameter);
 
+        public List<WaterParameter> GetListWaterParametersByPond(int pondId);
+
     }
 }

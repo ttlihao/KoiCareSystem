@@ -73,14 +73,10 @@
         <h2>Create new Koi Fish</h2>
 
         <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <!-- Pond Selection -->
-            <div class="form-group">
-                <label asp-for="Pond.Id" class="control-label">Select Pond</label>
-                <select asp-for="Pond.Id" class="form-control" asp-items="Model.PondSelectList"></select>
-                <span asp-validation-for="Pond.Id" class="text-danger"></span>
-            </div>
+            <!-- Display model validation errors at the top of the form -->
+            <div asp-validation-summary="All" class="text-danger"></div>
+
 
             <!-- Koi Fish Name -->
             <div class="form-group">
@@ -112,11 +108,15 @@
 
             <!-- Gender -->
             <div class="form-group">
-                <label asp-for="KoiFish.Gender" class="control-label">Gender</label>
-                <input asp-for="KoiFish.Gender" class="form-control" />
+                <label asp-for="KoiFish.Gender" class="control-label"></label>
+                @Html.DropDownListFor(
+                         model => model.KoiFish.Gender,
+                         new SelectList(new List<string> { "Male", "Female" }),
+                         "Select Gender",
+                         new { @class = "form-control" }
+                         )
                 <span asp-validation-for="KoiFish.Gender" class="text-danger"></span>
-            </div>
-
+                </div>
             <!-- Origin -->
             <div class="form-group">
                 <label asp-for="KoiFish.Origin" class="control-label">Origin</label>
@@ -130,6 +130,15 @@
                 <input asp-for="KoiFish.Note" class="form-control" />
                 <span asp-validation-for="KoiFish.Note" class="text-danger"></span>
             </div>
+
+
+            <!-- Select pond -->
+            <div class="form-group">
+                <label asp-for="PondId" class="control-label">Pond</label>
+                <select asp-for="PondId" class="form-control" asp-items="Model.AvailablePonds"></select>
+                <span asp-validation-for="PondId" class="text-danger"></span>
+            </div>
+
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn-submit" />
