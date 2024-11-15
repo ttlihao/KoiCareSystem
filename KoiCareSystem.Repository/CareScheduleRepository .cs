@@ -33,5 +33,13 @@ namespace KoiCareSystem.Repository
         {
             return await Task.Run(() => CareScheduleDAO.Instance.UpdateCareScheduleAsync(careSchedule));
         }
+                public List<CareProperty> GetCarePropertyByAccountId(int accountId)
+        {
+            return CarePropertyDAO.Instance.GetCarePropertyByAccountId(accountId);
+        }
+        public List<CareSchedule> GetCareScheduleByAccountId(int accountId)
+        {
+            return CareScheduleDAO.Instance.GetCareScheduleByAccountId(accountId);
+        }
     }
 }

@@ -9,7 +9,7 @@ using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CarePropertyPage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareProperty
 {
     public class IndexModel : PageModel
     {

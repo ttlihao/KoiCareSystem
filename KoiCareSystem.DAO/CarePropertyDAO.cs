@@ -123,5 +123,27 @@ namespace KoiCareSystem.DAO
             }
             return isSuccess;
         }
+
+        public List<CareProperty> GetCarePropertyByAccountId(int accountId)
+        {
+            var careProperties = _context.CareProperties
+                .Include(cp => cp.Schedule)
+                .ThenInclude(cs => cs.Pond)
+                .Where(cp => cp.Schedule.Pond != null && cp.Schedule.Pond.AccountId == accountId)
+                .ToList();
+
+            if (!careProperties.Any())
+            {
+                Console.WriteLine("No care properties found for the specified account.");
+            }
+            else
+            {
+                Console.WriteLine($"Found {careProperties.Count} care property(ies) for the specified account.");
+            }
+
+            return careProperties;
+        }
+
+
     }
 }

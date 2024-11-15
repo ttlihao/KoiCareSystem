@@ -14,5 +14,7 @@ namespace KoiCareSystem.Service.Interfaces
         public Task<bool> AddCareProperty(CareProperty careProperty);
         public Task<bool> RemoveCareProperty(int Id);
         public Task<bool> UpdateCareProperty(CareProperty careProperty);
+        List<CareProperty> GetCarePropertyByAccountId(int accountId);
+
     }
 }

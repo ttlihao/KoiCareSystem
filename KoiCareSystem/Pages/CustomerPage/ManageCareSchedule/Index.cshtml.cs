@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CareSchedulePage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareSchedule
 {
     public class IndexModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
             this.careScheduleService = careScheduleService;
         }
 
-        public IList<CareSchedule> CareSchedule { get;set; } = default!;
+        public IList<CareSchedule> CareSchedule { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

@@ -37,6 +37,13 @@ namespace KoiCareSystem.DAO
             {
                 if (careSchedule != null)
                 {
+                    // Validate care_type
+                    var validCareTypes = new List<string> { "CHANGE_WATER", "CLEAN", "FEED", "TREATMENT" };
+                    if (!validCareTypes.Contains(careSchedule.CareType))
+                    {
+                        throw new Exception("Invalid care type.");
+                    }
+
                     // Check if the care schedule already exists
                     var existingSchedule = await _context.CareSchedules
                         .FirstOrDefaultAsync(cs => cs.Id == careSchedule.Id);
@@ -50,14 +57,15 @@ namespace KoiCareSystem.DAO
                             isSuccess = true;
                         }
                     }
-                    }
                 }
+            }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
             return isSuccess;
         }
+
 
         // Read by Id
         public async Task<CareSchedule> GetCareScheduleByIdAsync(int id)
@@ -130,6 +138,25 @@ namespace KoiCareSystem.DAO
             }
             return isSuccess;
         }
+        public List<CareSchedule> GetCareScheduleByAccountId(int accountId)
+        {
+            var careSchedules = _context.CareSchedules
+                .Include(cs => cs.Pond)
+                .Where(cs => cs.Pond != null && cs.Pond.AccountId == accountId)
+                .ToList();
+
+            if (!careSchedules.Any())
+            {
+                Console.WriteLine("No care schedules found for the specified account.");
+            }
+            else
+            {
+                Console.WriteLine($"Found {careSchedules.Count} care schedule(s) for the specified account.");
+            }
+
+            return careSchedules;
+        }
+
     }
 }
 

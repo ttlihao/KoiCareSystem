@@ -10,7 +10,7 @@ using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 using KoiCareSystem.DAO;
 
-namespace KoiCareSystem.Pages.CareSchedulePage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareSchedule
 {
     public class EditModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
 
         public EditModel(ICareScheduleService careScheduleService, CarekoisystemContext context)
         {
-            this.careScheduleService = careScheduleService; 
+            this.careScheduleService = careScheduleService;
             this.context = context;
         }
 
@@ -39,7 +39,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 return NotFound();
             }
             CareSchedule = careschedule;
-           ViewData["PondId"] = new SelectList(context.Ponds, "Id", "Name");
+            ViewData["PondId"] = new SelectList(context.Ponds, "Id", "Name");
             return Page();
         }
 
@@ -74,7 +74,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 return BadRequest("Update failed.");
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
 
     }

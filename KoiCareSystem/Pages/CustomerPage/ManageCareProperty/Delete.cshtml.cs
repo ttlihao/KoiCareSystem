@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CarePropertyPage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareProperty
 {
     public class DeleteModel : PageModel
     {
@@ -56,7 +56,7 @@ namespace KoiCareSystem.Pages.CarePropertyPage
                 await carePropertyService.RemoveCareProperty(CareProperty.Id);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }

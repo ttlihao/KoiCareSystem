@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.WaterParameterPage
+namespace KoiCareSystem.Pages.CustomerPage.ManageWaterParameter
 {
     public class DeleteModel : PageModel
     {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.WaterParameterPage
+namespace KoiCareSystem.Pages.CustomerPage.ManageWaterParameter
 {
     public class IndexModel : PageModel
     {
@@ -19,11 +19,11 @@ namespace KoiCareSystem.Pages.WaterParameterPage
             waterParameterService = water;
         }
 
-        public IList<WaterParameter> WaterParameter { get;set; } = default!;
+        public IList<WaterParameter> WaterParameter { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if(waterParameterService.GetListWaterParameters() == null)
+            if (waterParameterService.GetListWaterParameters() == null)
             {
                 waterParameterService.GetListWaterParameters();
             }

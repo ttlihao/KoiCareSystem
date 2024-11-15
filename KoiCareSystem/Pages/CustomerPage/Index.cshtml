@@ -13,6 +13,8 @@
                 <li><a href="#" onclick="showContent('pond')" id="user-tab">Manage Pond</a></li>
                 <li><a href="#" onclick="showContent('koifish')" id="koifish-tab">Manage Koi Fish</a></li>
             <li><a href="#" onclick="showContent('feeding')" id="koifish-tab">Manage Feeding</a></li>
+            <li><a href="#" onclick="showContent('careschedule')" id="koifish-tab">Manage Care Schedule</a></li>
+            <li><a href="#" onclick="showContent('careproperty')" id="koifish-tab">Manage Care Property</a></li>
             <li><a href="#" onclick="showContent('waterparameter')" id="koifish-tab">Manage WaterParameter</a></li>
             </ul>
         </div>
@@ -134,6 +136,105 @@
                     </tbody>
                 </table>
             </div>
+
+        <div id="careschedule-content" class="tab-content" style="display: none;">
+        <h1>Manage Care Schedule</h1>
+
+        <p>
+            <a asp-page="./ManageCareSchedule/Create" class="btn btn-primary">Create New</a>
+        </p>
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CareSchedule[0].CareType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CareSchedule[0].Details)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CareSchedule[0].ScheduledDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CareSchedule[0].Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CareSchedule[0].Pond)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CareSchedule)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CareType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Details)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ScheduledDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Pond.Name)
+                            </td>
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+        </table>
+    </div>
+        <div id="careproperty-content" class="tab-content" style="display: none;">
+            <h1>Manage Care Property</h1>
+
+            <p>
+                <a asp-page="./ManageCareProperty/Create" class="btn btn-primary">Create New</a>
+            </p>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CareProperty[0].Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CareProperty[0].Value)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CareProperty[0].Schedule)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CareProperty)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Value)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Schedule.Id)
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </div>
 
         <div id="waterparameter-content" class="tab-content" style="display: none;">
             <h1>Manage Pond Water Parameter</h1>

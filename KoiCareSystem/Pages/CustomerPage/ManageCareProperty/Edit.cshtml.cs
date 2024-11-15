@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CarePropertyPage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareProperty
 {
     public class EditModel : PageModel
     {
@@ -73,7 +73,7 @@ namespace KoiCareSystem.Pages.CarePropertyPage
                 return BadRequest("Update failed.");
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }

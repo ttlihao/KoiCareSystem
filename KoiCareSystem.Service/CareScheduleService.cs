@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using KoiCareSystem.BussinessObject;
+using KoiCareSystem.DAO;
 using KoiCareSystem.Repository;
 using KoiCareSystem.Repository.Interfaces;
 using KoiCareSystem.Service.Interfaces;
@@ -40,6 +41,10 @@ namespace KoiCareSystem.Service
         public async Task<bool> UpdateCareSchedule(CareSchedule careSchedule)
         {
             return await careScheduleRepository.UpdateCareSchedule(careSchedule);
+        }
+        public List<CareSchedule> GetCareScheduleByAccountId(int id)
+        {
+            return careScheduleRepository.GetCareScheduleByAccountId(id);
         }
     }
 }

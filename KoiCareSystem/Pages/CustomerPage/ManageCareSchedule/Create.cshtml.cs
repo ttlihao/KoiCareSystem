@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CareSchedulePage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareSchedule
 {
     public class CreateModel : PageModel
     {
@@ -22,7 +22,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
 
         public IActionResult OnGet()
         {
-        ViewData["PondId"] = new SelectList(pondService.GetAllPonds(), "Id", "Name");
+            ViewData["PondId"] = new SelectList(pondService.GetAllPonds(), "Id", "Name");
             return Page();
         }
 
@@ -39,7 +39,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
 
             await careScheduleService.AddCareSchedule(CareSchedule);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }
