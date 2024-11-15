@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CareSchedulePage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareSchedule
 {
     public class DeleteModel : PageModel
     {
@@ -16,7 +16,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
 
         public DeleteModel(ICareScheduleService careScheduleService)
         {
-        this.careScheduleService = careScheduleService;
+            this.careScheduleService = careScheduleService;
         }
 
         [BindProperty]
@@ -56,7 +56,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 await careScheduleService.RemoveCareSchedule((int)id);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }

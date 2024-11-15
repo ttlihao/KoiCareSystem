@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KoiCareSystem.DAO;
 
 namespace KoiCareSystem.Service
 {
@@ -42,6 +43,10 @@ namespace KoiCareSystem.Service
         public async Task<bool> UpdateCareProperty(CareProperty CareProperty)
         {
             return await CarePropertyRepository.UpdateCareProperty(CareProperty);
+        }
+        public  List<CareProperty> GetCarePropertyByAccountId(int id)
+        {
+            return CarePropertyRepository.GetCarePropertyByAccountId(id);
         }
     }
 }

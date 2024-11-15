@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CarePropertyPage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareProperty
 {
     public class CreateModel : PageModel
     {
@@ -17,13 +17,19 @@ namespace KoiCareSystem.Pages.CarePropertyPage
 
         public CreateModel(ICarePropertyService carePropertyService, ICareScheduleService careScheduleService)
         {
-            this.carePropertyService = carePropertyService; 
-            this.careScheduleService = careScheduleService; 
+            this.carePropertyService = carePropertyService;
+            this.careScheduleService = careScheduleService;
         }
 
         public async Task<IActionResult> OnGet()
         {
-            ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+            {
+                return RedirectToPage("/Login");
+            }
+            ViewData["ScheduleId"] = new SelectList( careScheduleService.GetCareScheduleByAccountId(userId.Value), "Id", "Id");
             return Page();
         }
 
@@ -40,7 +46,7 @@ namespace KoiCareSystem.Pages.CarePropertyPage
 
             await carePropertyService.AddCareProperty(CareProperty);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }

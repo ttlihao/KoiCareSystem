@@ -1,11 +1,11 @@
 ﻿@page
-@model KoiCareSystem.Pages.CareSchedulePage.EditModel
+@model CreateModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
 <h4>CareSchedule</h4>
 <hr />
@@ -13,7 +13,6 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CareSchedule.Id" />
             <div class="form-group">
                 <label asp-for="CareSchedule.PondId" class="control-label"></label>
                 <select asp-for="CareSchedule.PondId" class="form-control" asp-items="ViewBag.PondId"></select>
@@ -21,7 +20,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="CareSchedule.CareType" class="control-label"></label>
-                <input asp-for="CareSchedule.CareType" class="form-control" />
+                <select asp-for="CareSchedule.CareType" class="form-control">
+                    <option value="CHANGE_WATER">Change Water</option>
+                    <option value="CLEAN">Clean</option>
+                    <option value="FEED">Feed</option>
+                    <option value="TREATMENT">Treatment</option>
+                </select>
                 <span asp-validation-for="CareSchedule.CareType" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -36,20 +40,25 @@
             </div>
             <div class="form-group">
                 <label asp-for="CareSchedule.Status" class="control-label"></label>
-                <input asp-for="CareSchedule.Status" class="form-control" />
+                <select asp-for="CareSchedule.Status" class="form-control">
+                    <option value="PENDING">Pending</option>
+                    <option value="COMPLETED">Completed</option>
+                </select>
                 <span asp-validation-for="CareSchedule.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

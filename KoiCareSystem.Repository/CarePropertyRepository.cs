@@ -33,5 +33,9 @@ namespace KoiCareSystem.Repository
         {
             return await Task.Run(() => CarePropertyDAO.Instance.UpdateCarePropertyAsync(careProperty));
         }
+        public List<CareProperty> GetCarePropertyByAccountId(int accountId)
+        {
+            return CarePropertyDAO.Instance.GetCarePropertyByAccountId(accountId);
+        }
     }
 }

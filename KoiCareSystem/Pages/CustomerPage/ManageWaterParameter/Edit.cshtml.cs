@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.WaterParameterPage
+namespace KoiCareSystem.Pages.CustomerPage.ManageWaterParameter
 {
     public class EditModel : PageModel
     {
@@ -30,13 +30,13 @@ namespace KoiCareSystem.Pages.WaterParameterPage
                 return NotFound();
             }
 
-            var waterparameter =  waterParameterService.GetWaterParameterByID(id);
+            var waterparameter = waterParameterService.GetWaterParameterByID(id);
             if (waterparameter == null)
             {
                 return NotFound();
             }
             WaterParameter = waterparameter;
-           ViewData["PondId"] = new SelectList(waterParameterService.GetListWaterParameters(), "Id", "Name");
+            ViewData["PondId"] = new SelectList(waterParameterService.GetListWaterParameters(), "Id", "Name");
             return Page();
         }
 

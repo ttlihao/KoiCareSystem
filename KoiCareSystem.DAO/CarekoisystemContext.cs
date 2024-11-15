@@ -95,7 +95,7 @@ public partial class CarekoisystemContext : DbContext
 
             entity.HasOne(d => d.Schedule).WithMany(p => p.CareProperties)
                 .HasForeignKey(d => d.ScheduleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__CarePrope__sched__66603565");
         });
 
@@ -120,7 +120,7 @@ public partial class CarekoisystemContext : DbContext
 
             entity.HasOne(d => d.Pond).WithMany(p => p.CareSchedules)
                 .HasForeignKey(d => d.PondId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__CareSched__pond___6383C8BA");
         });
 
@@ -346,12 +346,12 @@ public partial class CarekoisystemContext : DbContext
 
             entity.HasOne(d => d.Koifish).WithMany(p => p.PondKoiFishes)
                 .HasForeignKey(d => d.KoifishId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__Pond_KoiF__koifi__44FF419A");
 
             entity.HasOne(d => d.Pond).WithMany(p => p.PondKoiFishes)
                 .HasForeignKey(d => d.PondId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__Pond_KoiF__pond___440B1D61");
         });
 

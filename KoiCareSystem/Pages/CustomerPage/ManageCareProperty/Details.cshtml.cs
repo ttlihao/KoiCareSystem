@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CarePropertyPage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareProperty
 {
     public class DetailsModel : PageModel
     {
@@ -37,7 +37,7 @@ namespace KoiCareSystem.Pages.CarePropertyPage
             {
                 CareProperty = careproperty;
             }
-            return Page();
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }

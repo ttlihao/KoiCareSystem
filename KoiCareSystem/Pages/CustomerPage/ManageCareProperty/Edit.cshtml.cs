@@ -8,23 +8,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
-using KoiCareSystem.DAO;
 
-namespace KoiCareSystem.Pages.CareSchedulePage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareProperty
 {
     public class EditModel : PageModel
     {
+        private ICarePropertyService carePropertyService;
         private ICareScheduleService careScheduleService;
-        private readonly CarekoisystemContext context;
 
-        public EditModel(ICareScheduleService careScheduleService, CarekoisystemContext context)
+        public EditModel(ICarePropertyService carePropertyService, ICareScheduleService careScheduleService)
         {
-            this.careScheduleService = careScheduleService; 
-            this.context = context;
+            this.carePropertyService = carePropertyService;
+            this.careScheduleService = careScheduleService;
         }
 
         [BindProperty]
-        public CareSchedule CareSchedule { get; set; } = default!;
+        public CareProperty CareProperty { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,13 +32,13 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 return NotFound();
             }
 
-            var careschedule = await careScheduleService.GetCareSchedule((int)id);
-            if (careschedule == null)
+            var careproperty = await carePropertyService.GetCareProperty((int)id);
+            if (careproperty == null)
             {
                 return NotFound();
             }
-            CareSchedule = careschedule;
-           ViewData["PondId"] = new SelectList(context.Ponds, "Id", "Name");
+            CareProperty = careproperty;
+            ViewData["ScheduleId"] = new SelectList(await careScheduleService.GetCareSchedules(), "Id", "Id");
             return Page();
         }
 
@@ -55,11 +54,11 @@ namespace KoiCareSystem.Pages.CareSchedulePage
             bool isSuccess;
             try
             {
-                isSuccess = await careScheduleService.UpdateCareSchedule(CareSchedule);
+                isSuccess = await carePropertyService.UpdateCareProperty(CareProperty);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (await careScheduleService.GetCareSchedule(CareSchedule.Id) == null)
+                if (await carePropertyService.GetCareProperty(CareProperty.Id) == null)
                 {
                     return NotFound();
                 }
@@ -74,8 +73,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
                 return BadRequest("Update failed.");
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/CustomerPage/Index");
         }
-
     }
 }

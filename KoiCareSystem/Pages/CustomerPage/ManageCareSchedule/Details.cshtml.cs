@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 using KoiCareSystem.Service.Interfaces;
 
-namespace KoiCareSystem.Pages.CareSchedulePage
+namespace KoiCareSystem.Pages.CustomerPage.ManageCareSchedule
 {
     public class DetailsModel : PageModel
     {
@@ -37,7 +37,7 @@ namespace KoiCareSystem.Pages.CareSchedulePage
             {
                 CareSchedule = careschedule;
             }
-            return Page();
+            return RedirectToPage("/CustomerPage/Index");
         }
     }
 }
