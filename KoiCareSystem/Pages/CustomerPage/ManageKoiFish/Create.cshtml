@@ -74,7 +74,9 @@
 
         <!-- Update enctype for file upload -->
         <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Display model validation errors at the top of the form -->
+            <div asp-validation-summary="All" class="text-danger"></div>
 
             <div class="form-group">
                 <label asp-for="KoiFish.FishName" class="control-label"></label>
@@ -103,9 +105,15 @@
 
             <div class="form-group">
                 <label asp-for="KoiFish.Gender" class="control-label"></label>
-                <input asp-for="KoiFish.Gender" class="form-control" />
+                @Html.DropDownListFor(
+                         model => model.KoiFish.Gender,
+                         new SelectList(new List<string> { "Male", "Female" }),
+                         "Select Gender",
+                         new { @class = "form-control" }
+                         )
                 <span asp-validation-for="KoiFish.Gender" class="text-danger"></span>
             </div>
+
 
             <div class="form-group">
                 <label asp-for="KoiFish.Origin" class="control-label"></label>
@@ -118,6 +126,12 @@
                 <input asp-for="KoiFish.Note" class="form-control" />
                 <span asp-validation-for="KoiFish.Note" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="PondId" class="control-label">Pond</label>
+                <select asp-for="PondId" class="form-control" asp-items="Model.AvailablePonds"></select>
+                <span asp-validation-for="PondId" class="text-danger"></span>
+            </div>
+
 
             <div class="form-group">
                 <label asp-for="KoiFish.CreatedTime" class="control-label"></label>

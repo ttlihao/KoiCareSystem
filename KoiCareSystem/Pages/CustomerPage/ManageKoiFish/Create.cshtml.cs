@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KoiCareSystem.BussinessObject;
-using KoiCareSystem.DAO;
-using KoiCareSystem.Service;
 using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
@@ -16,25 +17,47 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
     {
         private readonly IKoiFishService koiFishService;
         private readonly IWebHostEnvironment environment;
+        private readonly IPondService pondService;
 
-        public CreateModel(IKoiFishService koiFishService, IWebHostEnvironment environment)
+        public CreateModel(IKoiFishService koiFishService, IWebHostEnvironment environment, IPondService pondService)
         {
             this.koiFishService = koiFishService;
             this.environment = environment;
+            this.pondService = pondService;
         }
 
         [BindProperty]
         public KoiFish KoiFish { get; set; } = default!;
 
         [BindProperty]
-        public IFormFile ImageFile { get; set; } // Thuộc tính để lưu trữ file ảnh upload
+        public IFormFile ImageFile { get; set; }
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public int PondId { get; set; }
+
+        public List<SelectListItem> AvailablePonds { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
         {
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+            {
+                return RedirectToPage("/Login");
+            }
+
+            // Fetch ponds that are not deleted
+            var ponds = await pondService.GetPondsByAccountId(userId.Value);
+            AvailablePonds = ponds.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.Name
+            }).ToList();
+
             return Page();
         }
 
-        // Xử lý post để tạo cá Koi mới
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -42,36 +65,38 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
                 return Page();
             }
 
-            // Xử lý lưu ảnh nếu người dùng chọn ảnh
             if (ImageFile != null)
             {
-                // Thư mục để lưu ảnh (trong wwwroot/images)
                 var uploadsFolder = Path.Combine(environment.WebRootPath, "images");
-
-                // Đảm bảo thư mục tồn tại
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
                 }
 
-                // Tạo tên file duy nhất để tránh trùng lặp
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
                 var filePath = Path.Combine(uploadsFolder, fileName);
 
-                // Lưu file ảnh lên server
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await ImageFile.CopyToAsync(fileStream);
                 }
 
-                // Cập nhật thuộc tính ImageUrl của KoiFish với đường dẫn ảnh
                 KoiFish.ImagePath = $"/images/{fileName}";
             }
 
-            // Gọi service để tạo mới cá Koi
-            koiFishService.CreateKoiFish(KoiFish);
+            KoiFish.HealthStatus = "Healthy";
 
-            return RedirectToPage("/CustomerPage/Index");
+            try
+            {
+                koiFishService.CreateKoiFish(KoiFish, PondId);
+                return RedirectToPage("/CustomerPage/Index");
+            }
+            catch (ArgumentException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+            }
+
+            return Page();
         }
     }
 }

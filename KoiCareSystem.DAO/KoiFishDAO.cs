@@ -50,23 +50,35 @@ namespace KoiCareSystem.DAO
             return _context.KoiFishes.Where(k => k.Deleted == false).ToList();
         }
 
-        public void CreateKoiFish(KoiFish koiFish)
+        public void CreateKoiFish(KoiFish koiFish, int pondId)
         {
             if (koiFish == null)
             {
                 throw new ArgumentNullException(nameof(koiFish));
             }
 
-            // Đánh dấu thời gian tạo mới
-            koiFish.CreatedTime = DateTime.Now;
+            var pond = _context.Ponds.FirstOrDefault(p => p.Id == pondId && p.Deleted == false);
 
-            // Đặt giá trị Deleted mặc định là false
+            if (pond == null)
+            {
+                throw new ArgumentException($"Pond with ID {pondId} not found or is marked as deleted.");
+            }
+
+            // Set the creation time and default deleted status
+            koiFish.CreatedTime = DateTime.Now;
             koiFish.Deleted = false;
 
-            // Thêm con cá vào cơ sở dữ liệu
-            _context.KoiFishes.Add(koiFish);
+            // Create relationship entry and add koi fish to context
+            var pondKoiFish = new PondKoiFish
+            {
+                Koifish = koiFish,
+                Pond = pond
+            };
 
-            // Lưu thay đổi vào cơ sở dữ liệu
+            _context.KoiFishes.Add(koiFish);
+            _context.PondKoiFishes.Add(pondKoiFish); // Add to linking table if you have one
+
+            // Save changes to database
             _context.SaveChanges();
         }
 
