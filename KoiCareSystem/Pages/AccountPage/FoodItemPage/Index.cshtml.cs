@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace KoiCareSystem.Pages.FoodItemPage
+namespace KoiCareSystem.Pages.AccountPage.FoodItemPage
 {
     public class IndexModel : PageModel
     {

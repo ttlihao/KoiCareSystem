@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 
-namespace KoiCareSystem.Pages.FoodItemPage
+namespace KoiCareSystem.Pages.AccountPage.FoodItemPage
 {
     public class EditModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly DAO.CarekoisystemContext _context;
 
-        public EditModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public EditModel(DAO.CarekoisystemContext context)
         {
             _context = context;
         }
