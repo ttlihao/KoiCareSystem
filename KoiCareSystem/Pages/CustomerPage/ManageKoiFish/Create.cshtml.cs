@@ -30,7 +30,11 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
         public KoiFish KoiFish { get; set; } = default!;
 
         [BindProperty]
-        public IFormFile ImageFile { get; set; }
+        public Pond Pond { get; set; } = default!;
+
+        [BindProperty]
+        public IFormFile ImageFile { get; set; } // Thuộc tính để lưu trữ file ảnh upload
+        public SelectList PondSelectList { get; set; } = default!;
 
         [BindProperty]
         public int PondId { get; set; }
@@ -56,6 +60,7 @@ namespace KoiCareSystem.Pages.CustomerPage.ManageKoiFish
 
             return Page();
         }
+
 
 
         public async Task<IActionResult> OnPostAsync()

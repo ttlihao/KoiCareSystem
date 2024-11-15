@@ -13,6 +13,8 @@ namespace KoiCareSystem.DAO
         private CarekoisystemContext _context;
         private static KoiFishDAO instance;
 
+        private PondDAO pondDAO;
+
         public KoiFishDAO()
         {
             _context = new CarekoisystemContext();

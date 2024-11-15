@@ -44,6 +44,7 @@ namespace KoiCareSystem.Pages.CustomerPage
             // Load ponds and koi fish for the logged-in user
             LoadPonds(userId.Value);
             LoadKoiFishs(userId.Value);
+            LoadFeedings(userId.Value);
 
             return Page();
         }
@@ -60,10 +61,10 @@ namespace KoiCareSystem.Pages.CustomerPage
             KoiFish = koiFishService.GetKoiFishByAccountId(userId);
         }
 
-        private void LoadFeedings()
+        private void LoadFeedings(int userId)
         {
             // Get koi fish by account ID
-            Feeding = feedingService.GetListFeeding();
+            Feeding = feedingService.GetFeedingsByAccount(userId);
         }
 
         private void LoadWaters(int pondId)
