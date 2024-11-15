@@ -1,19 +1,29 @@
 ﻿using KoiCareSystem.BussinessObject;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace KoiCareSystem.DAO
 {
     public class OrderDetailDAO
     {
-        // Create a new OrderDetail
-        public void CreateOrderDetail(OrderDetail orderDetail)
+        private readonly CarekoisystemContext _context;
+
+        public OrderDetailDAO(CarekoisystemContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        // Create a new OrderDetail in the database
+        public async Task CreateOrderDetailAsync(OrderDetail orderDetail)
         {
             try
             {
-                using (var context = new CarekoisystemContext())
-                {
-                    context.OrderDetails.Add(orderDetail);
-                    context.SaveChanges();
-                }
+                await _context.OrderDetails.AddAsync(orderDetail);
+                await _context.SaveChangesAsync();
+                Console.WriteLine("OrderDetail created successfully.");
             }
             catch (Exception ex)
             {
@@ -21,8 +31,8 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Retrieve all OrderDetails
-        public List<OrderDetail> GetAllOrderDetails()
+        // Retrieve all OrderDetails from the database
+        public async Task<List<OrderDetail>> GetAllOrderDetailsAsync()
         {
             try
             {
@@ -38,8 +48,8 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Retrieve OrderDetail by Id
-        public OrderDetail GetOrderDetailById(int id)
+        // Retrieve a single OrderDetail by its ID
+        public async Task<OrderDetail?> GetOrderDetailByIdAsync(int id)
         {
             try
             {
@@ -55,12 +65,28 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Update an existing OrderDetail
-        public void UpdateOrderDetail(OrderDetail updatedOrderDetail)
+        // Retrieve a single OrderDetail by OrderId and FoodItemId
+        public async Task<OrderDetail?> GetOrderDetailAsync(int orderId, int foodItemId)
         {
             try
             {
-                using (var context = new CarekoisystemContext())
+                return await _context.OrderDetails
+                                     .FirstOrDefaultAsync(od => od.OrderId == orderId && od.FoodItemId == foodItemId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving order detail by OrderId and FoodItemId: {ex.Message}");
+                return null;
+            }
+        }
+
+        // Update an existing OrderDetail in the database
+        public async Task UpdateOrderDetailAsync(OrderDetail updatedOrderDetail)
+        {
+            try
+            {
+                var existingOrderDetail = await _context.OrderDetails.FirstOrDefaultAsync(od => od.Id == updatedOrderDetail.Id);
+                if (existingOrderDetail != null)
                 {
                     var existingOrderDetail = context.OrderDetails.FirstOrDefault(od => od.Id == updatedOrderDetail.Id);
                     if (existingOrderDetail != null)
@@ -71,8 +97,12 @@ namespace KoiCareSystem.DAO
                         existingOrderDetail.Quantity = updatedOrderDetail.Quantity;
                         existingOrderDetail.Total = updatedOrderDetail.Total;
 
-                        context.SaveChanges();
-                    }
+                    await _context.SaveChangesAsync();
+                    Console.WriteLine("OrderDetail updated successfully.");
+                }
+                else
+                {
+                    Console.WriteLine($"Order detail with ID {updatedOrderDetail.Id} not found for update.");
                 }
             }
             catch (Exception ex)
@@ -81,26 +111,76 @@ namespace KoiCareSystem.DAO
             }
         }
 
-        // Delete (soft delete) an OrderDetail
-        public void DeleteOrderDetail(int id)
+        // Delete an OrderDetail by its ID
+        public async Task DeleteOrderDetailAsync(int id)
         {
+            Console.WriteLine($"Attempting to delete OrderDetail with ID {id}...");
             try
             {
                 using (var context = new CarekoisystemContext())
                 {
-                    var orderDetail = context.OrderDetails.FirstOrDefault(od => od.Id == id);
-                    if (orderDetail != null)
-                    {
-                        // If you have a 'Deleted' column, use soft delete logic here
-                        context.OrderDetails.Remove(orderDetail);
-                        context.SaveChanges();
-                    }
+                    _context.OrderDetails.Remove(orderDetail);
+                    await _context.SaveChangesAsync();
+                    Console.WriteLine("OrderDetail deleted successfully.");
+                }
+                else
+                {
+                    Console.WriteLine($"OrderDetail with ID {id} not found.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error deleting order detail: {ex.Message}");
+                Console.WriteLine($"Error deleting OrderDetail: {ex.Message}");
             }
         }
+
+        // Log all OrderDetail records for a specific OrderId
+        public async Task LogOrderDetailsForOrderAsync(int orderId)
+        {
+            try
+            {
+                var orderDetails = await _context.OrderDetails
+                                                 .Where(od => od.OrderId == orderId)
+                                                 .ToListAsync();
+                Console.WriteLine($"OrderDetails for OrderId {orderId}: Count = {orderDetails.Count}");
+                foreach (var detail in orderDetails)
+                {
+                    Console.WriteLine($"OrderDetail - ID: {detail.Id}, FoodItemId: {detail.FoodItemId}, Quantity: {detail.Quantity}, Price: {detail.Price}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error logging order details for OrderId {orderId}: {ex.Message}");
+            }
+        }
+
+        // Delete an OrderDetail by OrderId and FoodItemId
+        public async Task<bool> DeleteOrderDetailByOrderAndItemAsync(int orderId, int foodItemId)
+        {
+            try
+            {
+                var orderDetail = await _context.OrderDetails
+                                                .FirstOrDefaultAsync(od => od.OrderId == orderId && od.FoodItemId == foodItemId);
+
+                if (orderDetail != null)
+                {
+                    _context.OrderDetails.Remove(orderDetail);
+                    await _context.SaveChangesAsync();
+                    Console.WriteLine($"OrderDetail for OrderId {orderId} and FoodItemId {foodItemId} deleted successfully.");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"OrderDetail for OrderId {orderId} and FoodItemId {foodItemId} not found.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting OrderDetail by OrderId and FoodItemId: {ex.Message}");
+                return false;
+            }
+        }
+
     }
 }

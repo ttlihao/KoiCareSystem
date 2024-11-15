@@ -39,9 +39,45 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/Login">Login</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/FoodItemShop">FoodShop</a>
+                            </li>
                         }
                         else
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/Privacy">Privacy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/PondPage/Index">Pond</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/FoodItemShop">FoodShop</a>
+                            </li>
+                        }
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto">
+                        @if (!string.IsNullOrEmpty(fullName)) 
+                        {
+                            <!-- Cart Icon -->
+                            <li class="nav-item">
+                                <a class="nav-link position-relative text-white" href="/Cart">
+                                    <i class="fas fa-shopping-cart"></i> Cart
+                                    @if (cartItemCount > 0)
+                                    {
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            @cartItemCount
+                                            <span class="visually-hidden">cart items</span>
+                                        </span>
+                                    }
+                                </a>
+                            </li>
+
+                            <!-- User Profile Dropdown -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="@avatarUrl" alt="Avatar" class="rounded-circle" style="width: 30px; height: 30px;" />

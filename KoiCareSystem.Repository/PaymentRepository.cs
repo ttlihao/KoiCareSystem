@@ -3,16 +3,53 @@ using KoiCareSystem.DAO;
 using KoiCareSystem.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KoiCareSystem.Repository
 {
     public class PaymentRepository:IPaymentRepository
     {
-        public List<Payment> GetHistoryPayments(int orderId) => PaymentDAO.Instance.GetHistoryPayments(orderId);
+        private readonly PaymentDAO _paymentDAO;
 
-        public List<Payment> GetPaymentsByUserId(int userId) => PaymentDAO.Instance.GetPaymentsByUserId(userId);
+        // Inject PaymentDAO via constructor
+        public PaymentRepository(PaymentDAO paymentDAO)
+        {
+            _paymentDAO = paymentDAO ?? throw new ArgumentNullException(nameof(paymentDAO));
+        }
+
+        public async Task CreatePaymentAsync(Payment payment)
+        {
+            await _paymentDAO.AddPaymentAsync(payment);
+        }
+
+        public async Task DeletePaymentAsync(int id)
+        {
+            await _paymentDAO.DeletePaymentAsync(id);
+        }
+
+        public async Task<List<Payment>> GetAllPaymentsAsync()
+        {
+            return await _paymentDAO.GetAllPaymentsAsync();
+        }
+
+        public async Task<List<Payment>> GetHistoryPaymentsAsync(int orderId)
+        {
+            return await _paymentDAO.GetHistoryPaymentsAsync(orderId);
+        }
+
+        public async Task<Payment> GetPaymentByIdAsync(int id)
+        {
+            return await _paymentDAO.GetPaymentByIdAsync(id);
+        }
+
+        public async Task<List<Payment>> GetPaymentsByUserIdAsync(int userId)
+        {
+            return await _paymentDAO.GetPaymentsByUserIdAsync(userId);
+        }
+
+        public async Task UpdatePaymentAsync(Payment payment)
+        {
+            await _paymentDAO.UpdatePaymentAsync(payment);
+        }
     }
 }

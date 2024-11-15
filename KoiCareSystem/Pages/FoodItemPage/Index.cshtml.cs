@@ -1,4 +1,5 @@
 ﻿using KoiCareSystem.BussinessObject;
+using KoiCareSystem.Service;
 using KoiCareSystem.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace KoiCareSystem.Pages.FoodItemPage
             _foodItemService = foodItemService;
         }
 
-        public IList<FoodItem> FoodItems { get; set; } = default!;
+        public IList<FoodItem> FoodItems { get; set; } = new List<FoodItem>();
 
         public async Task OnGetAsync()
         {

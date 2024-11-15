@@ -9,36 +9,43 @@
 
 <form method="post">
     <input type="hidden" asp-for="FoodItem.Id" />
+
     <div class="form-group">
         <label asp-for="FoodItem.FoodName" class="control-label"></label>
         <input asp-for="FoodItem.FoodName" class="form-control" />
         <span asp-validation-for="FoodItem.FoodName" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="FoodItem.Price" class="control-label"></label>
-        <input asp-for="FoodItem.Price" class="form-control" />
+        <input asp-for="FoodItem.Price" class="form-control" type="number" step="0.01" />
         <span asp-validation-for="FoodItem.Price" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="FoodItem.Category" class="control-label"></label>
         <input asp-for="FoodItem.Category" class="form-control" />
         <span asp-validation-for="FoodItem.Category" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="FoodItem.Type" class="control-label"></label>
         <input asp-for="FoodItem.Type" class="form-control" />
         <span asp-validation-for="FoodItem.Type" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="FoodItem.Quantity" class="control-label"></label>
-        <input asp-for="FoodItem.Quantity" class="form-control" />
+        <input asp-for="FoodItem.Quantity" class="form-control" type="number" min="0" />
         <span asp-validation-for="FoodItem.Quantity" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="FoodItem.Status" class="control-label"></label>
         <input asp-for="FoodItem.Status" class="form-control" />
         <span asp-validation-for="FoodItem.Status" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>

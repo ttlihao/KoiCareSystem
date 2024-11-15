@@ -1,0 +1,269 @@
+﻿@page
+@model KoiCareSystem.Pages.FoodItemShopModel
+
+@{
+    ViewData["Title"] = "Shop Our Food Items";
+}
+
+<!-- Background Overlay -->
+<div class="background-overlay"></div>
+
+<div class="container my-5 content-container">
+    <h1 class="text-center mb-4 page-title">Shop Our Food Items</h1>
+
+    <!-- Search and Sort Form -->
+    <!-- Search and Sort Form -->
+    <form method="get" asp-page="/FoodItemShop" id="filterForm" class="search-sort-form">
+        <div class="input-group search-group">
+            <input type="text" class="form-control" placeholder="Search by name" asp-for="SearchTerm" />
+            <button class="btn btn-primary search-btn" type="submit">Search</button>
+        </div>
+
+        <div class="sort-group">
+            <select class="form-control sort-dropdown" asp-for="SortOrder" onchange="this.form.submit()">
+                <option value="">Sort by</option>
+                <option value="name_asc">Name: A to Z</option>
+                <option value="name_desc">Name: Z to A</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+            </select>
+        </div>
+    </form>
+
+
+    <!-- Food Items Grid -->
+    <div class="row food-items-grid">
+        @foreach (var item in Model.FilteredFoodItems)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card h-100 item-card shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="item-name">@item.FoodName</h5>
+                        <p class="item-price">$@item.Price</p>
+                        <p class="item-details">
+                            <span class="badge badge-primary">@item.Category</span>
+                            <span class="badge badge-warning">@item.Type</span>
+                        </p>
+
+                        <!-- Quantity Selector and Add to Cart Button -->
+                        <form method="post" asp-page-handler="AddToCart" data-item-id="@item.Id" class="add-to-cart-form">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+                            <div class="quantity-group">
+                                <input type="number" name="quantity" min="1" value="1" class="form-control quantity-input" />
+                                <button type="submit" class="btn btn-sm add-to-cart-btn">Add to Cart</button>
+                            </div>
+                        </form>
+
+                        <div class="cart-feedback alert alert-success d-none" role="alert">
+                            Item added to cart!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Style for the page -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        color: #fff;
+        margin: 0;
+    }
+
+    /* Background Styling */
+    .background-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('/images/koi-background.jpg') center center / cover no-repeat;
+        filter: brightness(0.6); /* Slightly darker for better contrast */
+        z-index: -1;
+    }
+
+    /* Page Title Styling */
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    /* Container Styling */
+    .content-container {
+        position: relative;
+        z-index: 1;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+        border-radius: 10px;
+    }
+
+    /* Search and Sort Form Styling */
+    .search-sort-form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .search-group, .sort-group {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .search-group {
+        flex-grow: 1;
+        max-width: 500px;
+    }
+
+    .search-btn {
+        background-color: #28a745;
+        color: #fff;
+        border-radius: 0 4px 4px 0;
+    }
+
+        .search-btn:hover {
+            background-color: #218838;
+        }
+
+    .sort-dropdown {
+        max-width: 200px;
+    }
+
+    /* Food Items Grid Styling */
+    .food-items-grid {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    /* Card Styling */
+    .item-card {
+        background-color: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 10px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .item-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .item-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .item-price {
+        color: #e67e22;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .item-details {
+        margin-bottom: 1rem;
+    }
+
+        .item-details .badge {
+            margin: 2px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+    /* Badge Colors */
+    .badge-primary {
+        background-color: #007bff; /* New vibrant color for Category */
+    }
+
+    .badge-warning {
+        background-color: #ffbb33; /* New vibrant color for Type */
+    }
+
+    .quantity-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        margin-top: 0.5rem;
+    }
+
+    /* Feedback Alert Styling */
+    .cart-feedback {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Button Styling */
+    .add-to-cart-btn {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+        font-weight: bold;
+    }
+
+        .add-to-cart-btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+</style>
+<script>
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent full page reload
+
+            const formData = new FormData(this);
+
+            try {
+                const response = await fetch(this.action, { // Use `this.action` for form's action URL
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Show success message on the same page
+                    showSuccessMessage(result.message || "Item added to cart successfully.");
+                } else {
+                    alert(result.message || "Failed to add item to cart.");
+                }
+            } catch (error) {
+                console.error("Error adding item to cart:", error);
+                alert("An error occurred while adding item to cart.");
+            }
+        });
+    });
+
+    // Function to display a success message
+    function showSuccessMessage(message) {
+        const successDiv = document.createElement('div');
+        successDiv.className = 'alert alert-success';
+        successDiv.textContent = message;
+        successDiv.style.position = 'fixed';
+        successDiv.style.top = '20px';
+        successDiv.style.right = '20px';
+        successDiv.style.zIndex = '1000';
+        successDiv.style.padding = '10px';
+        successDiv.style.borderRadius = '5px';
+
+        document.body.appendChild(successDiv);
+
+        // Remove the message after 3 seconds
+        setTimeout(() => {
+            successDiv.remove();
+        }, 3000);
+    }
+</script>
+
+

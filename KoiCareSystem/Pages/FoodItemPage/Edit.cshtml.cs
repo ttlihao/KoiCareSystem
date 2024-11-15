@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 
@@ -20,7 +19,7 @@ namespace KoiCareSystem.Pages.FeedingPage
         }
 
         [BindProperty]
-        public Feeding Feeding { get; set; } = default!;
+        public FoodItem FoodItem { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,17 +28,15 @@ namespace KoiCareSystem.Pages.FeedingPage
                 return NotFound();
             }
 
-            var feeding =  await _context.Feedings.FirstOrDefaultAsync(m => m.Id == id);
-            if (feeding == null)
+            var foodItem = await _context.FoodItems.FirstOrDefaultAsync(m => m.Id == id);
+            if (foodItem == null)
             {
                 return NotFound();
             }
-            Feeding = feeding;
+            FoodItem = foodItem;
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -47,7 +44,7 @@ namespace KoiCareSystem.Pages.FeedingPage
                 return Page();
             }
 
-            _context.Attach(Feeding).State = EntityState.Modified;
+            _context.Attach(FoodItem).State = EntityState.Modified;
 
             try
             {
@@ -55,7 +52,7 @@ namespace KoiCareSystem.Pages.FeedingPage
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FeedingExists(Feeding.Id))
+                if (!FoodItemExists(FoodItem.Id))
                 {
                     return NotFound();
                 }
@@ -68,9 +65,9 @@ namespace KoiCareSystem.Pages.FeedingPage
             return RedirectToPage("./Index");
         }
 
-        private bool FeedingExists(int id)
+        private bool FoodItemExists(int id)
         {
-            return _context.Feedings.Any(e => e.Id == id);
+            return _context.FoodItems.Any(e => e.Id == id);
         }
     }
 }

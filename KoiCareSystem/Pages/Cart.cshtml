@@ -1,0 +1,103 @@
+﻿@page
+@model KoiCareSystem.Pages.CartPageModel
+
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<h1>Your Cart</h1>
+
+@if (Model.CartItems.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.FoodName</td>
+                    <td>$@item.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>$@item.Total</td>
+                    <td>
+                        <!-- Set the correct foodItemId in the data attribute -->
+                        <button type="button" class="btn btn-danger btn-sm remove-from-cart" data-fooditemid="@item.FoodItemId">Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p><strong>Total Amount:</strong> $@Model.TotalAmount</p>
+
+    <!-- Checkout Form -->
+    <form method="post" asp-page-handler="Checkout">
+        <div class="mb-3">
+            <label for="address" class="form-label">Shipping Address</label>
+            <input type="text" id="address" name="address" class="form-control" placeholder="Enter your address" required>
+        </div>
+        <div class="mb-3">
+            <label for="receiver" class="form-label">Receiver Name</label>
+            <input type="text" id="receiver" name="receiver" class="form-control" placeholder="Enter the receiver's name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+    </form>
+}
+else
+{
+    <p>Your cart is empty.</p>
+}
+
+<!-- JavaScript to handle the remove action -->
+@section Scripts {
+    <script>
+        document.querySelectorAll('.remove-from-cart').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                event.preventDefault();
+
+                const foodItemId = event.target.getAttribute('data-fooditemid');
+                console.log("Removing item with foodItemId:", foodItemId);
+
+                if (!foodItemId || parseInt(foodItemId) === 0) {
+                    console.error("Invalid foodItemId:", foodItemId);
+                    alert("Failed to retrieve the item ID for removal.");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`?handler=RemoveFromCart`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        },
+                        body: JSON.stringify({ foodItemId: parseInt(foodItemId) })
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            location.reload();
+                        } else {
+                            alert(result.message || 'Failed to remove item from cart');
+                        }
+                    } else {
+                        const errorText = await response.text();
+                        console.error('Failed to remove item from cart:', errorText);
+                        alert('Failed to remove item from cart');
+                    }
+                } catch (error) {
+                    console.error('Error removing item:', error);
+                    alert('An error occurred while removing the item from the cart');
+                }
+            });
+        });
+    </script>
+}

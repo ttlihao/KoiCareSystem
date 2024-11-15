@@ -44,6 +44,14 @@ builder.Services.AddScoped<IPondFeedingService, PondFeedingService>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<VNPayService>();
+builder.Services.AddScoped<OrderDetailDAO>();
+builder.Services.AddScoped<OrderDAO>();
+builder.Services.AddScoped<FoodItemDAO>();
+builder.Services.AddTransient<EmailService>();
 builder.Services.AddScoped<CarekoisystemContext>();
 builder.Services.AddScoped<PondDAO>();
 builder.Services.AddScoped<CarePropertyDAO>();
