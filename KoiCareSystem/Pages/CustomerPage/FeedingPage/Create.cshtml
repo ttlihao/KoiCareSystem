@@ -97,12 +97,16 @@
                             <span asp-validation-for="Feeding.FeedAmount" class="text-danger"></span>
                         </div>
 
-                        <!-- Feeding Time input -->
+
+                        <!-- Feeding Date input -->
+                        <!-- Feeding Date and Time input -->
                         <div class="form-group mb-3">
-                            <label asp-for="Feeding.FeedingTime" class="form-label required">Feeding Time</label>
+                            <label asp-for="Feeding.FeedingTime" class="form-label required">Feeding Date and Time</label>
                             <input asp-for="Feeding.FeedingTime" type="datetime-local" class="form-control" aria-required="true" />
                             <span asp-validation-for="Feeding.FeedingTime" class="text-danger"></span>
                         </div>
+
+
 
                         <!-- Submit button -->
                         <div class="d-grid mt-4">

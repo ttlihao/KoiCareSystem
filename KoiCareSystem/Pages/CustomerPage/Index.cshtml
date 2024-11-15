@@ -240,7 +240,7 @@
                                
                                 <td>@Html.DisplayFor(modelItem => item.FoodType)</td>
                                 <td>@Html.DisplayFor(modelItem => item.FeedAmount)</td>
-                                <td>@item.FeedingTime?.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                <td>@item.FeedingTime?.ToString("dd-MM-yyyy HH:mm:ss")</td>
                                 <td>
                                     <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                                     <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
