@@ -1,7 +1,4 @@
 ﻿using KoiCareSystem.BussinessObject;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +8,13 @@ namespace KoiCareSystem.Repository
 {
     public interface IPaymentRepository
     {
-        Task<List<Payment>> GetAllPaymentsAsync();
-        Task<Payment> GetPaymentByIdAsync(int id);
-        Task CreatePaymentAsync(Payment payment);
-        Task UpdatePaymentAsync(Payment payment);
-        Task DeletePaymentAsync(int id);
+        List<Payment> GetAllPayments();
+        Payment GetPaymentById(int id);
+        void CreatePayment(Payment payment);
+        void UpdatePayment(Payment payment);
+        void DeletePayment(int id);
 
-        Task<List<Payment>> GetPaymentsByUserIdAsync(int userId);
-        Task<List<Payment>> GetHistoryPaymentsAsync(int orderId);
+        List<Payment> GetHistoryPayments(int orderId);
+        List<Payment> GetPaymentsByUserId(int userId);
     }
 }

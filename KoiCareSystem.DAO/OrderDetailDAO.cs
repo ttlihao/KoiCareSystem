@@ -77,7 +77,7 @@ namespace KoiCareSystem.DAO
                 var existingOrderDetail = await _context.OrderDetails.FirstOrDefaultAsync(od => od.Id == updatedOrderDetail.Id);
                 if (existingOrderDetail != null)
                 {
-                    var existingOrderDetail = context.OrderDetails.FirstOrDefault(od => od.Id == updatedOrderDetail.Id);
+                    existingOrderDetail = _context.OrderDetails.FirstOrDefault(od => od.Id == updatedOrderDetail.Id);
                     if (existingOrderDetail != null)
                     {
                         existingOrderDetail.OrderId = updatedOrderDetail.OrderId;
@@ -86,8 +86,9 @@ namespace KoiCareSystem.DAO
                         existingOrderDetail.Quantity = updatedOrderDetail.Quantity;
                         existingOrderDetail.Total = updatedOrderDetail.Total;
 
-                    await _context.SaveChangesAsync();
-                    Console.WriteLine("OrderDetail updated successfully.");
+                        await _context.SaveChangesAsync();
+                        Console.WriteLine("OrderDetail updated successfully.");
+                    }
                 }
                 else
                 {

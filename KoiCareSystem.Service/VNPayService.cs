@@ -38,7 +38,7 @@ public class VNPayService
         // Generate the secure hash for data integrity
         string signData = BuildDataString(vnPayParams);
         string hashSecret = _configuration["VNPay:HashSecret"] ?? throw new InvalidOperationException("Hash secret is not configured.");
-        string secureHash = ComputeHmacSHA512(hashSecret, signData);
+        string secureHash = HmacSHA512(hashSecret, signData);
         vnPayParams.Add("vnp_SecureHash", secureHash);
 
         // Build the final URL
@@ -62,7 +62,7 @@ public class VNPayService
         var sortedData = new SortedList<string, string>(vnpayData);
         string signData = BuildDataString(sortedData);
         string hashSecret = _configuration["VNPay:HashSecret"] ?? throw new InvalidOperationException("Hash secret is not configured.");
-        string computedHash = ComputeHmacSHA512(hashSecret, signData);
+        string computedHash = HmacSHA512(hashSecret, signData);
 
         // Validate that the computed hash matches the received hash
         return computedHash.Equals(receivedSecureHash, StringComparison.OrdinalIgnoreCase);
@@ -113,4 +113,21 @@ public class VNPayService
             return BitConverter.ToString(hash).Replace("-", "").ToLower();
         }
     }
+    public static string HmacSHA512(string key, string inputData)
+    {
+        var hash = new StringBuilder();
+        var keyBytes = Encoding.UTF8.GetBytes(key);
+        var inputBytes = Encoding.UTF8.GetBytes(inputData);
+        using (var hmac = new HMACSHA512(keyBytes))
+        {
+            var hashValue = hmac.ComputeHash(inputBytes);
+            foreach (var theByte in hashValue)
+            {
+                hash.Append(theByte.ToString("x2"));
+            }
+        }
+
+        return hash.ToString();
+    }
+
 }

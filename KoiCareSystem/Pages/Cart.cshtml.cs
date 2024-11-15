@@ -164,42 +164,40 @@ namespace KoiCareSystem.Pages
         {
             return HttpContext.Session.GetInt32("UserId") ?? 0;
         }
-        public async Task ProcessPaymentCallback(int orderId, bool paymentSuccessful)
-        {
-            // Fetch the order using the orderId
-            var order = await _orderDAO.GetOrderByIdAsync(orderId);
+        //public async Task ProcessPaymentCallback(int orderId, bool paymentSuccessful)
+        //{
+        //    // Fetch the order using the orderId
+        //    var order = await _orderDAO.GetOrderByIdAsync(orderId);
 
-            if (order == null)
-            {
-                Console.WriteLine("Order not found.");
-                return;
-            }
+        //    if (order == null)
+        //    {
+        //        Console.WriteLine("Order not found.");
+        //        return;
+        //    }
 
-            if (paymentSuccessful)
-            {
-                // Update the order status to "Completed"
-                order.Status = "Completed";
-                order.OrderDate = DateTime.Now; // Update order date if necessary
-                await _orderDAO.UpdateOrderAsync(order);
+        //    if (paymentSuccessful)
+        //    {
+        //        // Update the order status to "Completed"
+        //        order.Status = "Completed";
+        //        order.OrderDate = DateTime.Now; // Update order date if necessary
+        //        await _orderDAO.UpdateOrderAsync(order);
 
-                // Insert a new record into the Payment table
-                var payment = new Payment
-                {
-                    OrderId = order.Id,
-                    PaymentDate = DateTime.Now,
-                    Total = order.TotalAmount,
-                    Status = "Completed"
-                };
+        //        // Insert a new record into the Payment table
+        //        var payment = new Payment
+        //        {
+        //            OrderId = order.Id,
+        //            PaymentDate = DateTime.Now,
+        //            Total = order.TotalAmount,
+        //            Status = "Completed"
+        //        };
 
-                await _paymentDAO.InsertPaymentAsync(payment);
-
-                Console.WriteLine($"Payment processed successfully for Order ID: {orderId}. Order status updated and payment record created.");
-            }
-            else
-            {
-                Console.WriteLine("Payment failed.");
-            }
-        }
+        //        Console.WriteLine($"Payment processed successfully for Order ID: {orderId}. Order status updated and payment record created.");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Payment failed.");
+        //    }
+        //}
 
     }
 }

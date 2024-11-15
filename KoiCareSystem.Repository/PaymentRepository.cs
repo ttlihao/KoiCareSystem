@@ -2,8 +2,6 @@
 using KoiCareSystem.DAO;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace KoiCareSystem.Repository
 {
     public class PaymentRepository : IPaymentRepository
