@@ -99,11 +99,11 @@
 
                         <!-- Dropdown chọn hồ cá -->
                         <div class="form-group mb-3">
-                            <label asp-for="Feeding.PondFeedingId" class="form-label">Select Pond</label>
-                            <select asp-for="Feeding.PondFeedingId" class="form-select" asp-items="Model.PondSelectList">
+                            <label asp-for="Pond.Id" class="form-label">Select Pond</label>
+                            <select asp-for="Pond.Id" class="form-select" asp-items="Model.PondSelectList">
                                 <option value="">-- Select Pond --</option>
                             </select>
-                            <span asp-validation-for="Feeding.PondFeedingId" class="text-danger"></span>
+                            <span asp-validation-for="Pond.Id" class="text-danger"></span>
                         </div>
 
                         <!-- Các trường nhập dữ liệu khác -->

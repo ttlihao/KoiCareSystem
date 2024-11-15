@@ -36,23 +36,15 @@ namespace KoiCareSystem.DAO
         public bool AddFeeding(Feeding feeding)
         {
             bool isSuccess = false;
-            Pond feedingPond = pondDAO.GetPondById(feeding.PondFeedingId);
+            
           
             Feeding feed = GetFeedingByPondID(feeding.Id);
             try
             {
-                if (feedingPond == null)
-                {
-                    throw new Exception("Plese choose pond before add feeding time!");
-                }
+                
                 if (feed == null)
                 {
                     dbContext.Feedings.Add(feeding);
-                    dbContext.SaveChanges();
-
-                    PondFeeding pondFeeding = PondFeedingDAO.Instance.GetPondFeedingId(feedingPond.Id);
-                    pondFeeding.FeedingId = feeding.Id;
-                    dbContext.PondFeedings.Add(pondFeeding);
                     dbContext.SaveChanges();
                     isSuccess = true;
                 }
