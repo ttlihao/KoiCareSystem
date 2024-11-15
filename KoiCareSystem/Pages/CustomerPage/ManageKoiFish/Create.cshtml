@@ -72,8 +72,10 @@
     <div class="create-container">
         <h2>Create new Koi Fish</h2>
 
-        <!-- Update enctype for file upload -->
         <form method="post" enctype="multipart/form-data">
+
+            <!-- Display model validation errors at the top of the form -->
+            <div asp-validation-summary="All" class="text-danger"></div>
 
             <!-- Pond Selection -->
             <div class="form-group">
@@ -120,8 +122,8 @@
                          new { @class = "form-control" }
                          )
                 <span asp-validation-for="KoiFish.Gender" class="text-danger"></span>
-            </div>
-
+                </div>
+            <!-- Origin -->
             <div class="form-group">
                 <label asp-for="KoiFish.Origin" class="control-label">Origin</label>
                 <input asp-for="KoiFish.Origin" class="form-control" />

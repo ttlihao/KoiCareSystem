@@ -20,5 +20,7 @@ namespace KoiCareSystem.Service.Interfaces
 
         public bool UpdateWaterParameter(WaterParameter waterParameter);
 
+        public List<WaterParameter> GetListWaterParametersByPond(int pondId);
+
     }
 }
