@@ -4,23 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KoiCareSystem.BussinessObject;
 
-namespace KoiCareSystem.Pages.FoodItemPage
+namespace KoiCareSystem.Pages.AccountPage.FoodItemPage
 {
     public class EditModel : PageModel
     {
-        private readonly KoiCareSystem.DAO.CarekoisystemContext _context;
+        private readonly DAO.CarekoisystemContext _context;
 
-        public EditModel(KoiCareSystem.DAO.CarekoisystemContext context)
+        public EditModel(DAO.CarekoisystemContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Feeding Feeding { get; set; } = default!;
+        public FoodItem FoodItem { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,17 +28,15 @@ namespace KoiCareSystem.Pages.FoodItemPage
                 return NotFound();
             }
 
-            var feeding =  await _context.Feedings.FirstOrDefaultAsync(m => m.Id == id);
-            if (feeding == null)
+            var foodItem = await _context.FoodItems.FirstOrDefaultAsync(m => m.Id == id);
+            if (foodItem == null)
             {
                 return NotFound();
             }
-            Feeding = feeding;
+            FoodItem = foodItem;
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -47,7 +44,7 @@ namespace KoiCareSystem.Pages.FoodItemPage
                 return Page();
             }
 
-            _context.Attach(Feeding).State = EntityState.Modified;
+            _context.Attach(FoodItem).State = EntityState.Modified;
 
             try
             {
@@ -55,7 +52,7 @@ namespace KoiCareSystem.Pages.FoodItemPage
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FeedingExists(Feeding.Id))
+                if (!FoodItemExists(FoodItem.Id))
                 {
                     return NotFound();
                 }
@@ -68,9 +65,9 @@ namespace KoiCareSystem.Pages.FoodItemPage
             return RedirectToPage("./Index");
         }
 
-        private bool FeedingExists(int id)
+        private bool FoodItemExists(int id)
         {
-            return _context.Feedings.Any(e => e.Id == id);
+            return _context.FoodItems.Any(e => e.Id == id);
         }
     }
 }

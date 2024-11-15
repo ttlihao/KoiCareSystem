@@ -1,5 +1,5 @@
 ﻿@page
-@model KoiCareSystem.Pages.FoodItemPage.CreateModel
+@model             CreateModel
 
 @{
     ViewData["Title"] = "Create Food Item";
@@ -15,7 +15,7 @@
     </div>
     <div class="form-group">
         <label asp-for="FoodItem.Price" class="control-label"></label>
-        <input asp-for="FoodItem.Price" class="form-control" />
+        <input asp-for="FoodItem.Price" class="form-control" type="number" step="0.01" min="0.01" />
         <span asp-validation-for="FoodItem.Price" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -30,12 +30,15 @@
     </div>
     <div class="form-group">
         <label asp-for="FoodItem.Quantity" class="control-label"></label>
-        <input asp-for="FoodItem.Quantity" class="form-control" />
+        <input asp-for="FoodItem.Quantity" class="form-control" type="number" min="0" />
         <span asp-validation-for="FoodItem.Quantity" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="FoodItem.Status" class="control-label"></label>
-        <input asp-for="FoodItem.Status" class="form-control" />
+        <select asp-for="FoodItem.Status" class="form-control">
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="INACTIVE">INACTIVE</option>
+        </select>
         <span asp-validation-for="FoodItem.Status" class="text-danger"></span>
     </div>
     <div class="form-group">

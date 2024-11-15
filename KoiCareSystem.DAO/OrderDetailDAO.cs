@@ -69,7 +69,7 @@ namespace KoiCareSystem.DAO
             }
         }
 
-       
+        // Update an existing OrderDetail in the database
         public async Task UpdateOrderDetailAsync(OrderDetail updatedOrderDetail)
         {
             try
@@ -77,13 +77,18 @@ namespace KoiCareSystem.DAO
                 var existingOrderDetail = await _context.OrderDetails.FirstOrDefaultAsync(od => od.Id == updatedOrderDetail.Id);
                 if (existingOrderDetail != null)
                 {
-                    existingOrderDetail.OrderId = updatedOrderDetail.OrderId;
-                    existingOrderDetail.FoodItemId = updatedOrderDetail.FoodItemId;
-                    existingOrderDetail.Price = updatedOrderDetail.Price;
-                    existingOrderDetail.Quantity = updatedOrderDetail.Quantity;
-                    existingOrderDetail.Total = updatedOrderDetail.Total;
+                    existingOrderDetail = _context.OrderDetails.FirstOrDefault(od => od.Id == updatedOrderDetail.Id);
+                    if (existingOrderDetail != null)
+                    {
+                        existingOrderDetail.OrderId = updatedOrderDetail.OrderId;
+                        existingOrderDetail.FoodItemId = updatedOrderDetail.FoodItemId;
+                        existingOrderDetail.Price = updatedOrderDetail.Price;
+                        existingOrderDetail.Quantity = updatedOrderDetail.Quantity;
+                        existingOrderDetail.Total = updatedOrderDetail.Total;
 
-                    await _context.SaveChangesAsync();
+                        await _context.SaveChangesAsync();
+                        Console.WriteLine("OrderDetail updated successfully.");
+                    }
                 }
                 else
                 {
@@ -98,24 +103,74 @@ namespace KoiCareSystem.DAO
 
         public async Task DeleteOrderDetailAsync(int id)
         {
+            Console.WriteLine($"Attempting to delete OrderDetail with ID {id}...");
             try
             {
                 var orderDetail = await _context.OrderDetails.FirstOrDefaultAsync(od => od.Id == id);
                 if (orderDetail != null)
                 {
-                    
                     _context.OrderDetails.Remove(orderDetail);
                     await _context.SaveChangesAsync();
+                    Console.WriteLine("OrderDetail deleted successfully.");
                 }
                 else
                 {
-                    Console.WriteLine($"Order detail with ID {id} not found for deletion.");
+                    Console.WriteLine($"OrderDetail with ID {id} not found.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error deleting order detail: {ex.Message}");
+                Console.WriteLine($"Error deleting OrderDetail: {ex.Message}");
             }
         }
+
+        // Log all OrderDetail records for a specific OrderId
+        public async Task LogOrderDetailsForOrderAsync(int orderId)
+        {
+            try
+            {
+                var orderDetails = await _context.OrderDetails
+                                                 .Where(od => od.OrderId == orderId)
+                                                 .ToListAsync();
+                Console.WriteLine($"OrderDetails for OrderId {orderId}: Count = {orderDetails.Count}");
+                foreach (var detail in orderDetails)
+                {
+                    Console.WriteLine($"OrderDetail - ID: {detail.Id}, FoodItemId: {detail.FoodItemId}, Quantity: {detail.Quantity}, Price: {detail.Price}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error logging order details for OrderId {orderId}: {ex.Message}");
+            }
+        }
+
+        // Delete an OrderDetail by OrderId and FoodItemId
+        public async Task<bool> DeleteOrderDetailByOrderAndItemAsync(int orderId, int foodItemId)
+        {
+            try
+            {
+                var orderDetail = await _context.OrderDetails
+                                                .FirstOrDefaultAsync(od => od.OrderId == orderId && od.FoodItemId == foodItemId);
+
+                if (orderDetail != null)
+                {
+                    _context.OrderDetails.Remove(orderDetail);
+                    await _context.SaveChangesAsync();
+                    Console.WriteLine($"OrderDetail for OrderId {orderId} and FoodItemId {foodItemId} deleted successfully.");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"OrderDetail for OrderId {orderId} and FoodItemId {foodItemId} not found.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting OrderDetail by OrderId and FoodItemId: {ex.Message}");
+                return false;
+            }
+        }
+
     }
 }

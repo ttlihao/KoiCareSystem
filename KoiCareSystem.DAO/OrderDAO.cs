@@ -51,6 +51,15 @@ namespace KoiCareSystem.DAO
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task AddPaymentAsync(Payment payment)
+        {
+            if (payment == null)
+                throw new ArgumentNullException(nameof(payment));
+
+            _context.Payments.Add(payment);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<Order?> GetPendingOrderByAccountIdAsync(int accountId)
         {
             return await _context.Orders

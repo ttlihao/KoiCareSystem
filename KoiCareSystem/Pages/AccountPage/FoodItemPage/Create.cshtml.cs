@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
-namespace KoiCareSystem.Pages.FoodItemPage
+namespace KoiCareSystem.Pages.AccountPage.FoodItemPage
 {
     public class CreateModel : PageModel
     {

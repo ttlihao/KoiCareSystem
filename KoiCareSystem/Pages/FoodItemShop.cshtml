@@ -1,5 +1,5 @@
 ﻿@page
-@model KoiCareSystem.Pages.FoodItemPage.IndexModel
+@model KoiCareSystem.Pages.FoodItemShopModel
 
 @{
     ViewData["Title"] = "Shop Our Food Items";
@@ -12,7 +12,8 @@
     <h1 class="text-center mb-4 page-title">Shop Our Food Items</h1>
 
     <!-- Search and Sort Form -->
-    <form method="get" asp-page="./Index" id="filterForm" class="search-sort-form">
+    <!-- Search and Sort Form -->
+    <form method="get" asp-page="/FoodItemShop" id="filterForm" class="search-sort-form">
         <div class="input-group search-group">
             <input type="text" class="form-control" placeholder="Search by name" asp-for="SearchTerm" />
             <button class="btn btn-primary search-btn" type="submit">Search</button>
@@ -28,6 +29,7 @@
             </select>
         </div>
     </form>
+
 
     <!-- Food Items Grid -->
     <div class="row food-items-grid">

@@ -1,0 +1,10 @@
+﻿@page
+@model OrderConfirmationModel
+
+<h1>@Model.PaymentStatus</h1>
+
+@if (!string.IsNullOrEmpty(Model.TransactionId))
+{
+    <p>Transaction ID: @Model.TransactionId</p>
+}
+
