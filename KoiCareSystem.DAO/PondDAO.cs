@@ -123,7 +123,7 @@ namespace KoiCareSystem.DAO
                 .ToList();
         }
 
-        public List<Pond> GetPondsByAccountId(int accountId)
+        public Task<List<Pond>> GetPondsByAccountId(int accountId)
         {
             var account = _context.Accounts.FirstOrDefault(a => a.Id == accountId);
             if (account == null)
@@ -134,7 +134,7 @@ namespace KoiCareSystem.DAO
             return _context.Ponds
                 .Where(p => p.AccountId == accountId && p.Deleted == false)
                 .Include(p => p.Account) // Include related Account if needed
-                .ToList();
+                .ToListAsync();
         }
 
 
