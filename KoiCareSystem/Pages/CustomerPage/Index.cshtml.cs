@@ -11,12 +11,16 @@ namespace KoiCareSystem.Pages.CustomerPage
         private readonly IPondService pondService;
         private readonly IKoiFishService koiFishService;
         private readonly IFeedingService feedingService;
+        private readonly IWaterParameterService waterParameterService;
 
         [BindProperty]
         public IList<Pond> Pond { get; set; } = new List<Pond>()!;
         [BindProperty]
         public IList<KoiFish> KoiFish { get; set; } = new List<KoiFish>()!;
+        [BindProperty]
         public IList<Feeding> Feeding { get; set; } = new List<Feeding>()!;
+        [BindProperty]
+        public IList<WaterParameter> WaterParameter { get; set; }
 
 
         public IndexModel(IPondService pondService, IKoiFishService koiFishService)

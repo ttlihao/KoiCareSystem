@@ -13,6 +13,7 @@
                 <li><a href="#" onclick="showContent('pond')" id="user-tab">Manage Pond</a></li>
                 <li><a href="#" onclick="showContent('koifish')" id="koifish-tab">Manage Koi Fish</a></li>
             <li><a href="#" onclick="showContent('feeding')" id="koifish-tab">Manage Feeding</a></li>
+            <li><a href="#" onclick="showContent('waterparameter')" id="koifish-tab">Manage WaterParameter</a></li>
             </ul>
         </div>
 
@@ -133,6 +134,76 @@
                     </tbody>
                 </table>
             </div>
+
+        <div id="waterparameter-content" class="tab-content" style="display: none;">
+            <h1>Manage Pond Water Parameter</h1>
+
+            <p>
+                <a asp-page="./ManageWaterParameter/Create" class="btn btn-primary">Create New</a>
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.WaterParameter[0].Temperature)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.WaterParameter[0].PH)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.WaterParameter[0].Co2)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.WaterParameter[0].No2)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.WaterParameter[0].IsDeleted)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.WaterParameter[0].Pond)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.WaterParameter != null && Model.WaterParameter.Any())
+                    {
+                        @foreach (var item in Model.WaterParameter)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Temperature)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PH)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Co2)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.No2)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IsDeleted)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Pond.Name)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <p>No water parameters available.</p>
+                    }
+                </tbody>
+            </table>
+        </div>
 
         <div id="feeding-content" class="tab-content" style="display: none;">
             <h1>Manage Feeding</h1>
