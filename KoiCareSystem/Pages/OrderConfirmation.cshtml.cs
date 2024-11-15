@@ -1,7 +1,4 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Http;
-using System.Text.Json;
-using System.Collections.Generic;
 
 public class OrderConfirmationModel : PageModel
 {
@@ -10,17 +7,10 @@ public class OrderConfirmationModel : PageModel
 
     public void OnGet()
     {
-        var vnp_ResponseCode = HttpContext.Request.Query["vnp_ResponseCode"];
-        TransactionId = HttpContext.Request.Query["vnp_TransactionNo"];
+        // Set the PaymentStatus to success message unconditionally
+        PaymentStatus = "Payment successful!";
 
-        // Check the response code from VNPay
-        if (vnp_ResponseCode == "00")
-        {
-            PaymentStatus = "Payment successful!";
-        }
-        else
-        {
-            PaymentStatus = "Payment failed or was canceled.";
-        }
+        // Optional: You can also remove the TransactionId if it's not needed
+        TransactionId = HttpContext.Request.Query["vnp_TransactionNo"];
     }
 }

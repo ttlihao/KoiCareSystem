@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using KoiCareSystem.DAO;
 using System;
+using KoiCareSystem.Service.Interfaces;
 
 namespace KoiCareSystem.Pages
 {
@@ -122,20 +123,57 @@ namespace KoiCareSystem.Pages
         }
 
         // Handle checkout with VNPay
+        //[BindProperty]
+        //public string Address { get; set; }
+        //[BindProperty]
+        //public string Receiver { get; set; }
+
+        //public IActionResult OnPostCheckout()
+        //{
+        //    int accountId = GetAccountId();
+        //    if (accountId == 0)
+        //    {
+        //        return RedirectToPage("/Login");
+        //    } 
+
+        //    CartItems = GetCartItemsAsync(accountId).Result;
+        //    decimal totalAmount = CartItems.Sum(item => item.Price * item.Quantity);
+
+        //    if (!CartItems.Any() || totalAmount <= 0)
+        //    {
+        //        ModelState.AddModelError(string.Empty, "Your cart is empty or the total amount is invalid.");
+        //        return Page();
+        //    }
+
+        //    try
+        //    {
+        //        string orderId = DateTime.Now.Ticks.ToString();
+        //        string orderInfo = $"Payment for order {orderId}";
+
+        //        string paymentUrl = _vnPayService.GenerateVnPayUrl(totalAmount, orderInfo, orderId);
+        //        return Redirect(paymentUrl);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ModelState.AddModelError(string.Empty, "Failed to generate payment URL.");
+        //        return Page();
+        //    }
+        //}
         [BindProperty]
         public string Address { get; set; }
         [BindProperty]
         public string Receiver { get; set; }
 
-        public IActionResult OnPostCheckout()
+        public async Task<IActionResult> OnPostCheckoutAsync()
         {
             int accountId = GetAccountId();
             if (accountId == 0)
             {
                 return RedirectToPage("/Login");
-            } 
+            }
 
-            CartItems = GetCartItemsAsync(accountId).Result;
+            // Fetch cart items and calculate total amount
+            CartItems = await GetCartItemsAsync(accountId);
             decimal totalAmount = CartItems.Sum(item => item.Price * item.Quantity);
 
             if (!CartItems.Any() || totalAmount <= 0)
@@ -146,15 +184,33 @@ namespace KoiCareSystem.Pages
 
             try
             {
-                string orderId = DateTime.Now.Ticks.ToString();
-                string orderInfo = $"Payment for order {orderId}";
+                // Retrieve the order and mark it as completed
+                var order = await _orderDAO.GetPendingOrderByAccountIdAsync(accountId);
+                if (order != null)
+                {
+                    order.Status = "Completed";
+                    order.OrderDate = DateTime.Now; // Set the order date to now
+                    await _orderDAO.UpdateOrderAsync(order);
 
-                string paymentUrl = _vnPayService.GenerateVnPayUrl(totalAmount, orderInfo, orderId);
-                return Redirect(paymentUrl);
+                    // Optionally, create a payment record
+                    var payment = new Payment
+                    {
+                        OrderId = order.Id,
+                        PaymentDate = DateTime.Now,
+                        Total = totalAmount,
+                        Status = "Completed"
+                    };
+
+                    await _orderDAO.AddPaymentAsync(payment);
+                }
+
+                // Redirect to success page
+                TempData["PaymentStatus"] = "Your order has been completed successfully.";
+                return RedirectToPage("/OrderConfirmation");
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, "Failed to generate payment URL.");
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your order.");
                 return Page();
             }
         }

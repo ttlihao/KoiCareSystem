@@ -1,8 +1,10 @@
 ﻿@page
 @model OrderConfirmationModel
-@{
-    ViewData["Title"] = "Order Confirmation";
-}
 
 <h1>@Model.PaymentStatus</h1>
-<p>Transaction ID: @Model.TransactionId</p>
+
+@if (!string.IsNullOrEmpty(Model.TransactionId))
+{
+    <p>Transaction ID: @Model.TransactionId</p>
+}
+
